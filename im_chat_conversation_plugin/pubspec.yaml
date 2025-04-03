@@ -25,21 +25,30 @@ dependencies:
 #  image_picker: ^1.1.2
   screenshot_callback_plus: ^1.0.0  # 截屏检测
   flutter_advanced_avatar: ^1.5.2
-  get: ^4.7.2
+  get: ^5.0.0-release-candidate-9.3.2
   permission_utils:
-    path: ../../permission_utils
-  flutter_scankit:
-    path: ../../flutter-scankit
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: permission_utils
+#    path: ../../permission_utils
+#  flutter_scankit:
+#    path: ../../flutter-scankit
 
   image_picker:
     git:
-      url: https://glok33.com/mobile/plugins/image_picker.git
+      url: https://github.com/xiaoli55979/tools_plugins.git
       ref: main
-      path: image_picker
+      path: image_picker/image_picker
     #  flutter_chat_ui: ^1.6.15
     #  使用本地库是因为线上库消息事件长按无法传出坐标
+
   flutter_chat_ui:
-    path: ../../flutter_chat_ui
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: flutter_chat_ui
+
   im_chat_common_plugin:
     path: ../../im_chat_project_plugins/im_chat_common_plugin
 

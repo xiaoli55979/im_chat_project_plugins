@@ -10,13 +10,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get: ^5.0.0-release-candidate-9.3.2
   plugin_platform_interface: ^2.0.2
   form_builder_validators: ^10.0.1 # form
   intl_phone_field: ^3.2.0
+  package_info_plus: ^8.3.0
+
   device_info:
-    path: ../../device_info
-  get:
-    path: ../../getx
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: device_info
+
   im_chat_common_plugin:
     path: ../../im_chat_project_plugins/im_chat_common_plugin
 

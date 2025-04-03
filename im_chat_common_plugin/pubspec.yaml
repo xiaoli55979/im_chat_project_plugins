@@ -10,9 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    #  新版的get安卓通过url shrme跳转会打开404页面,暂时不能使用
-  get:
-    path: ../../getx
+  get: ^5.0.0-release-candidate-9.3.2
   plugin_platform_interface: ^2.0.2
   intl: ^0.19.0
   dio: ^5.3.3
@@ -56,28 +54,52 @@ dependencies:
   image_gallery_saver: ^2.0.3
   image_picker:
     git:
-      url: https://glok33.com/mobile/plugins/image_picker.git
+      url: https://github.com/xiaoli55979/tools_plugins.git
       ref: main
-      path: image_picker
+      path: image_picker/image_picker
 
   wukongimfluttersdk:
-    path: ../../WuKongIMFlutterSDK
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: WuKongIMFlutterSDK
   device_info:
-    path: ../../device_info
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: device_info
   flutter_scankit:
-    path: ../../flutter-scankit
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: flutter-scankit
   line_detection_plugin:
-    path: ../../line_detection_plugin
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: line_detection_plugin
   permission_utils:
-    path: ../../permission_utils
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: permission_utils
   dio_smart_retry:
-    path: ../../dio_smart_retry
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: dio_smart_retry
   adaptive_action_sheet:
-    path: ../../adaptive_action_sheet
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: adaptive_action_sheet
   im_chat_resource_plugin:
     path: ../../im_chat_project_plugins/im_chat_resource_plugin
   flutter_screen_lock_plug:
-    path: ../../flutter_screen_lock_plug
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: flutter_screen_lock_plug
 
 dev_dependencies:
 #  flutter_test:

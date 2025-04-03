@@ -13,8 +13,7 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   im_chat_common_plugin:
     path: ../../im_chat_project_plugins/im_chat_common_plugin
-  get:
-    path: ../../getx
+  get: ^5.0.0-release-candidate-9.3.2
 
 
 

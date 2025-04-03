@@ -14,10 +14,14 @@ dependencies:
   infinite_scroll_pagination: ^4.1.0
   badges: ^3.1.2
 
-  get:
-    path: ../../getx
+  get: ^5.0.0-release-candidate-9.3.2
+#  wukongimfluttersdk:
+#    path: ../../WuKongIMFlutterSDK
   wukongimfluttersdk:
-    path: ../../WuKongIMFlutterSDK
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: WuKongIMFlutterSDK
   im_chat_common_plugin:
     path: ../../im_chat_project_plugins/im_chat_common_plugin
   im_chat_settings_plugin:
@@ -28,7 +32,10 @@ dependencies:
     path: ../../im_chat_project_plugins/im_chat_conversation_plugin
 
   adaptive_action_sheet:
-    path: ../../adaptive_action_sheet
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: adaptive_action_sheet
 
 dev_dependencies:
 #  flutter_test:

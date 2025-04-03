@@ -12,17 +12,20 @@ dependencies:
     sdk: flutter
   qr_flutter: ^4.1.0
   common_utils: ^2.1.0
-  get:
-    path: ../../getx
+  get: ^5.0.0-release-candidate-9.3.2
   plugin_platform_interface: ^2.0.2
   url_launcher: ^6.3.1
   open_filex: ^4.6.0
   path_provider: ^2.1.5
   im_chat_common_plugin:
     path: ../../im_chat_project_plugins/im_chat_common_plugin
+#  flutter_screen_lock_plug:
+#    path: ../../flutter_screen_lock_plug
   flutter_screen_lock_plug:
-    path: ../../flutter_screen_lock_plug
-
+    git:
+      url: https://github.com/xiaoli55979/tools_plugins.git
+      ref: main
+      path: flutter_screen_lock_plug
 dev_dependencies:
 #  flutter_test:
 #    sdk: flutter
