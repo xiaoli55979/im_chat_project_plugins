@@ -1,0 +1,8 @@
+{
+  "@@locale": "zh",
+  "welcome": "欢迎使用",
+  "inputPassword": "请输入您的安全码",
+  "inputPasswordHit": "请输入您的安全码",
+  "defaultPassword": "默认密码是:",
+  "confirm": "确定"
+}

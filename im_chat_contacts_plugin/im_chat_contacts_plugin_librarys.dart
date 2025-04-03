@@ -1,0 +1,32 @@
+// Auto-generated library file
+library im_chat_contacts_plugin;
+
+/// android
+  /// src
+    /// main
+      /// kotlin
+        /// com
+          /// example
+            /// im_chat_contacts_plugin
+    /// test
+      /// kotlin
+        /// com
+          /// example
+            /// im_chat_contacts_plugin
+export 'im_chat_contacts_plugin_librarys.dart';
+/// ios
+  /// Assets
+  /// Classes
+  /// Resources
+/// lib
+  /// pages
+    /// bingings
+    /// controllers
+    /// views
+  /// routes
+export 'lib/routes/app_pages_contacts.dart';
+export 'lib/routes/app_routes_contacts.dart';
+/// linux
+  /// include
+    /// im_chat_contacts_plugin
+  /// test

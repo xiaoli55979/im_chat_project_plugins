@@ -1,0 +1,7 @@
+{
+  "symbol_url": "//at.alicdn.com/t/c/font_4356009_vvliklf6wwc.js",
+  "save_dir": "./lib/config/icon/icon_font",
+  "trim_icon_prefix": "icon",
+  "default_icon_size": 32,
+  "null_safety": true
+}

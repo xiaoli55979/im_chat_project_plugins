@@ -1,0 +1,122 @@
+// Auto-generated library file
+library im_chat_common_plugin_library;
+
+/// api
+export 'api/base.dart';
+export 'api/exception.dart';
+export 'api/im_api_provider.dart';
+export 'api/lines_config.dart';
+export 'api/provider.dart';
+export 'api/result.dart';
+export 'api/retry_evaluator.dart';
+/// components
+export 'components/basic_view.dart';
+export 'components/bottom_sheet_view.dart';
+export 'components/custom_qrcode_scanview.dart';
+export 'components/divider_view.dart';
+export 'components/easy_splash_screen.dart';
+export 'components/empty_view.dart';
+export 'components/form_builder_group_button.dart';
+export 'components/form_builder_image_picker.dart';
+export 'components/form_builder_select.dart';
+export 'components/main_button.dart';
+export 'components/menu_item.dart';
+export 'components/my_app_bar.dart';
+export 'components/nav_text.dart';
+export 'components/password_check_view.dart';
+export 'components/password_notice_view.dart';
+export 'components/search_bar_view.dart';
+export 'components/splash_screen_view.dart';
+export 'components/subtitle_text.dart';
+export 'components/title_text.dart';
+export 'components/user_account_notice_view.dart';
+/// config
+  /// icon
+    /// icon_font
+export 'config/icon/icon_font.dart';
+export 'config/icon/iconfont.dart';
+export 'config/icon/local_svg_icon.dart';
+  /// theme
+export 'config/theme/color_extension.dart';
+export 'config/theme/color_mycolors.dart';
+export 'config/theme/dark_theme_colors.dart';
+export 'config/theme/light_theme_colors.dart';
+export 'config/theme/my_fonts.dart';
+export 'config/theme/my_styles.dart';
+export 'config/theme/my_theme.dart';
+  /// translations
+    /// en_US
+export 'config/translations/en_US/en_us_translation.dart';
+export 'config/translations/localization_service.dart';
+export 'config/translations/strings_enum.dart';
+    /// zh_CN
+export 'config/translations/zh_CN/zh_cn_translation.dart';
+/// database
+export 'database/database_manager.dart';
+export 'database/user_manager.dart';
+export 'im_chat_common_plugin_library.dart';
+/// immanager
+export 'immanager/http_utils.dart';
+export 'immanager/im_manager_utils.dart';
+export 'immanager/im_options_utils.dart';
+export 'immanager/user_info.dart';
+export 'jtp_common_init.dart';
+/// l10n
+export 'l10n/SlocalUtils.dart';
+  /// localization
+export 'l10n/localization/kit_common_localizations.dart';
+export 'l10n/localization/kit_common_localizations_en.dart';
+export 'l10n/localization/kit_common_localizations_zh.dart';
+/// models
+export 'models/app_config_model_entity.dart';
+export 'models/app_model_entity.dart';
+export 'models/conversatin_sync_model_entity.dart';
+export 'models/friend_model_entity.dart';
+export 'models/http_dns_lines_model_entity.dart';
+export 'models/im_node_model_entity.dart';
+export 'models/user_info_model_entity.dart';
+/// pages
+  /// bingings
+export 'pages/bingings/launch_bindings.dart';
+export 'pages/bingings/search_bindings.dart';
+export 'pages/bingings/user_info_bindings.dart';
+  /// controllers
+export 'pages/controllers/launch_page_controller.dart';
+export 'pages/controllers/search_bar_controller.dart';
+export 'pages/controllers/user_info_controller.dart';
+  /// views
+export 'pages/views/launch_page_view.dart';
+export 'pages/views/search_view.dart';
+export 'pages/views/user_info_view.dart';
+/// routes
+export 'routes/app_pages_common.dart';
+export 'routes/app_routes_common.dart';
+/// services
+export 'services/global_service.dart';
+/// tools
+export 'tools/app_lifecycle_manager.dart';
+export 'tools/apputil_handle.dart';
+export 'tools/avatar_manager.dart';
+export 'tools/cache_manager_tool.dart';
+export 'tools/common_config_option.dart';
+export 'tools/dialog_utils.dart';
+export 'tools/dropdown_utils.dart';
+export 'tools/encryption_interceptor.dart';
+export 'tools/encryption_utils.dart';
+export 'tools/file_manager.dart';
+export 'tools/font_utils.dart';
+export 'tools/fontsize_extension.dart';
+export 'tools/hide_keyboard_utils.dart';
+export 'tools/image_compress_utils.dart';
+export 'tools/image_tools.dart';
+export 'tools/link_utils.dart';
+export 'tools/log_manager.dart';
+export 'tools/logger_utils.dart';
+export 'tools/my_shared_pref.dart';
+export 'tools/permissions_utils.dart';
+export 'tools/project_utils.dart';
+export 'tools/snack_bar_util.dart';
+export 'tools/text_field_utils.dart';
+export 'tools/time_tools_utils.dart';
+export 'tools/tools_utils.dart';
+export 'tools/user_info_manager.dart';
