@@ -25,8 +25,7 @@ dependencies:
 #  image_picker: ^1.1.2
   screenshot_callback_plus: ^1.0.0  # 截屏检测
   flutter_advanced_avatar: ^1.5.2
-  get:
-    path: ../../getx
+  get: ^4.7.2
   permission_utils:
     path: ../../permission_utils
   flutter_scankit:

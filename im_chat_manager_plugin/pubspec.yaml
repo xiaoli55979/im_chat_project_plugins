@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
-  get:
-    path: ../../getx
+  get: ^4.7.2
   #    跳转开关管理插件
   #    跳转开关管理插件
   im_chat_switch_plugin:
