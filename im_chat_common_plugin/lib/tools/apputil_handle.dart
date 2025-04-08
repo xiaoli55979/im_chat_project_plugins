@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:im_chat_common_plugin/tools/permissions_utils.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -79,7 +79,7 @@ class ApputilHandle {
         if (screenshotBytes != null) {
           try {
             // 保存图片
-            final result = await ImageGallerySaver.saveImage(screenshotBytes);
+            final result = await ImageGallerySaverPlus.saveImage(screenshotBytes);
             if (result == null || result == '') throw '图片保存失败';
             // 显示保存成功的提示
             DialogUtils.toast("二维码保存成功!");
