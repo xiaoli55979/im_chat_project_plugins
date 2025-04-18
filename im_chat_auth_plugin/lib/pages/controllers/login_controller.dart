@@ -168,11 +168,17 @@ class LoginController extends GetxController {
         await userManager.upsertUser(model);
         userManager.setCurrentUserUid(model.uid);
         GlobalService.to.token = model.token;
+        GlobalService.to.uid = model.uid;
+        GlobalService.to.userModel = res.data!;
         MySharedPref.setToken(model.token);
         UserInfoModelEntity? getModel = await userManager.getCurrentUser();
-        // print("object_uid:${getModel?.uid}");
-        Get.offAllNamed("/home");
-        GlobalService.to.isLoggedIn.value = true;
+        GlobalService.to.loginDefault(model.token).then((value){
+          if (value) {
+            // print("object_uid:${getModel?.uid}");
+            Get.offAllNamed("/home");
+            GlobalService.to.isLoggedIn.value = true;
+          }
+        });
       }
     } catch (e) {
       print("object_e:${e.toString()}");

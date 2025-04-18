@@ -15,7 +15,10 @@ class HomeView extends GetView<HomeController> {
         //   title: Text(_titles[_currentIndex]), // 动态切换标题
         //   centerTitle: true,
         // ),
-        body: controller.pages[controller.currentIndex], // 动态切换页面内容
+        body: IndexedStack(
+          index: controller.currentIndex,
+          children: controller.pages,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: controller.currentIndex, // 当前选中的索引
           onTap: (index) {

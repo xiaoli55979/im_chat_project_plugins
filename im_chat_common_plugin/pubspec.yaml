@@ -26,7 +26,6 @@ dependencies:
   shimmer: ^3.0.0 # shimmer
   common_utils: ^2.1.0 # utils
   flutter_html: ^3.0.0-beta.2
-  pull_to_refresh: ^2.0.0 # pull refresh
 #  encryptions: ^1.1.0+1
   shared_preferences: ^2.3.3
   package_info_plus: ^8.3.0
@@ -52,6 +51,14 @@ dependencies:
   archive: ^4.0.2
   url_launcher: ^6.0.13
   image_gallery_saver_plus: ^4.0.1
+
+  easy_refresh: ^3.4.0
+  flutter_keyboard_visibility: ^6.0.0
+  scrollable_positioned_list: 0.2.3
+  lpinyin: ^2.0.2
+  get_storage: ^2.1.1
+  cached_network_image: ^3.4.1
+
   image_picker:
     git:
       url: https://github.com/xiaoli55979/tools_plugins.git

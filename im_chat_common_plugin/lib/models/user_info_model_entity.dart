@@ -5,6 +5,36 @@ import 'package:im_chat_common_plugin/generated/json/user_info_model_entity.g.da
 
 export 'package:im_chat_common_plugin/generated/json/user_info_model_entity.g.dart';
 
+enum UserOnlineStatus {
+  app(0),
+  web(1),
+  pc(2);
+
+  const UserOnlineStatus(this.value);
+
+  final int value;
+
+  static UserOnlineStatus userOnlineStatus(int deviceFlag) {
+    if (deviceFlag == web.value) {
+      return web;
+    } else if (deviceFlag == pc.value) {
+      return pc;
+    }
+    return app;
+  }
+
+  String get name {
+    switch (this) {
+      case web:
+        return 'Web';
+      case pc:
+        return 'PC';
+      default:
+        return '手机';
+    }
+  }
+}
+
 @JsonSerializable()
 class UserInfoModelEntity {
   late String uid = '';

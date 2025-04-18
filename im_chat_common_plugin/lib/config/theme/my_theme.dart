@@ -82,8 +82,8 @@ class MyTheme {
 
         // input
         inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 1)),
-          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: LightThemeColors.primaryColor, width: 1)),
+          // enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey, width: 1)),
+          // focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: LightThemeColors.primaryColor, width: 1)),
           hintStyle: TextStyle(fontSize: FontUtils.contentTitleFontSize),
           errorStyle: TextStyle(
             fontSize: FontUtils.contentFontSize,

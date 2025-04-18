@@ -1,4 +1,5 @@
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_contacts_plugin/api/api.dart';
 
 class ApiProviderContact extends BaseProvider {
   /// 同步好友
@@ -26,7 +27,15 @@ class ApiProviderContact extends BaseProvider {
     int version = 0,
   }) =>
       get(
-        "/v1/friend/sync?limit=$limit&version=$version&api_version=$apiVersion",
+        "${API.getFriend.path}?limit=$limit&version=$version&api_version=$apiVersion",
+        decoder: (obj) => Result<List<FriendModelEntity>>.fromJson(obj),
+      );
+
+  Future<Result<List<FriendModelEntity>>> searchFriend({
+    required String? keyword,
+  }) =>
+      get(
+        "${API.searchFriend.path}?keyword=$keyword",
         decoder: (obj) => Result<List<FriendModelEntity>>.fromJson(obj),
       );
 }

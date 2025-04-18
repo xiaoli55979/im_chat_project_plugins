@@ -19,8 +19,8 @@ import 'package:im_chat_common_plugin/tools/log_manager.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
 import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
+import 'package:im_chat_common_plugin/util/storage.dart';
 import 'package:line_detection_plugin/line_detection.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'api/lines_config.dart';
@@ -289,7 +289,6 @@ class JtpComponentsInit {
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
-              RefreshLocalizations.delegate,
             ],
             supportedLocales: LocalizationService.supportedLanguages.entries.map((e) => e.value).toList(),
             // support locales
@@ -306,6 +305,9 @@ class JtpComponentsInit {
   static Future<void> initDefaultConfig(CommonConfigOption config) async {
     /// 如果需要 ensureInitialized，请在这里运行。
     WidgetsFlutterBinding.ensureInitialized();
+
+    /// init 初始化数据存储
+    await Storage.init();
 
     /// init shared preference
     await MySharedPref.init();

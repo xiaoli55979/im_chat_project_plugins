@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/database/user_manager.dart';
+import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
 import 'package:im_chat_common_plugin/tools/dialog_utils.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
@@ -72,13 +73,23 @@ class RegisterController extends GetxController {
           zone: zoneNum,
           code: smsCode,
         );
+        UserInfoManager().setUserInfo(res.data!);
         final userManager = UserManager();
         await userManager.upsertUser(res.data!);
         userManager.setCurrentUserUid(res.data!.uid);
         MySharedPref.setToken(res.data!.token);
         GlobalService.to.token = res.data!.token;
-        Get.offAllNamed("/home");
-        print("手机号:$phoneNum  验证码:$smsCode  昵称:$nickName 密码:$password  确认密码:$passwordConfirm");
+        GlobalService.to.uid = res.data!.uid;
+        GlobalService.to.userModel = res.data!;
+        GlobalService.to.loginDefault(GlobalService.to.token).then((value){
+          if (value) {
+            // print("object_uid:${getModel?.uid}");
+            Get.offAllNamed("/home");
+            GlobalService.to.isLoggedIn.value = true;
+            print("手机号:$phoneNum  验证码:$smsCode  昵称:$nickName 密码:$password  确认密码:$passwordConfirm");
+          }
+        });
+
       } catch (e) {
         DialogUtils.showError(e.toString());
       }

@@ -51,7 +51,10 @@ class FriendModelEntity {
   late int version = 0;
   @JSONField(name: 'is_deleted')
   late int isDeleted = 0;
-
+  @JSONField(name: 'created_at')
+  late String createdAt = '';
+  @JSONField(name: 'updated_at')
+  late String updatedAt = '';
   FriendModelEntity();
 
   factory FriendModelEntity.fromJson(Map<String, dynamic> json) => $FriendModelEntityFromJson(json);

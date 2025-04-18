@@ -132,4 +132,49 @@ class TimeToolsUtils {
     String allKey = "${ToolsUtils.cacheKey}_$model";
     return allKey;
   }
+
+  static String getOnlineTime(int time) {
+    int currentSeconds = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    int diff = currentSeconds - time;
+
+    if (diff > 60) {
+      int r = diff ~/ 60;
+      if (r > 60) {
+        return "";
+      } else {
+        return "$r分钟";
+      }
+    }
+    return "刚刚";
+  }
+
+  static String getShowDateAndMinute(int time) {
+    if (time < 100) return "";
+
+    final now = DateTime.now();
+    final inputDate = _parseTime(time);
+
+    // 比较年份是否相同
+    if (now.year != inputDate.year) {
+      return _formatDate1(inputDate);
+    } else {
+      return _formatDate4(inputDate);
+    }
+  }
+
+  static DateTime _parseTime(int timeStamp) {
+    // 处理秒级时间戳（长度小于13位）
+    if (timeStamp.toString().length < 13) {
+      timeStamp *= 1000;
+    }
+    return DateTime.fromMillisecondsSinceEpoch(timeStamp);
+  }
+
+  static String _formatDate1(DateTime date) {
+    return DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
+  }
+
+  static String _formatDate4(DateTime date) {
+    return DateFormat('MM-dd HH:mm').format(date);
+  }
 }

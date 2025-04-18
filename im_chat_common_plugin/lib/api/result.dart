@@ -8,6 +8,8 @@ class Result<T> {
 
   Result();
 
+  bool get isSuccess => code != null && code == 0;
+
   factory Result.fromJson(Map<String, dynamic> json) {
     Result<T> r = Result();
 

@@ -45,4 +45,8 @@ class DarkThemeColors {
   static const Color listTileSubtitleColor = Colors.white;
   static const Color listTileBackgroundColor = Color(0xFF414141);
   static const Color listTileIconColor = Colors.white;
+
+  static const Color reminderColor = Color(0xFFFF5353);
+
+  static const Color visitorColor = Color(0xFFFFC107);
 }

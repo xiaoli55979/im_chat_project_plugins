@@ -131,6 +131,14 @@ FriendModelEntity $FriendModelEntityFromJson(Map<String, dynamic> json) {
   if (isDeleted != null) {
     friendModelEntity.isDeleted = isDeleted;
   }
+  final String? createdAt = jsonConvert.convert<String>(json['created_at']);
+  if (createdAt != null) {
+    friendModelEntity.createdAt = createdAt;
+  }
+  final String? updatedAt = jsonConvert.convert<String>(json['updated_at']);
+  if (updatedAt != null) {
+    friendModelEntity.updatedAt = updatedAt;
+  }
   return friendModelEntity;
 }
 
@@ -168,6 +176,8 @@ Map<String, dynamic> $FriendModelEntityToJson(FriendModelEntity entity) {
   data['flame_second'] = entity.flameSecond;
   data['version'] = entity.version;
   data['is_deleted'] = entity.isDeleted;
+  data['created_at'] = entity.createdAt;
+  data['updated_at'] = entity.updatedAt;
   return data;
 }
 
@@ -205,6 +215,8 @@ extension FriendModelEntityExtension on FriendModelEntity {
     int? flameSecond,
     int? version,
     int? isDeleted,
+    String? createdAt,
+    String? updatedAt,
   }) {
     return FriendModelEntity()
       ..uid = uid ?? this.uid
@@ -238,6 +250,8 @@ extension FriendModelEntityExtension on FriendModelEntity {
       ..flame = flame ?? this.flame
       ..flameSecond = flameSecond ?? this.flameSecond
       ..version = version ?? this.version
-      ..isDeleted = isDeleted ?? this.isDeleted;
+      ..isDeleted = isDeleted ?? this.isDeleted
+      ..createdAt = createdAt ?? this.createdAt
+      ..updatedAt = updatedAt ?? this.updatedAt;
   }
 }

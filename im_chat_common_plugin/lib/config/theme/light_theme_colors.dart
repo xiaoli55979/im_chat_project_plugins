@@ -58,4 +58,8 @@ class LightThemeColors {
   static const Color listTileSubtitleColor = Color(0xFF575757);
   static const Color listTileBackgroundColor = Color(0xFFF8F8F8);
   static const Color listTileIconColor = Color(0xFF575757);
+
+  static const Color reminderColor = Color(0xFFFF5353);
+
+  static const Color visitorColor = Color(0xFFFFC107);
 }

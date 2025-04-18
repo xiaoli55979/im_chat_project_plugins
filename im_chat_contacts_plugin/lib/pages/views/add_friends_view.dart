@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/widget/search/common_search_bar.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../controllers/add_friends_controller.dart';
 
@@ -15,26 +17,17 @@ class AddFriendsView extends GetView<AddFriendsController> {
         actions: [],
         body: Column(
           children: [
-            // Search bar
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                controller: controller.searchController,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                  hintText: "搜索手机号/账号",
-                  filled: true,
-                  fillColor: Colors.grey.withOpacity(0.1),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
-                ),
-                onChanged: (value) => controller.searchUser(value),
-              ),
+            CommonSearchBar(
+              hintText: "搜索手机号/账号",
+              controller: controller.searchController,
+              onSearch: (value) {
+                controller.searchUser(value);
+              },
+              onChanged: (value) {},
+              onCancel: () {
+              },
             ),
-
+            // Search bar
             // My account info
             Center(
               child: Padding(

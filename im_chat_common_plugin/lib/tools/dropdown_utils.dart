@@ -38,6 +38,7 @@ class DropdownUtils {
     List<DropdownOption> options = getFilteredOptions(); // 获取过滤后的选项
 
     return DropdownButton2<DropdownOption>(
+      underline: SizedBox(),
       onChanged: onChanged,
       items: options
           .map((option) => DropdownMenuItem<DropdownOption>(
