@@ -209,7 +209,7 @@ class GlobalService extends GetxService {
         // await api.appModule();
 
         /// 初始化IM
-        ImManagerUtils.initIM();
+
 
         // /// 同步违禁词
         // await api.sensitiveWords();
@@ -217,7 +217,7 @@ class GlobalService extends GetxService {
         // /// 同步敏感词
         // await api.prohibitWords();
 
-        return Future.value(true);
+        return ImManagerUtils.initIM();
       } else {
         return Future.value(false);
       }

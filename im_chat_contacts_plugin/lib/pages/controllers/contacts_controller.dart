@@ -78,8 +78,68 @@ class ContactsController extends BaseController {
     try {
       var result = await api.friendSync();
       if (result.isSuccess) {
-        final dataList = result.data ?? [];
-        var channelList = dataList.map((friendModel){
+        final list = [];
+        final friendEntity = FriendModelEntity();
+        friendEntity.uid = '123451';
+        friendEntity.remark = '酷我音乐';
+        friendEntity.status = 1;
+        list.add(friendEntity);
+        final friendEntity1 = FriendModelEntity();
+        friendEntity1.uid = '123452';
+        friendEntity1.remark = '上心聊球';
+        friendEntity1.status = 1;
+        list.add(friendEntity1);
+        final friendEntity9 = FriendModelEntity();
+        friendEntity9.uid = '1234511';
+        friendEntity9.remark = '王德法';
+        friendEntity9.status = 1;
+        list.add(friendEntity9);
+
+        final friendEntity4 = FriendModelEntity();
+        friendEntity4.uid = '1234512';
+        friendEntity4.remark = '德玛西亚';
+        friendEntity4.status = 1;
+        list.add(friendEntity4);
+
+        final friendEntity5 = FriendModelEntity();
+        friendEntity5.uid = '1234513';
+        friendEntity5.remark = '灌灌灌灌';
+        friendEntity5.status = 1;
+        list.add(friendEntity5);
+
+        final friendEntity6 = FriendModelEntity();
+        friendEntity6.uid = '1234514';
+        friendEntity6.remark = '雷克萨';
+        friendEntity6.status = 1;
+        list.add(friendEntity6);
+
+        final friendEntity7 = FriendModelEntity();
+        friendEntity7.uid = '1234515';
+        friendEntity7.remark = '噢噢噢噢';
+        friendEntity7.status = 1;
+        list.add(friendEntity7);
+
+        final friendEntity8 = FriendModelEntity();
+        friendEntity8.uid = '1234516';
+        friendEntity8.remark = '热热热';
+        friendEntity8.status = 1;
+        list.add(friendEntity8);
+
+        final friendEntity2 = FriendModelEntity();
+        friendEntity2.uid = '123453';
+        friendEntity2.remark = '文件传输助手';
+        friendEntity2.status = 1;
+        friendEntity2.category = WKSystemAccount.accountCategorySystem.value;
+        list.add(friendEntity2);
+        final friendEntity3 = FriendModelEntity();
+        friendEntity3.uid = '123454';
+        friendEntity3.remark = '系统通知';
+        friendEntity3.status = 1;
+        friendEntity3.category = WKSystemAccount.accountCategorySystem.value;
+        friendEntity3.robot = 1;
+        list.add(friendEntity3);
+
+        final channelList = list.map((friendModel){
           final wkChannel = WKChannel(friendModel.uid, WKChannelType.personal);
           wkChannel.channelRemark = friendModel.remark;
           wkChannel.channelName = friendModel.name;
@@ -96,6 +156,25 @@ class ContactsController extends BaseController {
           wkChannel.follow = 1;//指定为好友
           return wkChannel;
         }).toList();
+
+        final dataList = result.data ?? [];
+        // var channelList = dataList.map((friendModel){
+        //   final wkChannel = WKChannel(friendModel.uid, WKChannelType.personal);
+        //   wkChannel.channelRemark = friendModel.remark;
+        //   wkChannel.channelName = friendModel.name;
+        //   wkChannel.mute = friendModel.mute;
+        //   wkChannel.top = friendModel.top;
+        //   wkChannel.version = friendModel.version;
+        //   wkChannel.status = friendModel.status;
+        //   wkChannel.isDeleted = friendModel.isDeleted;
+        //   wkChannel.updatedAt = friendModel.updatedAt;
+        //   wkChannel.createdAt = friendModel.createdAt;
+        //   wkChannel.receipt = friendModel.receipt;
+        //   wkChannel.robot = friendModel.robot;
+        //   wkChannel.category = friendModel.category;
+        //   wkChannel.follow = 1;//指定为好友
+        //   return wkChannel;
+        // }).toList();
 
         Storage.putFriendSync(true);
 
