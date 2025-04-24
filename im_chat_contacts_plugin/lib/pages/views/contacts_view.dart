@@ -29,7 +29,8 @@ class ContactsView extends GetView<ContactsController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // 搜索框
-            const SearchBarView(),
+            SearchBarView(onTap: () {
+            },),
             Expanded(
               child: MultiStatusView(
                 currentStatus: controller.multiStatus,
@@ -112,6 +113,7 @@ class ContactsView extends GetView<ContactsController> {
          borderRadius: BorderRadius.zero,
          onPressed: (){
            EasyLoading.showToast(contactEntity.contactsHeader!.title);
+           controller.toMyManagedGroup();
          },
          child: Container(
            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

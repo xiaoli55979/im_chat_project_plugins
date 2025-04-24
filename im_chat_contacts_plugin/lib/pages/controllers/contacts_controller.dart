@@ -5,6 +5,7 @@ import 'package:im_chat_common_plugin/util/app_values.dart';
 import 'package:im_chat_common_plugin/widget/az_listview/az_common.dart';
 import 'package:im_chat_common_plugin/widget/status/multi_status_view.dart';
 import 'package:im_chat_contacts_plugin/model/ui_contact_entity.dart';
+import 'package:im_chat_contacts_plugin/routes/app_routes_contacts.dart';
 import 'package:wukongimfluttersdk/entity/channel_member.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
 import 'package:wukongimfluttersdk/entity/channel.dart';
@@ -157,7 +158,7 @@ class ContactsController extends BaseController {
           return wkChannel;
         }).toList();
 
-        final dataList = result.data ?? [];
+        // final dataList = result.data ?? [];
         // var channelList = dataList.map((friendModel){
         //   final wkChannel = WKChannel(friendModel.uid, WKChannelType.personal);
         //   wkChannel.channelRemark = friendModel.remark;
@@ -175,6 +176,17 @@ class ContactsController extends BaseController {
         //   wkChannel.follow = 1;//指定为好友
         //   return wkChannel;
         // }).toList();
+
+        /// 群数据源
+        // final groupEntity = GroupModelEntity();
+        // groupEntity.channelID = '101010';
+        // groupEntity.channelRemark = '随便写的';
+        // groupEntity.status = 1;
+        // groupEntity.category = WKSystemAccount.accountCategorySystem.value;
+        // groupEntity.robot = 1;
+        // final groupList = [];
+        // groupList.add(groupEntity);
+
 
         Storage.putFriendSync(true);
 
@@ -226,5 +238,9 @@ class ContactsController extends BaseController {
     }).toList();
 
     contactList.insertAll(0, defaultGroupList);
+  }
+
+  toMyManagedGroup() {
+    Get.toNamed(AppRoutesContacts.myManagedGroup);
   }
 }
