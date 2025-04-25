@@ -129,11 +129,23 @@ abstract class KitCommonLocalizations {
   /// **'确定'**
   String get confirm;
 
-  /// No description provided for @confirm2.
+  /// No description provided for @loginDeviceManager.
   ///
   /// In zh, this message translates to:
-  /// **'确定'**
-  String get confirm2;
+  /// **'登录设备管理'**
+  String get loginDeviceManager;
+
+  /// No description provided for @friendInfo.
+  ///
+  /// In zh, this message translates to:
+  /// **'好友资料'**
+  String get friendInfo;
+
+  /// No description provided for @aa.
+  ///
+  /// In zh, this message translates to:
+  /// **'哎哎'**
+  String get aa;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

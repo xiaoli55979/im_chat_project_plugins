@@ -28,5 +28,11 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
   String get confirm => '确定';
 
   @override
-  String get confirm2 => '确定';
+  String get loginDeviceManager => '登录设备管理';
+
+  @override
+  String get friendInfo => '好友资料';
+
+  @override
+  String get aa => '哎哎';
 }

@@ -28,5 +28,11 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
   String get confirm => 'Confirm';
 
   @override
-  String get confirm2 => '确定';
+  String get loginDeviceManager => 'Log in to device management';
+
+  @override
+  String get friendInfo => 'friendData';
+
+  @override
+  String get aa => 'AA';
 }
