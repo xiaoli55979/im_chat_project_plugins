@@ -243,4 +243,8 @@ class ContactsController extends BaseController {
   toMyManagedGroup() {
     Get.toNamed(AppRoutesContacts.myManagedGroup);
   }
+
+  toFriend() {
+    Get.toNamed(AppRoutesContacts.friendInfo);
+  }
 }

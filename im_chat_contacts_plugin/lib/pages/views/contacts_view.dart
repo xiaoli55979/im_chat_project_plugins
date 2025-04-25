@@ -48,6 +48,7 @@ class ContactsView extends GetView<ContactsController> {
                       data: contactEntity.wkChannel!,
                       action: (channel){
                         EasyLoading.showToast('点击聊天');
+                        controller.toFriend();
                       },
                       menuAction: (channel, menu){
                         EasyLoading.showToast('点击${menu.title}');
