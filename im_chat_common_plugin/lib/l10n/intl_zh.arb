@@ -5,5 +5,7 @@
   "inputPasswordHit": "请输入您的安全码",
   "defaultPassword": "默认密码是:",
   "confirm": "确定",
-  "confirm2": "确定"
+  "loginDeviceManager": "登录设备管理",
+  "friendInfo": "好友资料",
+  "aa": "哎哎"
 }

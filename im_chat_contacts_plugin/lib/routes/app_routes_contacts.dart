@@ -8,4 +8,10 @@ class AppRoutesContacts {
   static const myManagedGroup = '/myManagedGroup';
   // 我加入的群
   // static const myJoinedGroup = '/myJoinedGroup';
+
+  // 好友资料
+  static const friendInfo = '/friendInfo';
+
+  // 备注
+  static const remark = '/remark';
 }
