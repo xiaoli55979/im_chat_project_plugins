@@ -8,6 +8,7 @@ import 'package:im_chat_common_plugin/models/app_config_model_entity.dart';
 import 'package:im_chat_common_plugin/models/app_model_entity.dart';
 import 'package:im_chat_common_plugin/models/conversatin_sync_model_entity.dart';
 import 'package:im_chat_common_plugin/models/friend_model_entity.dart';
+import 'package:im_chat_common_plugin/models/group_model_entity.dart';
 import 'package:im_chat_common_plugin/models/http_dns_lines_model_entity.dart';
 import 'package:im_chat_common_plugin/models/im_node_model_entity.dart';
 import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
@@ -198,6 +199,9 @@ class JsonConvert {
     if (<FriendModelEntity>[] is M) {
       return data.map<FriendModelEntity>((Map<String, dynamic> e) => FriendModelEntity.fromJson(e)).toList() as M;
     }
+    if (<GroupModelEntity>[] is M) {
+      return data.map<GroupModelEntity>((Map<String, dynamic> e) => GroupModelEntity.fromJson(e)).toList() as M;
+    }
     if (<HttpDnsLinesModelEntity>[] is M) {
       return data.map<HttpDnsLinesModelEntity>((Map<String, dynamic> e) => HttpDnsLinesModelEntity.fromJson(e)).toList() as M;
     }
@@ -243,6 +247,7 @@ class JsonConvertClassCollection {
     (ConversatinSyncModelConversationsUsers).toString(): ConversatinSyncModelConversationsUsers.fromJson,
     (ConversatinSyncModelConversationsGroups).toString(): ConversatinSyncModelConversationsGroups.fromJson,
     (FriendModelEntity).toString(): FriendModelEntity.fromJson,
+    (GroupModelEntity).toString(): GroupModelEntity.fromJson,
     (HttpDnsLinesModelEntity).toString(): HttpDnsLinesModelEntity.fromJson,
     (ImNodeModelEntity).toString(): ImNodeModelEntity.fromJson,
     (UserInfoModelEntity).toString(): UserInfoModelEntity.fromJson,

@@ -1,7 +1,7 @@
-// Copyright (c) 2022 NetEase, Inc. All rights reserved.
-// Use of this source code is governed by a MIT license that can be
-// found in the LICENSE file.
-
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 
 
 import 'kit_common_localizations.dart';
@@ -26,4 +26,7 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get confirm => 'Confirm';
+
+  @override
+  String get confirm2 => '确定';
 }

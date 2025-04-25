@@ -128,6 +128,12 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'确定'**
   String get confirm;
+
+  /// No description provided for @confirm2.
+  ///
+  /// In zh, this message translates to:
+  /// **'确定'**
+  String get confirm2;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {
