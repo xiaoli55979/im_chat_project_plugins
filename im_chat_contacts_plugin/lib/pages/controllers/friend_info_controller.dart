@@ -6,4 +6,8 @@ class FriendInfoController extends BaseController {
   toRemark() {
     Get.toNamed(AppRoutesContacts.remark);
   }
+
+  toMore() {
+    Get.toNamed(AppRoutesContacts.friendMore);
+  }
 }

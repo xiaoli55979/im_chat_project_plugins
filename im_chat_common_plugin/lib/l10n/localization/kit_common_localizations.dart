@@ -99,6 +99,12 @@ abstract class KitCommonLocalizations {
     Locale('zh')
   ];
 
+  /// No description provided for @appName.
+  ///
+  /// In zh, this message translates to:
+  /// **''**
+  String get appName;
+
   /// No description provided for @welcome.
   ///
   /// In zh, this message translates to:
@@ -141,11 +147,35 @@ abstract class KitCommonLocalizations {
   /// **'好友资料'**
   String get friendInfo;
 
-  /// No description provided for @aa.
+  /// No description provided for @more.
   ///
   /// In zh, this message translates to:
-  /// **'哎哎'**
-  String get aa;
+  /// **'更多'**
+  String get more;
+
+  /// No description provided for @shareBusinessCard.
+  ///
+  /// In zh, this message translates to:
+  /// **'分享名片'**
+  String get shareBusinessCard;
+
+  /// No description provided for @report.
+  ///
+  /// In zh, this message translates to:
+  /// **'举报'**
+  String get report;
+
+  /// No description provided for @messageWithoutInterruption.
+  ///
+  /// In zh, this message translates to:
+  /// **'消息免打扰'**
+  String get messageWithoutInterruption;
+
+  /// No description provided for @deleteFriend.
+  ///
+  /// In zh, this message translates to:
+  /// **'删除好友'**
+  String get deleteFriend;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

@@ -1,8 +1,10 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:im_chat_contacts_plugin/pages/bingings/friend_info_bindings.dart';
+import 'package:im_chat_contacts_plugin/pages/bingings/friend_more_bindings.dart';
 import 'package:im_chat_contacts_plugin/pages/bingings/my_managed_group_bindings.dart';
 import 'package:im_chat_contacts_plugin/pages/bingings/remark_bindings.dart';
 import 'package:im_chat_contacts_plugin/pages/views/friend_info_view.dart';
+import 'package:im_chat_contacts_plugin/pages/views/friend_more_view.dart';
 import 'package:im_chat_contacts_plugin/pages/views/my_managed_group_view.dart';
 import 'package:im_chat_contacts_plugin/pages/views/remark_view.dart';
 
@@ -37,6 +39,11 @@ class AppPagesContacts {
     /// 备注
     GetPage(name: AppRoutesContacts.remark, page: () => RemarkView(),
     bindings: [RemarkBindings()]
+    ),
+
+
+    GetPage(name: AppRoutesContacts.friendMore, page: () => const FriendMoreView(),
+    bindings: [FriendMoreBindings()]
     )
 
   ];

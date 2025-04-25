@@ -6,7 +6,8 @@ import 'package:im_chat_common_plugin/util/asset_util.dart';
 import 'package:im_chat_resource_plugin/generated/assets.dart';
 
 class PersonInfoWidget extends StatelessWidget {
-  const PersonInfoWidget({super.key});
+  final VoidCallback onPressed;
+  const PersonInfoWidget({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +31,13 @@ class PersonInfoWidget extends StatelessWidget {
               Spacer(),
               SizedBox(
                 width: 100,
-                child: AssetUtil.asset(
-                  Assets.contactMoreWhite,
-                  width: 50,
-                  height: 50,
+                child: GestureDetector(
+                  onTap: onPressed,
+                  child: AssetUtil.asset(
+                    Assets.contactMoreWhite,
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
               )
             ],

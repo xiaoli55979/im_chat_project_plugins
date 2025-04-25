@@ -4,6 +4,8 @@
 
 
 
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'kit_common_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -11,6 +13,9 @@ import 'kit_common_localizations.dart';
 /// The translations for English (`en`).
 class KitCommonLocalizationsEn extends KitCommonLocalizations {
   KitCommonLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appName => '';
 
   @override
   String get welcome => 'Welcome to ';
@@ -34,5 +39,17 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
   String get friendInfo => 'friendData';
 
   @override
-  String get aa => 'AA';
+  String get more => 'More';
+
+  @override
+  String get shareBusinessCard => 'share businessCard';
+
+  @override
+  String get report => 'report';
+
+  @override
+  String get messageWithoutInterruption => 'message without interruption';
+
+  @override
+  String get deleteFriend => 'Delete Friend';
 }

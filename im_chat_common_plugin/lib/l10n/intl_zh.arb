@@ -1,4 +1,5 @@
 {
+  "appName": "",
   "@@locale": "zh",
   "welcome": "欢迎使用",
   "inputPassword": "请输入您的安全码",
@@ -7,5 +8,9 @@
   "confirm": "确定",
   "loginDeviceManager": "登录设备管理",
   "friendInfo": "好友资料",
-  "aa": "哎哎"
+  "more": "更多",
+  "shareBusinessCard": "分享名片",
+  "report": "举报",
+  "messageWithoutInterruption": "消息免打扰",
+  "deleteFriend": "删除好友"
 }

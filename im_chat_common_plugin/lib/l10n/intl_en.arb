@@ -1,4 +1,5 @@
 {
+  "appName": "",
   "@@locale": "en",
   "welcome": "Welcome to ",
   "inputPassword": "Please enter your security id",
@@ -7,5 +8,9 @@
   "confirm": "Confirm",
   "loginDeviceManager": "Log in to device management",
   "friendInfo": "friendData",
-  "aa": "AA"
+  "more": "More",
+  "shareBusinessCard": "share businessCard",
+  "report": "report",
+  "messageWithoutInterruption": "message without interruption",
+  "deleteFriend": "Delete Friend"
 }

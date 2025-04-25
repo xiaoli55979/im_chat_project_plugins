@@ -17,8 +17,18 @@ class RemarkView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("备注名称", style: TextStyle(fontSize: 15, color: Colors.black54),textAlign: TextAlign.left,),
-              TextField(
+              SizedBox(height: 10,),
+              Container(
+                color: Colors.white,
+                child: TextField(
 
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 16),
+                    hintText: '请输入备注名称',
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                ),
               ),
               Spacer(),
               SizedBox(

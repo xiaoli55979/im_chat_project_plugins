@@ -4,6 +4,8 @@
 
 
 
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'kit_common_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -11,6 +13,9 @@ import 'kit_common_localizations.dart';
 /// The translations for Chinese (`zh`).
 class KitCommonLocalizationsZh extends KitCommonLocalizations {
   KitCommonLocalizationsZh([String locale = 'zh']) : super(locale);
+
+  @override
+  String get appName => '';
 
   @override
   String get welcome => '欢迎使用';
@@ -34,5 +39,17 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
   String get friendInfo => '好友资料';
 
   @override
-  String get aa => '哎哎';
+  String get more => '更多';
+
+  @override
+  String get shareBusinessCard => '分享名片';
+
+  @override
+  String get report => '举报';
+
+  @override
+  String get messageWithoutInterruption => '消息免打扰';
+
+  @override
+  String get deleteFriend => '删除好友';
 }

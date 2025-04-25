@@ -14,4 +14,7 @@ class AppRoutesContacts {
 
   // 备注
   static const remark = '/remark';
+
+  // 更多
+  static const friendMore = '/friendMore';
 }

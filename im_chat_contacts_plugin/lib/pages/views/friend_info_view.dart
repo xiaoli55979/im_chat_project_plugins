@@ -20,7 +20,7 @@ class FriendInfoView extends GetView<FriendInfoController> {
         title: "好友资料",
         body: Column(
           children: [
-            PersonInfoWidget(),
+            PersonInfoWidget(onPressed: () { controller.toMore(); },),
             MenuItem(title: "账户",
               value: "xiaomi",
               hideRightArrow: true,
