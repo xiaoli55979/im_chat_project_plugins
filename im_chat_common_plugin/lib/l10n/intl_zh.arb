@@ -12,5 +12,21 @@
   "shareBusinessCard": "分享名片",
   "report": "举报",
   "messageWithoutInterruption": "消息免打扰",
-  "deleteFriend": "删除好友"
+  "deleteFriend": "删除好友",
+  "reportingObject": "举报对象",
+  "reason": "理由",
+  "certificate": "凭证",
+  "describe": "说明",
+  "gambling": "赌博",
+  "pornographicAndVulgar": "色情低俗",
+  "violentTerrifyingBloody": "暴恐血腥",
+  "postingPoliticalRumors": "发布政治谣言",
+  "postingInappropriateContent": "发布不适当内容",
+  "fraudulentBehaviorOfDefraudingMoney": "存在欺诈骗钱行为",
+  "accountMayHaveBeenHacked": "账号可能被盗用",
+  "infringementBehaviorExists": "存在侵权行为",
+  "publishCounterfeitProductInformation": "发布仿冒品信息",
+  "pretendingToBeSomeoneElse": "冒充他人",
+  "enter": "请输入",
+  "save": "保存"
 }

@@ -28,7 +28,11 @@ class FriendMoreView extends GetView<FriendMoreController> {
                   SlocalCommon.of(context).shareBusinessCard)),
           MenuItem(
               title: SlocalCommon.getLocalizaContent(
-                  SlocalCommon.of(context).report)),
+                  SlocalCommon.of(context).report),
+              onPressed: () {
+                controller.toReport();
+              },
+            ),
           MenuItem(
             title: SlocalCommon.getLocalizaContent(
                 SlocalCommon.of(context).messageWithoutInterruption),
@@ -43,6 +47,7 @@ class FriendMoreView extends GetView<FriendMoreController> {
               });
             }),
             hideRightArrow: true,
+            hideLine: true,
           ),
           Spacer(),
           Padding(padding: EdgeInsets.all(16),

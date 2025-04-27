@@ -52,4 +52,52 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get deleteFriend => '删除好友';
+
+  @override
+  String get reportingObject => '举报对象';
+
+  @override
+  String get reason => '理由';
+
+  @override
+  String get certificate => '凭证';
+
+  @override
+  String get describe => '说明';
+
+  @override
+  String get gambling => '赌博';
+
+  @override
+  String get pornographicAndVulgar => '色情低俗';
+
+  @override
+  String get violentTerrifyingBloody => '暴恐血腥';
+
+  @override
+  String get postingPoliticalRumors => '发布政治谣言';
+
+  @override
+  String get postingInappropriateContent => '发布不适当内容';
+
+  @override
+  String get fraudulentBehaviorOfDefraudingMoney => '存在欺诈骗钱行为';
+
+  @override
+  String get accountMayHaveBeenHacked => '账号可能被盗用';
+
+  @override
+  String get infringementBehaviorExists => '存在侵权行为';
+
+  @override
+  String get publishCounterfeitProductInformation => '发布仿冒品信息';
+
+  @override
+  String get pretendingToBeSomeoneElse => '冒充他人';
+
+  @override
+  String get enter => '请输入';
+
+  @override
+  String get save => '保存';
 }

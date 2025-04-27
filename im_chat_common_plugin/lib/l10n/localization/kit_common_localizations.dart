@@ -176,6 +176,102 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'删除好友'**
   String get deleteFriend;
+
+  /// No description provided for @reportingObject.
+  ///
+  /// In zh, this message translates to:
+  /// **'举报对象'**
+  String get reportingObject;
+
+  /// No description provided for @reason.
+  ///
+  /// In zh, this message translates to:
+  /// **'理由'**
+  String get reason;
+
+  /// No description provided for @certificate.
+  ///
+  /// In zh, this message translates to:
+  /// **'凭证'**
+  String get certificate;
+
+  /// No description provided for @describe.
+  ///
+  /// In zh, this message translates to:
+  /// **'说明'**
+  String get describe;
+
+  /// No description provided for @gambling.
+  ///
+  /// In zh, this message translates to:
+  /// **'赌博'**
+  String get gambling;
+
+  /// No description provided for @pornographicAndVulgar.
+  ///
+  /// In zh, this message translates to:
+  /// **'色情低俗'**
+  String get pornographicAndVulgar;
+
+  /// No description provided for @violentTerrifyingBloody.
+  ///
+  /// In zh, this message translates to:
+  /// **'暴恐血腥'**
+  String get violentTerrifyingBloody;
+
+  /// No description provided for @postingPoliticalRumors.
+  ///
+  /// In zh, this message translates to:
+  /// **'发布政治谣言'**
+  String get postingPoliticalRumors;
+
+  /// No description provided for @postingInappropriateContent.
+  ///
+  /// In zh, this message translates to:
+  /// **'发布不适当内容'**
+  String get postingInappropriateContent;
+
+  /// No description provided for @fraudulentBehaviorOfDefraudingMoney.
+  ///
+  /// In zh, this message translates to:
+  /// **'存在欺诈骗钱行为'**
+  String get fraudulentBehaviorOfDefraudingMoney;
+
+  /// No description provided for @accountMayHaveBeenHacked.
+  ///
+  /// In zh, this message translates to:
+  /// **'账号可能被盗用'**
+  String get accountMayHaveBeenHacked;
+
+  /// No description provided for @infringementBehaviorExists.
+  ///
+  /// In zh, this message translates to:
+  /// **'存在侵权行为'**
+  String get infringementBehaviorExists;
+
+  /// No description provided for @publishCounterfeitProductInformation.
+  ///
+  /// In zh, this message translates to:
+  /// **'发布仿冒品信息'**
+  String get publishCounterfeitProductInformation;
+
+  /// No description provided for @pretendingToBeSomeoneElse.
+  ///
+  /// In zh, this message translates to:
+  /// **'冒充他人'**
+  String get pretendingToBeSomeoneElse;
+
+  /// No description provided for @enter.
+  ///
+  /// In zh, this message translates to:
+  /// **'请输入'**
+  String get enter;
+
+  /// No description provided for @save.
+  ///
+  /// In zh, this message translates to:
+  /// **'保存'**
+  String get save;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

@@ -32,7 +32,7 @@ class RemarkView extends StatelessWidget {
               ),
               Spacer(),
               SizedBox(
-                height: MediaQuery.of(context).padding.bottom + 70,
+                height: MediaQuery.of(context).padding.bottom + 40,
                 child: MainButton(onPressed: () {}, text: "保存", backgroundColor: Colors.blue,),
               )
             ],

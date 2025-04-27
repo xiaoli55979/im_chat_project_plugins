@@ -12,5 +12,21 @@
   "shareBusinessCard": "share businessCard",
   "report": "report",
   "messageWithoutInterruption": "message without interruption",
-  "deleteFriend": "Delete Friend"
+  "deleteFriend": "Delete Friend",
+  "reportingObject": "Reporting Object",
+  "reason": "Reason",
+  "certificate": "Certificate",
+  "describe": "Describe",
+  "gambling": "gambling",
+  "pornographicAndVulgar": "Pornographic and vulgar",
+  "violentTerrifyingBloody": "Violent, terrifying, bloody",
+  "postingPoliticalRumors": "Posting political rumors",
+  "postingInappropriateContent": "Posting inappropriate content",
+  "fraudulentBehaviorOfDefraudingMoney": "There is fraudulent behavior of defrauding money",
+  "accountMayHaveBeenHacked": "Account may have been hacked",
+  "infringementBehaviorExists": "Infringement behavior exists",
+  "publishCounterfeitProductInformation": "Publish counterfeit product information",
+  "pretendingToBeSomeoneElse": "Pretending to be someone else",
+  "enter": "Enter",
+  "save": "Save"
 }

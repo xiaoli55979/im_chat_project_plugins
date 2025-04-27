@@ -52,4 +52,52 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get deleteFriend => 'Delete Friend';
+
+  @override
+  String get reportingObject => 'Reporting Object';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get certificate => 'Certificate';
+
+  @override
+  String get describe => 'Describe';
+
+  @override
+  String get gambling => 'gambling';
+
+  @override
+  String get pornographicAndVulgar => 'Pornographic and vulgar';
+
+  @override
+  String get violentTerrifyingBloody => 'Violent, terrifying, bloody';
+
+  @override
+  String get postingPoliticalRumors => 'Posting political rumors';
+
+  @override
+  String get postingInappropriateContent => 'Posting inappropriate content';
+
+  @override
+  String get fraudulentBehaviorOfDefraudingMoney => 'There is fraudulent behavior of defrauding money';
+
+  @override
+  String get accountMayHaveBeenHacked => 'Account may have been hacked';
+
+  @override
+  String get infringementBehaviorExists => 'Infringement behavior exists';
+
+  @override
+  String get publishCounterfeitProductInformation => 'Publish counterfeit product information';
+
+  @override
+  String get pretendingToBeSomeoneElse => 'Pretending to be someone else';
+
+  @override
+  String get enter => 'Enter';
+
+  @override
+  String get save => 'Save';
 }

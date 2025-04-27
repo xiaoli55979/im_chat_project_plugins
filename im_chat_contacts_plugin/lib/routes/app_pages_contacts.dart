@@ -3,10 +3,12 @@ import 'package:im_chat_contacts_plugin/pages/bingings/friend_info_bindings.dart
 import 'package:im_chat_contacts_plugin/pages/bingings/friend_more_bindings.dart';
 import 'package:im_chat_contacts_plugin/pages/bingings/my_managed_group_bindings.dart';
 import 'package:im_chat_contacts_plugin/pages/bingings/remark_bindings.dart';
+import 'package:im_chat_contacts_plugin/pages/bingings/report_bindings.dart';
 import 'package:im_chat_contacts_plugin/pages/views/friend_info_view.dart';
 import 'package:im_chat_contacts_plugin/pages/views/friend_more_view.dart';
 import 'package:im_chat_contacts_plugin/pages/views/my_managed_group_view.dart';
 import 'package:im_chat_contacts_plugin/pages/views/remark_view.dart';
+import 'package:im_chat_contacts_plugin/pages/views/report_view.dart';
 
 import '../pages/bingings/add_friends_bingings.dart';
 import '../pages/views/add_friends_view.dart';
@@ -41,9 +43,12 @@ class AppPagesContacts {
     bindings: [RemarkBindings()]
     ),
 
-
     GetPage(name: AppRoutesContacts.friendMore, page: () => const FriendMoreView(),
     bindings: [FriendMoreBindings()]
+    ),
+
+    GetPage(name: AppRoutesContacts.report, page: () => ReportView(),
+    bindings: [ReportBindings()]
     )
 
   ];
