@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // 如果使用 GetX 导航
 
@@ -14,7 +15,7 @@ class SearchBarView extends StatelessWidget {
     this.onTap,
     this.hintText = "搜索",
     this.searchViewColor = Colors.white,
-    this.backgroundColor = Colors.grey,
+    this.backgroundColor = CupertinoColors.systemGrey6,
     this.iconColor = Colors.grey,
     this.textColor = Colors.grey,
   }) : super(key: key);

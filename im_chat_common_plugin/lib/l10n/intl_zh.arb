@@ -28,5 +28,12 @@
   "publishCounterfeitProductInformation": "发布仿冒品信息",
   "pretendingToBeSomeoneElse": "冒充他人",
   "enter": "请输入",
-  "save": "保存"
+  "save": "保存",
+  "selectFriends": "选择好友",
+  "moreContacts": "更多联系人",
+  "myCollection": "我的收藏",
+  "systemNotification": "系统通知",
+  "sure": "确定",
+  "search": "搜索",
+  "recentlyChatting": "最近聊天"
 }

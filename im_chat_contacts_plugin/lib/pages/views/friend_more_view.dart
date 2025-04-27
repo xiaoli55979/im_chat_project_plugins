@@ -25,7 +25,11 @@ class FriendMoreView extends GetView<FriendMoreController> {
           ),
           MenuItem(
               title: SlocalCommon.getLocalizaContent(
-                  SlocalCommon.of(context).shareBusinessCard)),
+                  SlocalCommon.of(context).shareBusinessCard),
+                  onPressed: () {
+                controller.toShare();
+                  },
+          ),
           MenuItem(
               title: SlocalCommon.getLocalizaContent(
                   SlocalCommon.of(context).report),

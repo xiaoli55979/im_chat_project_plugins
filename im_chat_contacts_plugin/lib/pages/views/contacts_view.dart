@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
@@ -15,7 +16,6 @@ import 'package:im_chat_contacts_plugin/routes/app_routes_contacts.dart';
 import 'package:im_chat_contacts_plugin/widget/contact_cell.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:im_chat_resource_plugin/generated/assets.dart';
-
 class ContactsView extends GetView<ContactsController> {
   const ContactsView({super.key});
 
@@ -29,7 +29,7 @@ class ContactsView extends GetView<ContactsController> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // 搜索框
-            SearchBarView(onTap: () {
+            SearchBarView(backgroundColor: CupertinoColors.systemGrey6, searchViewColor: Colors.white,  onTap: () {
             },),
             Expanded(
               child: MultiStatusView(
@@ -49,6 +49,7 @@ class ContactsView extends GetView<ContactsController> {
                       action: (channel){
                         EasyLoading.showToast('点击聊天');
                         controller.toFriend();
+
                       },
                       menuAction: (channel, menu){
                         EasyLoading.showToast('点击${menu.title}');

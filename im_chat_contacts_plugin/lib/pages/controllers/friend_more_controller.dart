@@ -8,4 +8,8 @@ class FriendMoreController extends BaseController {
   toReport() {
     Get.toNamed(AppRoutesContacts.report);
   }
+
+  toShare() {
+    Get.toNamed(AppRoutesContacts.selectFriends);
+  }
 }

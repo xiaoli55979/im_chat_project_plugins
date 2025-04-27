@@ -20,35 +20,51 @@ class FriendInfoView extends GetView<FriendInfoController> {
         title: "好友资料",
         body: Column(
           children: [
-            PersonInfoWidget(onPressed: () { controller.toMore(); },),
-            MenuItem(title: "账户",
+            PersonInfoWidget(
+              onPressed: () {
+                controller.toMore();
+              },
+            ),
+            MenuItem(
+              title: "账户",
               value: "xiaomi",
               hideRightArrow: true,
-              tingObject: const Icon(Icons.paste_sharp),),
-            MenuItem(title: "电话", value: "xiaomi", hideRightArrow: true,),
-            MenuItem(title: "邮箱", value: "xiaomi", hideRightArrow: true,),
-            MenuItem(title: "备注", value: "xiaomi", hideLine: true, onPressed: () {
-              controller.toRemark();
-            },),
+              tingObject: const Icon(Icons.paste_sharp),
+            ),
+            MenuItem(
+              title: "电话",
+              value: "xiaomi",
+              hideRightArrow: true,
+            ),
+            MenuItem(
+              title: "邮箱",
+              value: "xiaomi",
+              hideRightArrow: true,
+            ),
+            MenuItem(
+              title: "备注",
+              value: "xiaomi",
+              hideLine: true,
+              onPressed: () {
+                controller.toRemark();
+              },
+            ),
             Spacer(),
             Container(
               color: Colors.white,
               padding: EdgeInsets.all(10),
-              child: MainButton(onPressed: () {
-
-              }, text: "聊天",
+              child: MainButton(
+                onPressed: () {
+                  controller.toChat();
+                },
+                text: "聊天",
                 backgroundColor: Colors.blue,
               ),
             ),
-            SizedBox(height: 10 + MediaQuery
-                .of(context)
-                .padding
-                .bottom,)
-
+            SizedBox(
+              height: 10 + MediaQuery.of(context).padding.bottom,
+            )
           ],
-        )
-
-    );
+        ));
   }
-
 }

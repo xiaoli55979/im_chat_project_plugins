@@ -272,6 +272,48 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'保存'**
   String get save;
+
+  /// No description provided for @selectFriends.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择好友'**
+  String get selectFriends;
+
+  /// No description provided for @moreContacts.
+  ///
+  /// In zh, this message translates to:
+  /// **'更多联系人'**
+  String get moreContacts;
+
+  /// No description provided for @myCollection.
+  ///
+  /// In zh, this message translates to:
+  /// **'我的收藏'**
+  String get myCollection;
+
+  /// No description provided for @systemNotification.
+  ///
+  /// In zh, this message translates to:
+  /// **'系统通知'**
+  String get systemNotification;
+
+  /// No description provided for @sure.
+  ///
+  /// In zh, this message translates to:
+  /// **'确定'**
+  String get sure;
+
+  /// No description provided for @search.
+  ///
+  /// In zh, this message translates to:
+  /// **'搜索'**
+  String get search;
+
+  /// No description provided for @recentlyChatting.
+  ///
+  /// In zh, this message translates to:
+  /// **'最近聊天'**
+  String get recentlyChatting;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

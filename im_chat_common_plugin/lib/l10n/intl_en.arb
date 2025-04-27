@@ -28,5 +28,12 @@
   "publishCounterfeitProductInformation": "Publish counterfeit product information",
   "pretendingToBeSomeoneElse": "Pretending to be someone else",
   "enter": "Enter",
-  "save": "Save"
+  "save": "Save",
+  "selectFriends": "Select friends",
+  "moreContacts": "More contacts",
+  "myCollection": "My collection",
+  "systemNotification": "System notification",
+  "sure": "sure",
+  "search": "search",
+  "recentlyChatting": "Recently chatting"
 }

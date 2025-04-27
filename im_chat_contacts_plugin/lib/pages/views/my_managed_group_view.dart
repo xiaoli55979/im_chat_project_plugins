@@ -21,7 +21,7 @@ class MyManagedGroupView extends GetView<MyManagedGroupController> {
             // 搜索框
             Container(
               color: CupertinoColors.systemGrey2,
-              child: SearchBarView(backgroundColor: Colors.grey, searchViewColor: Colors.white,)
+              child: SearchBarView()
               ,),
 
             _groupListView(context),

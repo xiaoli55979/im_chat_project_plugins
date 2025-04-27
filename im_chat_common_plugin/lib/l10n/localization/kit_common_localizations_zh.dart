@@ -100,4 +100,25 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get save => '保存';
+
+  @override
+  String get selectFriends => '选择好友';
+
+  @override
+  String get moreContacts => '更多联系人';
+
+  @override
+  String get myCollection => '我的收藏';
+
+  @override
+  String get systemNotification => '系统通知';
+
+  @override
+  String get sure => '确定';
+
+  @override
+  String get search => '搜索';
+
+  @override
+  String get recentlyChatting => '最近聊天';
 }

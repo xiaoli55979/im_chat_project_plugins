@@ -21,4 +21,10 @@ class AppRoutesContacts {
 
   // 举报
   static const report = '/report';
+
+  // 选择好友
+  static const selectFriends = '/selectFriends';
+
+  // 选择联系人
+  static const selectContacts = '/selectContacts';
 }

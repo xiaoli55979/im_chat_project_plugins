@@ -100,4 +100,25 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get selectFriends => 'Select friends';
+
+  @override
+  String get moreContacts => 'More contacts';
+
+  @override
+  String get myCollection => 'My collection';
+
+  @override
+  String get systemNotification => 'System notification';
+
+  @override
+  String get sure => 'sure';
+
+  @override
+  String get search => 'search';
+
+  @override
+  String get recentlyChatting => 'Recently chatting';
 }
