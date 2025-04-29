@@ -141,7 +141,6 @@ class ChatView extends GetView<ChatController> {
               emojiEnlargementBehavior: EmojiEnlargementBehavior.never,
               messages: controller.messages,
               showUserNames: true,
-
               showUserAvatars: true,
               avatarBuilder: (types.User author) {
                 return GestureDetector(
