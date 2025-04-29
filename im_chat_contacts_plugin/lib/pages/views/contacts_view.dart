@@ -101,6 +101,8 @@ class ContactsView extends GetView<ContactsController> {
               Get.toNamed(AppRoutesContacts.addFriends);
             } else if (newValue.index == 3) {
               ToolsUtils.onQrcodeScan();
+            } else {
+              controller.toSelectFriendCreateGroup();
             }
           },
         ),

@@ -9,8 +9,11 @@ import 'package:intl/intl.dart';
 
 import '../../handle/message_content_type.dart';
 import '../controllers/chat_controller.dart';
+import 'chat/custom_audio_message.dart';
 import 'chat/custom_card_message.dart';
+import 'chat/custom_image_message.dart';
 import 'chat/custom_input.dart';
+import 'chat/custom_sign_message.dart';
 import 'chat/custom_unsupport_message.dart';
 import 'chat/custom_video_message.dart';
 
@@ -125,7 +128,7 @@ class ChatView extends GetView<ChatController> {
               timeFormat: DateFormat('HH:mm:ss'),
               dateFormat: DateFormat('yyyy-MM-dd'),
               emptyState: Text(
-                "未知消息",
+                "暂无消息",
                 style: TextStyle(color: Colors.black),
               ),
               // showUserAvatars: widget.systemMessage ? false : true,
@@ -138,6 +141,7 @@ class ChatView extends GetView<ChatController> {
               emojiEnlargementBehavior: EmojiEnlargementBehavior.never,
               messages: controller.messages,
               showUserNames: true,
+
               showUserAvatars: true,
               avatarBuilder: (types.User author) {
                 return GestureDetector(
@@ -146,29 +150,34 @@ class ChatView extends GetView<ChatController> {
                   },
                   child: Container(
                     padding: EdgeInsets.only(right: 10),
-                    child: author.imageUrl == null
-                        ? ImageTools.asset("default_avatar.png", isCommon: true, width: 35, height: 35)
-                        : SizedBox(
-                            width: 30,
-                            height: 30,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(5), // 调整圆角
-                              child: CachedNetworkImage(
-                                imageUrl: "${author.imageUrl!}",
-                                fit: BoxFit.fill, // 让图片填充整个框
-                                placeholder: (context, url) => Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  color: Colors.grey[300], // 占位颜色
-                                ),
-                                errorWidget: (context, url, error) => Container(
-                                  color: Colors.grey[300],
-                                  alignment: Alignment.center,
-                                  child: Icon(Icons.error, size: 20, color: Colors.red),
-                                ),
-                              ),
-                            ),
-                          ),
+                    child:
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: ImageTools.asset("default_avatar.png", isCommon: true, width: 40, height: 40, fit: BoxFit.cover),
+                    )
+                    // author.imageUrl == null
+                    //     ? ImageTools.asset("default_avatar.png", isCommon: true, width: 35, height: 35, fit: BoxFit.cover)
+                    //     : SizedBox(
+                    //         width: 30,
+                    //         height: 30,
+                    //         child: ClipRRect(
+                    //           borderRadius: BorderRadius.circular(15), // 调整圆角
+                    //           child: CachedNetworkImage(
+                    //             imageUrl: author.imageUrl!,
+                    //             fit: BoxFit.fill, // 让图片填充整个框
+                    //             placeholder: (context, url) => Container(
+                    //               width: double.infinity,
+                    //               height: double.infinity,
+                    //               color: Colors.grey[300], // 占位颜色
+                    //             ),
+                    //             errorWidget: (context, url, error) => Container(
+                    //               color: Colors.grey[300],
+                    //               alignment: Alignment.center,
+                    //               child: Icon(Icons.error, size: 20, color: Colors.red),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
                   ),
                 );
               },
@@ -182,32 +191,31 @@ class ChatView extends GetView<ChatController> {
               //   );
               // },
               videoMessageBuilder: (types.VideoMessage message, {required int messageWidth}) {
+                print("<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>");
                 return CustomVideoMessage(message: message);
               },
-              // imageMessageBuilder: (types.ImageMessage message, {required int messageWidth}) {
-              //   return CustomImageMessage(message: message, messageWidth: 250);
-              // },
+              imageMessageBuilder: (types.ImageMessage message, {required int messageWidth}) {
+                return CustomImageMessage(message: message, messageWidth: 250);
+              },
               customMessageBuilder: (types.CustomMessage customMessage, {required int messageWidth}) {
                 final metadata = customMessage.metadata;
-                if (metadata == null || metadata["type"] == null) {
-                  return const CustomUnsupportMessage();
-                }
-
-                int type = metadata["type"];
+                int type = metadata?["type"];
                 if (type == MessageContentType.CARD) {
                   return CustomCardMessage(message: customMessage);
+                } else if (type == MessageContentType.SIGN) {
+                  return CustomSignMessage(message: customMessage);
                 } else {
-                  return const CustomUnsupportMessage();
+                  return CustomUnsupportMessage();
                 }
               },
-              // audioMessageBuilder: (types.AudioMessage message, {required int messageWidth}) {
-              //   return CustomAudioMessage(message: message);
-              // },
+              audioMessageBuilder: (types.AudioMessage message, {required int messageWidth}) {
+                return CustomAudioMessage(message: message);
+              },
 
               /// 消息滚动
-              onMessageVisibilityChanged: (types.Message message, bool visible) {
+              // onMessageVisibilityChanged: (types.Message message, bool visible) {
                 // messagehandleModel.markMessageAsRead(messageQueue, message);
-              },
+              // },
               // onMessageLongPress: (BuildContext context, message, LongPressStartDetails details) {
               //   longClick(context, message, details);
               // },

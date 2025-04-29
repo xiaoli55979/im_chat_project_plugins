@@ -314,6 +314,24 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'最近聊天'**
   String get recentlyChatting;
+
+  /// No description provided for @arrived.
+  ///
+  /// In zh, this message translates to:
+  /// **'已达'**
+  String get arrived;
+
+  /// No description provided for @read.
+  ///
+  /// In zh, this message translates to:
+  /// **'已读'**
+  String get read;
+
+  /// No description provided for @friendsBusinessCard.
+  ///
+  /// In zh, this message translates to:
+  /// **'好友名片'**
+  String get friendsBusinessCard;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

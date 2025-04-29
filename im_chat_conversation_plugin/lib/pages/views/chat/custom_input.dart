@@ -265,33 +265,7 @@ class _CustomInputState extends State<CustomInput> {
                 Row(
                   textDirection: TextDirection.ltr,
                   children: [
-                    AttachmentButton(
-                      isLoading: widget.isAttachmentUploading ?? false,
-                      onPressed: () {
-                        _showTools = !_showTools;
-                        _emojiShowing = false;
-                        _inputFocusNode.unfocus();
-                        if (mounted) {
-                          setState(() {});
-                        }
-                      },
-                      padding: buttonPadding,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        if (mounted) {
-                          setState(() {
-                            _emojiShowing = !_emojiShowing;
-                            _showTools = false;
-                            _inputFocusNode.unfocus();
-                          });
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.emoji_emotions_outlined,
-                        // color: Colors.white,
-                      ),
-                    ),
+
                     Expanded(
                       child: Padding(
                         padding: textPadding,
@@ -336,6 +310,39 @@ class _CustomInputState extends State<CustomInput> {
                         ),
                       ),
                     ),
+
+                    IconButton(
+                      onPressed: () {
+                        if (mounted) {
+                          setState(() {
+                            _emojiShowing = !_emojiShowing;
+                            _showTools = false;
+                            _inputFocusNode.unfocus();
+                          });
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.emoji_emotions_outlined,
+                        // color: Colors.white,
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: !_sendButtonVisible,
+                      child: AttachmentButton(
+                        isLoading: widget.isAttachmentUploading ?? false,
+                        onPressed: () {
+                          _showTools = !_showTools;
+                          _emojiShowing = false;
+                          _inputFocusNode.unfocus();
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        },
+                        padding: buttonPadding,
+                      ),
+                    ),
+
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: buttonPadding.bottom + buttonPadding.top + 24,
@@ -357,9 +364,11 @@ class _CustomInputState extends State<CustomInput> {
                       toolList: [
                         // ToolType.order,
                         ToolType.image,
+                        ToolType.carmera,
                         ToolType.video,
                         ToolType.file,
-                        // ToolType.card,
+                        ToolType.card,
+                        ToolType.sign
                         // ToolType.system,
                         // ToolType.richText,
                         // ToolType.model,

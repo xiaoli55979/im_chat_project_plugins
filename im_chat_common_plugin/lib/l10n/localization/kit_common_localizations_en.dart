@@ -121,4 +121,13 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get recentlyChatting => 'Recently chatting';
+
+  @override
+  String get arrived => 'arrived';
+
+  @override
+  String get read => 'read';
+
+  @override
+  String get friendsBusinessCard => 'Friend\'s business card';
 }

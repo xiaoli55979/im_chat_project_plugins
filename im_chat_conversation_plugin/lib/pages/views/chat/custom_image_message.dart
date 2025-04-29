@@ -8,10 +8,10 @@ class CustomImageMessage extends StatelessWidget {
   final types.ImageMessage message;
   final int messageWidth;
   const CustomImageMessage({
-    Key? key,
+    super.key,
     required this.message,
     this.messageWidth = 250,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

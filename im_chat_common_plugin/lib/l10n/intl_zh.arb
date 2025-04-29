@@ -35,5 +35,8 @@
   "systemNotification": "系统通知",
   "sure": "确定",
   "search": "搜索",
-  "recentlyChatting": "最近聊天"
+  "recentlyChatting": "最近聊天",
+  "arrived": "已达",
+  "read": "已读",
+  "friendsBusinessCard": "好友名片"
 }

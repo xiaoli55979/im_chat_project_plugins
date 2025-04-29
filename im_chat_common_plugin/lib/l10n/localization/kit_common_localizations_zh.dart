@@ -121,4 +121,13 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get recentlyChatting => '最近聊天';
+
+  @override
+  String get arrived => '已达';
+
+  @override
+  String get read => '已读';
+
+  @override
+  String get friendsBusinessCard => '好友名片';
 }

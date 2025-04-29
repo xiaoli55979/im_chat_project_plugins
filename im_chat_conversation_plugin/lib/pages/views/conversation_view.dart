@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/util/asset_util.dart';
+import 'package:im_chat_resource_plugin/generated/assets.dart';
 
+import '../../models/chat_message_model_entity.dart';
+import '../../models/conversation_msg.dart';
 import '../controllers/conversation_controller.dart';
 
 class ConversationView extends GetView<ConversationController> {
@@ -38,7 +42,7 @@ class ConversationView extends GetView<ConversationController> {
                 separatorBuilder: (context, index) => const Divider(height: 1),
                 itemBuilder: (context, index) {
                   // final message = controller.messages[index];
-                  final msgModel = controller.msgList[index];
+                  final msgModel = controller.msgList[0];
                   return Container(
                     color: Colors.white,
                     child: ListTile(
@@ -92,28 +96,41 @@ class ConversationView extends GetView<ConversationController> {
                           // ),
                         ],
                       ),
-                      title: Text(
-                        controller.getChannelName(msgModel),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                      title: Row(
+                        children: [
+                          Text(
+                            "标题",
+                            // controller.getChannelName(msgModel),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Visibility(
+                              visible: true,
+                              child: SizedBox(width: 6,)),
+                          Visibility(
+                              visible: true,
+                              child: AssetUtil.asset(Assets.conversationSystemMsg, width: 20))
+                        ],
                       ),
                       subtitle: Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: Row(
                           children: [
                             Text(
-                              controller.getReminderText(msgModel),
-                              style: const TextStyle(color: Color.fromARGB(255, 247, 2, 2), fontSize: 14),
+                              "上次推荐的房子满意吗",
+                              // controller.getReminderText(msgModel),
+                              style: const TextStyle(color: Colors.grey, fontSize: 14),
                               maxLines: 1,
                             ),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                controller.getShowContent(msgModel),
+                                "yes",
+                                // controller.getShowContent(msgModel),
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 14,
@@ -126,7 +143,8 @@ class ConversationView extends GetView<ConversationController> {
                         ),
                       ),
                       trailing: Text(
-                        ToolsUtils.formatDateTime(msgModel.msg.lastMsgTimestamp),
+                        "20:20",
+                        // ToolsUtils.formatDateTime(msgModel.msg.lastMsgTimestamp),
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 14,

@@ -11,11 +11,11 @@ class CustomVideoMessage extends StatefulWidget {
   final double maxThumbnailHeight; // 视频缩略图最大高度
   final double maxThumbnailWidth; // 视频缩略图最大宽度
   const CustomVideoMessage({
-    Key? key,
+    super.key,
     required this.message,
     this.maxThumbnailHeight = 250,
     this.maxThumbnailWidth = 250,
-  }) : super(key: key);
+  });
 
   @override
   _CustomVideoMessageState createState() => _CustomVideoMessageState();

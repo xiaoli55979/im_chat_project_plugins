@@ -8,14 +8,14 @@ import 'package:im_chat_common_plugin/util/asset_util.dart';
 import 'package:wukongimfluttersdk/entity/msg.dart';
 import 'package:im_chat_resource_plugin/generated/assets.dart';
 
-class CustomCardMessage extends StatelessWidget {
+class CustomSignMessage extends StatelessWidget {
   final types.CustomMessage message;
   final int messageWidth;
 
-  const CustomCardMessage({
+  const CustomSignMessage({
     super.key,
     required this.message,
-    this.messageWidth = 250,
+    this.messageWidth = 296,
   });
 
   Future<String> fetchUserName(WKMsg? msg) async {
@@ -55,13 +55,14 @@ class CustomCardMessage extends StatelessWidget {
     // builder: (context, snapshot) {
     //   final displayName = snapshot.data ?? username;
 
-    return Container(
+    return
+      Container(
       color: CupertinoColors.systemGrey5,
-      width: maxDimension,
+      width: 220,
       child: Row(
         children: [
           Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
-          style: TextStyle(color: Colors.red, fontSize: 12),
+            style: TextStyle(color: Colors.red, fontSize: 12),
           ),
           SizedBox(width: 6,),
           Expanded(
@@ -97,8 +98,8 @@ class CustomCardMessage extends StatelessWidget {
                           Text("招商总局(官方)",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black54,
+                              fontSize: 15,
+                              color: Colors.black54,
                             ),),
                           Text("zhaoshang", overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: Colors.black54))
                         ],

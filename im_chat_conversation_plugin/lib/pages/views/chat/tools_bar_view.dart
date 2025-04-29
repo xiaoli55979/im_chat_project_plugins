@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 
 // 定义工具类型的枚举 , card, system, richText, model, source
-enum ToolType { image, video, file }
+enum ToolType { image, carmera, video, file, card, sign }
 
 extension ToolTypeExtension on ToolType {
   int get value {
     switch (this) {
       case ToolType.image:
         return 0;
-      case ToolType.video:
+      case ToolType.carmera:
         return 1;
-      case ToolType.file:
+      case ToolType.video:
         return 2;
-      // case ToolType.card:
-      //   return 4;
+      case ToolType.file:
+        return 3;
+      case ToolType.card:
+        return 4;
+      case ToolType.sign:
+        return 5;
       // case ToolType.system:
       //   return 5;
       // case ToolType.richText:
@@ -111,6 +115,10 @@ class ToolItem extends StatelessWidget {
         icon = Icons.image;
         title = '图片';
         break;
+      case ToolType.carmera:
+        icon = Icons.camera;
+        title = '相机';
+        break;
       case ToolType.video:
         icon = Icons.video_library;
         title = '视频';
@@ -119,10 +127,14 @@ class ToolItem extends StatelessWidget {
         icon = Icons.insert_drive_file;
         title = '文件';
         break;
-      // case ToolType.card:
-      //   icon = Icons.contact_page;
-      //   title = '名片';
-      //   break;
+      case ToolType.card:
+        icon = Icons.contact_page;
+        title = '名片';
+        break;
+      case ToolType.sign:
+        icon = Icons.signpost;
+        title = '签到';
+        break;
       // case ToolType.system:
       //   icon = Icons.settings_system_daydream;
       //   title = '历史消息';

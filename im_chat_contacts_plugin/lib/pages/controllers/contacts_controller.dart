@@ -247,4 +247,8 @@ class ContactsController extends BaseController {
   toFriend() {
     Get.toNamed(AppRoutesContacts.friendInfo);
   }
+
+  toSelectFriendCreateGroup() {
+    Get.toNamed(AppRoutesContacts.selectContacts);
+  }
 }

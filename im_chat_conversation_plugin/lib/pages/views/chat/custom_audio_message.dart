@@ -12,9 +12,9 @@ class CustomAudioMessage extends StatefulWidget {
   final types.AudioMessage message;
 
   const CustomAudioMessage({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
   _CustomAudioMessageState createState() => _CustomAudioMessageState();

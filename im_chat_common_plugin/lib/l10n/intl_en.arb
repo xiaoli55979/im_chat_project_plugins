@@ -35,5 +35,8 @@
   "systemNotification": "System notification",
   "sure": "sure",
   "search": "search",
-  "recentlyChatting": "Recently chatting"
+  "recentlyChatting": "Recently chatting",
+  "arrived": "arrived",
+  "read": "read",
+  "friendsBusinessCard": "Friend's business card"
 }
