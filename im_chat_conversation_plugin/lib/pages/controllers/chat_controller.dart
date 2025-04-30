@@ -51,10 +51,16 @@ class ChatController extends GetxController {
   /// 焦点变化了
   bool focusChange = false;
 
+  /// 是否是多选
+  bool isMultiple = false;
+  /// isSelectedMultiple 是否选中多选
+  bool isSelectedMultiple = true;
   /// 消息
   UIConversation? messageModel;
 
   List<UIMsg> msgList = [];
+
+  List<types.Message> didSelectedMsgs = [];
 
   String channelID = "";
   int channelType = 0;
@@ -244,11 +250,14 @@ class ChatController extends GetxController {
   /// 点击背景
   void backgroundTap() {
     focusChange = !focusChange;
+    isSelectedMultiple != isSelectedMultiple;
+    isMultiple != isMultiple;
     update();
   }
 
   /// 点击消息
   void handleMessageTap(BuildContext _, types.Message message) async {
+    backgroundTap();
     print("object_handleMessageTap");
     try {
       int type = int.tryParse('${message.metadata?["type"]}') ?? -1;
@@ -297,6 +306,15 @@ class ChatController extends GetxController {
 
     if (route != null) {
       Get.toNamed(route, arguments: {"channelID": channelID, "channelType": channelType});
+    }
+  }
+
+  /// 已选择消息
+  void didSelectedMsg(types.Message msg) {
+    if (didSelectedMsgs.contains(msg)) {
+      didSelectedMsgs.remove(msg);
+    } else {
+      didSelectedMsgs.add(msg);
     }
   }
 }

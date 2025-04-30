@@ -5,6 +5,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_conversation_plugin/pages/views/chat/multiple_bar_view.dart';
 import 'package:intl/intl.dart';
 
 import '../../handle/message_content_type.dart';
@@ -18,13 +19,13 @@ import 'chat/custom_unsupport_message.dart';
 import 'chat/custom_video_message.dart';
 
 class ChatView extends GetView<ChatController> {
-  const ChatView({super.key});
+  OverlayEntry? overlayEntry;
+  ChatView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final sensitiveWords = ["你妈的", "揍你", "微信"];
     final sensitivePattern = sensitiveWords.map(RegExp.escape).join('|');
-
     return GetBuilder<ChatController>(builder: (controller) {
       return PopScope(
           canPop: false,
@@ -32,6 +33,7 @@ class ChatView extends GetView<ChatController> {
             if (!back) {
               Get.back();
             }
+            removeOverlayEntry();
           },
           child: Scaffold(
             appBar: AppBar(
@@ -62,6 +64,7 @@ class ChatView extends GetView<ChatController> {
                 IconButton(
                     onPressed: () {
                       controller.gotoGroupSetting();
+                      removeOverlayEntry();
                     },
                     icon: Icon(Icons.more_vert)),
               ],
@@ -90,7 +93,9 @@ class ChatView extends GetView<ChatController> {
                     },
                   ),
                 ],
-                onLinkPressed: (String url) {},
+                onLinkPressed: (String url) {
+                  removeOverlayEntry();
+                },
               ),
               theme: DefaultChatTheme(
                 bubbleMargin: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 1),
@@ -142,10 +147,26 @@ class ChatView extends GetView<ChatController> {
               messages: controller.messages,
               showUserNames: true,
               showUserAvatars: true,
-              avatarBuilder: (types.User author) {
+              isMultipleSelect: controller.isMultiple,
+              isSelected: controller.isSelectedMultiple,
+              selectedMsg: controller.didSelectedMsg,
+              didSelectedMsgs: controller.didSelectedMsgs,
+              didSelectedMsgsFun: (List<types.Message> msgs) {
+                controller.didSelectedMsgs = msgs;
+                print("数量是：${msgs.length}");
+                controller.update();
+                removeOverlayEntry();
+              },
+              avatarBuilder: (types.User author, bool isMultipleSelect, types.Message msg) {
                 return GestureDetector(
                   onTap: () {
-                    controller.showUserInfo(author.id);
+                    if (isMultipleSelect) {
+                      controller.didSelectedMsg(msg);
+                      controller.update();
+                    } else {
+                      controller.showUserInfo(author.id);
+                    }
+                    removeOverlayEntry();
                   },
                   child: Container(
                     padding: EdgeInsets.only(right: 10),
@@ -182,6 +203,7 @@ class ChatView extends GetView<ChatController> {
               },
               topTapCallBack: () {
                 print("object_topTapCallBack");
+                removeOverlayEntry();
               },
               // avatarBuilder: (types.User author) {
               //   return Container(
@@ -215,11 +237,21 @@ class ChatView extends GetView<ChatController> {
               // onMessageVisibilityChanged: (types.Message message, bool visible) {
                 // messagehandleModel.markMessageAsRead(messageQueue, message);
               // },
-              // onMessageLongPress: (BuildContext context, message, LongPressStartDetails details) {
-              //   longClick(context, message, details);
-              // },
+              onMessageLongPress: (BuildContext context, message, LongPressStartDetails details) {
+                // longClick(context, message, details);
+                final renderBox = context.findRenderObject() as RenderBox;
 
-              customBottomWidget: CustomInput(
+                // 获取被点击视图左上角的全局位置
+                // 获取视图右上角的全局坐标
+                final viewRightTopOffset = renderBox.localToGlobal(Offset(renderBox.size.width, 0));
+                showBubbleMenu(context,
+                  viewRightTopOffset,
+                  false
+                );
+                // removeOverlayEntry();
+              },
+
+              customBottomWidget: controller.isMultiple ? MultipleBarView() : CustomInput(
                 requestFocus: controller.requestFocus,
                 focusChange: controller.focusChange,
                 onSendPressed: controller.handleSendPressed,
@@ -232,14 +264,17 @@ class ChatView extends GetView<ChatController> {
               onSendPressed: controller.handleSendPressed,
               onEndReached: () async {
                 print("object_onEndReached");
+                removeOverlayEntry();
               },
               onAvatarTap: (types.User user) {
                 print("object_onAvatarTap");
                 Get.toNamed(AppRoutesCommon.userInfo);
+                removeOverlayEntry();
               },
               onBackgroundTap: () {
                 print("object_onBackgroundTap");
                 controller.backgroundTap();
+                removeOverlayEntry();
                 // if (mounted) {
                 //   setState(() {});
                 // }
@@ -248,5 +283,60 @@ class ChatView extends GetView<ChatController> {
             ),
           ));
     });
+  }
+
+  void showBubbleMenu(BuildContext context, Offset offset, bool isLeft) {
+    removeOverlayEntry();
+    print('View Offset: $offset');
+    print('Context: ${context.widget}');
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // 动态计算位置
+    double? leftPosition = isLeft ? offset.dx - 20 : null;
+    double? rightPosition = isLeft ? null : 60;
+    double topPosition = offset.dy - 140;
+
+    // 确保不会超出屏幕
+    if (leftPosition != null && leftPosition < 0) leftPosition = 0;
+    if (rightPosition != null && rightPosition < 0) rightPosition = 0;
+    if (topPosition < 0) topPosition = 0;
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: topPosition,
+        left: leftPosition,
+        right: rightPosition,
+        child: BubbleView(
+          viewOffset: offset,
+          isLeft: isLeft,
+          onDismiss: () {
+            removeOverlayEntry();
+          },
+          menuItems: const [
+            MultipleItemEnum('assets/icons/reply.png', '回复'),
+            MultipleItemEnum('assets/icons/copy.png', '复制'),
+            MultipleItemEnum('assets/icons/forward.png', '转发'),
+            MultipleItemEnum('assets/icons/select_all.png', '多选'),
+            MultipleItemEnum('assets/icons/delete.png', '删除'),
+            MultipleItemEnum('assets/icons/archive.png', '收藏'),
+            MultipleItemEnum('assets/icons/push_pin.png', '置顶'),
+            MultipleItemEnum('assets/icons/more.png', '更多'),
+          ],
+          didSelectItem: (MultipleItemEnum item) {
+            print("你点击了${item.label}");
+            controller.isMultiple = !controller.isMultiple;
+            controller.update();
+          },
+        ),
+      ),
+    );
+
+    Overlay.of(Get.context!).insert(overlayEntry!);
+  }
+
+  void removeOverlayEntry() {
+    if (overlayEntry != null) {
+    overlayEntry?.remove();
+    overlayEntry = null;
+    }
   }
 }
