@@ -55,6 +55,10 @@ class ChatController extends GetxController {
   bool isMultiple = false;
   /// isSelectedMultiple 是否选中多选
   bool isSelectedMultiple = true;
+
+  /// 是否回复
+  bool isReply = false;
+
   /// 消息
   UIConversation? messageModel;
 
@@ -227,6 +231,14 @@ class ChatController extends GetxController {
   /// 获取当前用户信息
   types.User getUser() {
     return types.User(id: "1234");
+  }
+
+
+  bool isOwner(types.Message msg) {
+    final currentId = getUser().id;
+    if (currentId == msg.id) { return true; } else {
+      return false;
+    }
   }
 
   /// 添加一条消息

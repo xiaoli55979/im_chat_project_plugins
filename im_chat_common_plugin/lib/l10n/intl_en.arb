@@ -38,5 +38,12 @@
   "recentlyChatting": "Recently chatting",
   "arrived": "arrived",
   "read": "read",
-  "friendsBusinessCard": "Friend's business card"
+  "friendsBusinessCard": "Friend's business card",
+  "reply": "Reply",
+  "copy": "Copy",
+  "forward": "Forward",
+  "multipleChoice": "MultipleChoice",
+  "delete": "Delete",
+  "collect": "Collect",
+  "top": "Top Up"
 }

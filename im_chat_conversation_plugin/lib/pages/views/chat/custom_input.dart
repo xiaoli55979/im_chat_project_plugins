@@ -8,6 +8,8 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/tools_bar_view.dart';
 
+import '../../../handle/message_content_type.dart';
+
 /// A class that represents bottom bar widget with a text field, attachment and
 /// send buttons inside. By default hides send button when text field is empty.
 class CustomInput extends StatefulWidget {
@@ -22,8 +24,9 @@ class CustomInput extends StatefulWidget {
     this.repliedMessage,
     this.requestFocus,
     this.focusChange = false,
+    this.isReplied = false,
   });
-
+  final bool isReplied;
   /// Whether attachment is uploading. Will replace attachment button with a
   /// [CircularProgressIndicator]. Since we don't have libraries for
   /// managing media in dependencies we have no way of knowing if
@@ -144,36 +147,64 @@ class _CustomInputState extends State<CustomInput> {
           style: TextStyle(color: Colors.black),
           maxLines: 3,
         ),
+        trailing: IconButton(onPressed: () {
+
+        }, icon: Icon(Icons.close)),
+      );
+    }
+    else if (widget.repliedMessage is types.ImageMessage) {
+      final message = widget.repliedMessage as types.ImageMessage;
+      return ListTile(
+        title: Text('Replied with an image'),
+        subtitle: Text(
+          'Image URL: ${message.uri}',
+          style: TextStyle(color: Colors.white70),
+        ),
+      );
+    } else if (widget.repliedMessage is types.VideoMessage) {
+      final message = widget.repliedMessage as types.VideoMessage;
+      return ListTile(
+        title: Text('Replied with an Video'),
+        subtitle: Text(
+          'Video URL: ${message.uri}',
+          style: TextStyle(color: Colors.white70),
+        ),
+      );
+    } else if (widget.repliedMessage is types.FileMessage) {
+      final message = widget.repliedMessage as types.FileMessage;
+      return ListTile(
+        title: Text('Replied with a file'),
+        subtitle: Text(
+          'File name: ${message.name}',
+          style: TextStyle(color: Colors.white70),
+        ),
+      );
+    } else if (widget.repliedMessage is types.CustomMessage) {
+      final message = widget.repliedMessage as types.CustomMessage;
+      int type = int.tryParse('${message.metadata?["type"]}') ?? -1;
+      String typeText;
+      if (type == MessageContentType.CARD) {
+        typeText = "Card";
+      } else if (type == MessageContentType.SIGN) {
+        typeText = "Sign";
+      } else {
+        typeText = "Unknown";
+      }
+      return ListTile(
+        title: Text('Replied with a Custom Message'),
+        subtitle: Text(
+          typeText,
+          style: TextStyle(color: Colors.white70),
+        ),
       );
     } else {
-      return Container();
+      return ListTile(
+        title: Text(
+          'Replied message is of unsupported type',
+          style: TextStyle(color: Colors.white70),
+        ),
+      );
     }
-    // else if (widget.repliedMessage is types.ImageMessage) {
-    //   final message = widget.repliedMessage as types.ImageMessage;
-    //   return ListTile(
-    //     title: Text('Replied with an image'),
-    //     subtitle: Text(
-    //       'Image URL: ${message.uri}',
-    //       style: TextStyle(color: Colors.white70),
-    //     ),
-    //   );
-    // } else if (widget.repliedMessage is types.FileMessage) {
-    //   final message = widget.repliedMessage as types.FileMessage;
-    //   return ListTile(
-    //     title: Text('Replied with a file'),
-    //     subtitle: Text(
-    //       'File name: ${message.name}',
-    //       style: TextStyle(color: Colors.white70),
-    //     ),
-    //   );
-    // } else {
-    //   return ListTile(
-    //     title: Text(
-    //       'Replied message is of unsupported type',
-    //       style: TextStyle(color: Colors.white70),
-    //     ),
-    //   );
-    // }
   }
 
   /// 留言客服用户信息输入框

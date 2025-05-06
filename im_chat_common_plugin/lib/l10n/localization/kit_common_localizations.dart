@@ -332,6 +332,48 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'好友名片'**
   String get friendsBusinessCard;
+
+  /// No description provided for @reply.
+  ///
+  /// In zh, this message translates to:
+  /// **'回复'**
+  String get reply;
+
+  /// No description provided for @copy.
+  ///
+  /// In zh, this message translates to:
+  /// **'复制'**
+  String get copy;
+
+  /// No description provided for @forward.
+  ///
+  /// In zh, this message translates to:
+  /// **'转发'**
+  String get forward;
+
+  /// No description provided for @multipleChoice.
+  ///
+  /// In zh, this message translates to:
+  /// **'多选'**
+  String get multipleChoice;
+
+  /// No description provided for @delete.
+  ///
+  /// In zh, this message translates to:
+  /// **'删除'**
+  String get delete;
+
+  /// No description provided for @collect.
+  ///
+  /// In zh, this message translates to:
+  /// **'收藏'**
+  String get collect;
+
+  /// No description provided for @top.
+  ///
+  /// In zh, this message translates to:
+  /// **'置顶'**
+  String get top;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

@@ -125,7 +125,7 @@ class ChatSendMessageTools {
     }
   }
 
-  /// 发送图片消息
+  /// 发送相机拍摄图片消息
   void handleCameraSelection({
     required types.User user,
     Function(types.ImageMessage message)? onMessageCreated,
@@ -184,29 +184,25 @@ class ChatSendMessageTools {
     /// 防止挂起锁屏
     jtpInit.isLockScreen = true;
     final result = await ImagePicker().pickVideo(
-      source: ImageSource.gallery,
-    );
-    if (result != null) {
-      final videoBytes = await result.readAsBytes();
-      final videoController = VideoPlayerController.file(File(result.path));
-      // 异步加载视频
-      await videoController.initialize();
+        maxDuration: const Duration(seconds: 60), // 设置最大录制时长,
+        source: ImageSource.camera);
 
+    if (result != null) {
+      final file = File(result.path);
+      final videoFileSize = await file.length();
+
+      // 构造 VideoMessage
       final message = types.VideoMessage(
         author: user,
-        createdAt: DateTime
-            .now()
-            .millisecondsSinceEpoch,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
         id: const Uuid().v4(),
         name: result.name,
-        size: videoBytes.length,
+        size: videoFileSize,
         uri: result.path,
-        width: videoController.value.size.width,
-        height: videoController.value.size.height,
-        status: Status.sending,
-        // duration: videoController.value.duration.inMilliseconds,
+        status: types.Status.sending,
       );
 
+      // 触发回调
       /// 触发回调
       if (onMessageCreated != null) {
         onMessageCreated(message);

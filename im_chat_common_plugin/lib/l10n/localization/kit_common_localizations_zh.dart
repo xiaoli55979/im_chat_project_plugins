@@ -130,4 +130,25 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get friendsBusinessCard => '好友名片';
+
+  @override
+  String get reply => '回复';
+
+  @override
+  String get copy => '复制';
+
+  @override
+  String get forward => '转发';
+
+  @override
+  String get multipleChoice => '多选';
+
+  @override
+  String get delete => '删除';
+
+  @override
+  String get collect => '收藏';
+
+  @override
+  String get top => '置顶';
 }

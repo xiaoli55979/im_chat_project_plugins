@@ -130,4 +130,25 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get friendsBusinessCard => 'Friend\'s business card';
+
+  @override
+  String get reply => 'Reply';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get forward => 'Forward';
+
+  @override
+  String get multipleChoice => 'MultipleChoice';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get collect => 'Collect';
+
+  @override
+  String get top => 'Top Up';
 }

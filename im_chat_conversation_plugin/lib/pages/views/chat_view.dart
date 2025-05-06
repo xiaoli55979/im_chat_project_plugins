@@ -17,6 +17,7 @@ import 'chat/custom_input.dart';
 import 'chat/custom_sign_message.dart';
 import 'chat/custom_unsupport_message.dart';
 import 'chat/custom_video_message.dart';
+import 'package:im_chat_common_plugin/l10n/SlocalUtils.dart';
 
 class ChatView extends GetView<ChatController> {
   OverlayEntry? overlayEntry;
@@ -37,6 +38,19 @@ class ChatView extends GetView<ChatController> {
           },
           child: Scaffold(
             appBar: AppBar(
+              // leading: Text("123", style: TextStyle(color: Colors.black54),),
+              leadingWidth: controller.isMultiple ? 100 : 50,
+              leading: controller.isMultiple ?
+              Column(
+                children: [
+                  SizedBox(height: 20,),
+                  Row(children: [
+                    SizedBox(width: 10,),
+                    Text("${controller.didSelectedMsgs.length}条已选中", softWrap: false, style: TextStyle(color: Colors.black),)
+                  ],)
+                ],
+              )
+                  : IconButton(onPressed: () {Get.back();}, icon: Icon(Icons.navigate_before)),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -45,13 +59,14 @@ class ChatView extends GetView<ChatController> {
                     children: [
                       SizedBox(width: 10),
                       Expanded(
-                        child: Text(
-                          "${controller.channelName}(1234/13441)",
-                          style: TextStyle(fontSize: 16),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                        ),
+                        child:
+                        Text(
+                            "${controller.channelName}(1234/13441)",
+                            style: TextStyle(fontSize: 16),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          )
                       ),
                       SizedBox(width: 10),
                     ],
@@ -61,7 +76,12 @@ class ChatView extends GetView<ChatController> {
               actions: [
                 /// 占位符,使标题居中
                 // SizedBox(width: 50),
-                IconButton(
+                 controller.isMultiple ?
+                 TextButton(onPressed: () {
+                   controller.isMultiple = !controller.isMultiple;
+                   controller.update();
+                 }, child: Text("取消")) :
+                 IconButton(
                     onPressed: () {
                       controller.gotoGroupSetting();
                       removeOverlayEntry();
@@ -99,19 +119,19 @@ class ChatView extends GetView<ChatController> {
               ),
               theme: DefaultChatTheme(
                 bubbleMargin: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 1),
-                messageBorderRadius: 5,
+                messageBorderRadius: 8,
                 messageInsetsHorizontal: 10,
                 messageInsetsVertical: 10,
-                messageMaxWidth: MediaQuery.of(context).size.width * 0.8,
+                messageMaxWidth: MediaQuery.of(context).size.width * 0.7,
                 dateDividerTextStyle: const TextStyle(color: Colors.grey, fontSize: 14),
                 dateDividerMargin: const EdgeInsets.only(top: 5, bottom: 5),
                 inputTextColor: Colors.black,
                 inputTextCursorColor: Colors.black,
                 inputBackgroundColor: const Color(0xFFE5E5E5),
                 backgroundColor: const Color(0xFFE5E5E5),
-                inputElevation: 1,
-                inputBorderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
-                primaryColor: Colors.blue,
+                inputElevation: 100,
+                // inputBorderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
+                primaryColor: Colors.white,
                 secondaryColor: Colors.white,
                 userAvatarNameColors: [Colors.blueAccent],
                 userAvatarImageBackgroundColor: Colors.blueAccent,
@@ -211,6 +231,43 @@ class ChatView extends GetView<ChatController> {
               //     child: ToolsUtils.asset("localIcons.png", width: 30, height: 30),
               //   );
               // },
+              textMessageBuilder: (types.TextMessage message, {required int messageWidth, required bool showName}) {
+                return Container(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+
+                  ),
+                  width: messageWidth.toDouble(),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end, // 垂直对齐到底部
+                    children: [
+                      Expanded(
+                        child: Text(
+                          message.text,
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(),
+                        ),
+                      ),
+                      SizedBox(width: 8), // 添加间距
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end, // 垂直对齐到底部
+                        crossAxisAlignment: CrossAxisAlignment.end, // 水平对齐到右侧
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              "21.04",
+                              style: TextStyle(color: Colors.grey, fontSize: 10),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                );
+            },
               videoMessageBuilder: (types.VideoMessage message, {required int messageWidth}) {
                 print("<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>");
                 return CustomVideoMessage(message: message);
@@ -251,12 +308,16 @@ class ChatView extends GetView<ChatController> {
                 // removeOverlayEntry();
               },
 
-              customBottomWidget: controller.isMultiple ? MultipleBarView() : CustomInput(
+              customBottomWidget: controller.isMultiple ?
+              MultipleBarView(didSelectedCount: controller.didSelectedMsgs.length,
+                total: controller.messages.length,)
+                  : CustomInput(
                 requestFocus: controller.requestFocus,
                 focusChange: controller.focusChange,
                 onSendPressed: controller.handleSendPressed,
                 onAttachmentPressedIndex: controller.handleToolsPressed,
-                repliedMessage: controller.quotedMessage,
+                repliedMessage: controller.isReply ? controller.messages.first : controller.quotedMessage,
+                isReplied: controller.isReply,
               ),
               onAttachmentPressedIndex: controller.handleToolsPressed,
               onMessageTap: controller.handleMessageTap,
@@ -311,15 +372,23 @@ class ChatView extends GetView<ChatController> {
           onDismiss: () {
             removeOverlayEntry();
           },
-          menuItems: const [
-            MultipleItemEnum('assets/icons/reply.png', '回复'),
-            MultipleItemEnum('assets/icons/copy.png', '复制'),
-            MultipleItemEnum('assets/icons/forward.png', '转发'),
-            MultipleItemEnum('assets/icons/select_all.png', '多选'),
-            MultipleItemEnum('assets/icons/delete.png', '删除'),
-            MultipleItemEnum('assets/icons/archive.png', '收藏'),
-            MultipleItemEnum('assets/icons/push_pin.png', '置顶'),
-            MultipleItemEnum('assets/icons/more.png', '更多'),
+          menuItems: [
+            MultipleItemEnum('assets/icons/reply.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).reply)),
+            MultipleItemEnum('assets/icons/copy.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).copy)),
+            MultipleItemEnum('assets/icons/forward.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).forward)),
+            MultipleItemEnum('assets/icons/select_all.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).multipleChoice)),
+            MultipleItemEnum('assets/icons/delete.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).delete)),
+            MultipleItemEnum('assets/icons/archive.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).collect)),
+            MultipleItemEnum('assets/icons/push_pin.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).top)),
+            MultipleItemEnum('assets/icons/more.png', SlocalCommon.getLocalizaContent(
+                SlocalCommon.of(context).more)),
           ],
           didSelectItem: (MultipleItemEnum item) {
             print("你点击了${item.label}");
