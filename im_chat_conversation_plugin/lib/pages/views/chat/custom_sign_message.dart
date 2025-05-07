@@ -11,11 +11,13 @@ import 'package:im_chat_resource_plugin/generated/assets.dart';
 class CustomSignMessage extends StatelessWidget {
   final types.CustomMessage message;
   final int messageWidth;
+  final bool isOwner;
 
   const CustomSignMessage({
     super.key,
     required this.message,
     this.messageWidth = 296,
+    required this.isOwner,
   });
 
   Future<String> fetchUserName(WKMsg? msg) async {
@@ -55,66 +57,78 @@ class CustomSignMessage extends StatelessWidget {
     // builder: (context, snapshot) {
     //   final displayName = snapshot.data ?? username;
 
-    return
-      Container(
+    return Container(
       color: CupertinoColors.systemGrey5,
       width: 220,
       child: Row(
         children: [
-          Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
+          Text(
+            SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
             style: TextStyle(color: Colors.red, fontSize: 12),
           ),
-          SizedBox(width: 6,),
+          SizedBox(
+            width: 6,
+          ),
           Expanded(
             child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
-                  color: Colors.lightBlue[100],
-                  borderRadius:
-                  BorderRadius.only(
+                  color: isOwner ? Colors.blue : Colors.white,
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(8),
                     bottomRight: Radius.circular(8),
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
-                  )
-              ),
+                    topRight: isOwner ? Radius.circular(0) : Radius.circular(8),
+                    topLeft: isOwner ? Radius.circular(8) : Radius.circular(0),
+                  )),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      SizedBox(width: 10,),
-                      Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).friendsBusinessCard)),
-                    ],
+                  SizedBox(
+                    height: 10,
                   ),
-                  Divider(color: Colors.blue, thickness: 1, indent: 6, endIndent: 6,),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.all(Radius.circular(4))),
+                        child: Text(
+                          SlocalCommon.getLocalizaContent(
+                              SlocalCommon.of(context).sign),
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        )),
+                  ),
+                  Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).activityLevelCheckInSynchronization,
+                  ),
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Divider(
+                    color: CupertinoColors.systemGrey2,
+                    thickness: 0.5,
+                  ),
                   Row(
                     children: [
-                      SizedBox(width: 10,),
-                      AssetUtil.asset(Assets.commonDefaultAvatar, fit: BoxFit.cover, width: 30),
-                      SizedBox(width: 6,),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("招商总局(官方)",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black54,
-                            ),),
-                          Text("zhaoshang", overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 10, color: Colors.black54))
-                        ],
+                      Expanded(
+                        child: Text(
+                          style: TextStyle(color: Colors.black54, fontSize: 10),
+                            "${SlocalCommon.getLocalizaContent(SlocalCommon.of(context).signSuccessContinuous)} 2"
+                            " ${SlocalCommon.getLocalizaContent(SlocalCommon.of(context).accumulate)} 5"),
                       ),
-                      SizedBox(width: 10,)
+                      Text("11.52",
+                          style: TextStyle(fontSize: 12, color: Colors.grey)),
+                      SizedBox(
+                        width: 10,
+                      )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Spacer(),
-                      Text("11.52", style: TextStyle(fontSize: 12, color: Colors.grey)),
-                      SizedBox(width: 10,)
-                    ],
-                  ),
-                  SizedBox(height: 10,)
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             ),

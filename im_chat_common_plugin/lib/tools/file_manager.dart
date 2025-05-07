@@ -83,4 +83,5 @@ class FileManager {
   List<ChatFile> getAllFiles() {
     return _files;
   }
+
 }

@@ -10,10 +10,10 @@ import 'package:path_provider/path_provider.dart';
 
 class CustomAudioMessage extends StatefulWidget {
   final types.AudioMessage message;
-
+  final bool isOwner;
   const CustomAudioMessage({
     super.key,
-    required this.message,
+    required this.message, required this.isOwner,
   });
 
   @override

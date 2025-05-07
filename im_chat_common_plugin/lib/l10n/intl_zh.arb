@@ -45,5 +45,9 @@
   "multipleChoice": "多选",
   "delete": "删除",
   "collect": "收藏",
-  "top": "置顶"
+  "top": "置顶",
+  "sign": "签到",
+  "signSuccessContinuous": "签到成功连续",
+  "accumulate": "累积",
+  "activityLevelCheckInSynchronization": "活跃度签到同步"
 }

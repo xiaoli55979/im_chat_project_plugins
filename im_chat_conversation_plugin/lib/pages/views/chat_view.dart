@@ -5,6 +5,8 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_conversation_plugin/pages/views/chat/custom_file_view.dart';
+import 'package:im_chat_conversation_plugin/pages/views/chat/custom_text_view.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/multiple_bar_view.dart';
 import 'package:intl/intl.dart';
 
@@ -232,67 +234,37 @@ class ChatView extends GetView<ChatController> {
               //   );
               // },
               textMessageBuilder: (types.TextMessage message, {required int messageWidth, required bool showName}) {
-                return Container(
-                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-
-                  ),
-                  width: messageWidth.toDouble(),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end, // 垂直对齐到底部
-                    children: [
-                      Expanded(
-                        child: Text(
-                          message.text,
-                          maxLines: 10,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(),
-                        ),
-                      ),
-                      SizedBox(width: 8), // 添加间距
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end, // 垂直对齐到底部
-                        crossAxisAlignment: CrossAxisAlignment.end, // 水平对齐到右侧
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text(
-                              "21.04",
-                              style: TextStyle(color: Colors.grey, fontSize: 10),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                );
+                return CustomTextView(message: message, isOwner: controller.isOwner(message),);
             },
               videoMessageBuilder: (types.VideoMessage message, {required int messageWidth}) {
                 print("<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>");
-                return CustomVideoMessage(message: message);
+                return CustomVideoMessage(message: message, isOwner: controller.isOwner(message),);
               },
               imageMessageBuilder: (types.ImageMessage message, {required int messageWidth}) {
-                return CustomImageMessage(message: message, messageWidth: 250);
+                return CustomImageMessage(message: message, messageWidth: 250, isOwner: controller.isOwner(message),);
               },
               customMessageBuilder: (types.CustomMessage customMessage, {required int messageWidth}) {
                 final metadata = customMessage.metadata;
                 int type = metadata?["type"];
                 if (type == MessageContentType.CARD) {
-                  return CustomCardMessage(message: customMessage);
+                  return CustomCardMessage(message: customMessage, isOwner: controller.isOwner(customMessage),);
                 } else if (type == MessageContentType.SIGN) {
-                  return CustomSignMessage(message: customMessage);
+                  return CustomSignMessage(message: customMessage, isOwner: controller.isOwner(customMessage),);
                 } else {
                   return CustomUnsupportMessage();
                 }
               },
               audioMessageBuilder: (types.AudioMessage message, {required int messageWidth}) {
-                return CustomAudioMessage(message: message);
+                return CustomAudioMessage(message: message, isOwner: controller.isOwner(message),);
               },
+
+              fileMessageBuilder: (types.FileMessage message, {required int messageWidth}) {
+                return CustomFileView(message: message, isOwner: controller.isOwner(message));
+            },
 
               /// 消息滚动
               // onMessageVisibilityChanged: (types.Message message, bool visible) {
-                // messagehandleModel.markMessageAsRead(messageQueue, message);
+              //   messagehandleModel.markMessageAsRead(messageQueue, message);
               // },
               onMessageLongPress: (BuildContext context, message, LongPressStartDetails details) {
                 // longClick(context, message, details);

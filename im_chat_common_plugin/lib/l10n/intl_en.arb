@@ -45,5 +45,9 @@
   "multipleChoice": "MultipleChoice",
   "delete": "Delete",
   "collect": "Collect",
-  "top": "Top Up"
+  "top": "Top Up",
+  "sign": "Sign",
+  "signSuccessContinuous": "Sign success continuous",
+  "accumulate": "Accumulate",
+  "activityLevelCheckInSynchronization": "Activity level check-in synchronization"
 }

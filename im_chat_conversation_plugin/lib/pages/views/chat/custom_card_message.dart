@@ -11,11 +11,11 @@ import 'package:im_chat_resource_plugin/generated/assets.dart';
 class CustomCardMessage extends StatelessWidget {
   final types.CustomMessage message;
   final int messageWidth;
-
+  final bool isOwner;
   const CustomCardMessage({
     super.key,
     required this.message,
-    this.messageWidth = 250,
+    this.messageWidth = 250, required this.isOwner,
   });
 
   Future<String> fetchUserName(WKMsg? msg) async {
@@ -67,13 +67,13 @@ class CustomCardMessage extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.lightBlue[100],
+                  color: isOwner ? Colors.blue : Colors.white,
                   borderRadius:
                   BorderRadius.only(
                     bottomLeft: Radius.circular(8),
                     bottomRight: Radius.circular(8),
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
+                    topRight: isOwner ? Radius.circular(0) : Radius.circular(8),
+                    topLeft: isOwner ? Radius.circular(8) : Radius.circular(0),
                   )
               ),
               child: Column(

@@ -374,6 +374,30 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'置顶'**
   String get top;
+
+  /// No description provided for @sign.
+  ///
+  /// In zh, this message translates to:
+  /// **'签到'**
+  String get sign;
+
+  /// No description provided for @signSuccessContinuous.
+  ///
+  /// In zh, this message translates to:
+  /// **'签到成功连续'**
+  String get signSuccessContinuous;
+
+  /// No description provided for @accumulate.
+  ///
+  /// In zh, this message translates to:
+  /// **'累积'**
+  String get accumulate;
+
+  /// No description provided for @activityLevelCheckInSynchronization.
+  ///
+  /// In zh, this message translates to:
+  /// **'活跃度签到同步'**
+  String get activityLevelCheckInSynchronization;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

@@ -291,4 +291,16 @@ class ToolsUtils {
       kDebugMode ? DialogUtils.showError(e.toString()) : DialogUtils.showError(message);
     }
   }
+
+  /// 私有方法：格式化大小为 KB/MB
+  static String formatSize(int bytes) {
+    if (bytes <= 0) return "0 KB";
+    const kb = 1024;
+    const mb = kb * 1024;
+    if (bytes >= mb) {
+      return "${(bytes / mb).toStringAsFixed(2)} MB";
+    } else {
+      return "${(bytes / kb).toStringAsFixed(2)} KB";
+    }
+  }
 }

@@ -233,7 +233,7 @@ class ChatController extends GetxController {
     return types.User(id: "1234");
   }
 
-
+  /// 是否是自己
   bool isOwner(types.Message msg) {
     final currentId = getUser().id;
     if (currentId == msg.id) { return true; } else {

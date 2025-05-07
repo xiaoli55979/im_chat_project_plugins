@@ -151,4 +151,16 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get top => 'Top Up';
+
+  @override
+  String get sign => 'Sign';
+
+  @override
+  String get signSuccessContinuous => 'Sign success continuous';
+
+  @override
+  String get accumulate => 'Accumulate';
+
+  @override
+  String get activityLevelCheckInSynchronization => 'Activity level check-in synchronization';
 }

@@ -151,4 +151,16 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get top => '置顶';
+
+  @override
+  String get sign => '签到';
+
+  @override
+  String get signSuccessContinuous => '签到成功连续';
+
+  @override
+  String get accumulate => '累积';
+
+  @override
+  String get activityLevelCheckInSynchronization => '活跃度签到同步';
 }
