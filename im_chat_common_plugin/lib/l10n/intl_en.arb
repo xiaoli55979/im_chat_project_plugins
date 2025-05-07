@@ -49,5 +49,8 @@
   "sign": "Sign",
   "signSuccessContinuous": "Sign success continuous",
   "accumulate": "Accumulate",
-  "activityLevelCheckInSynchronization": "Activity level check-in synchronization"
+  "activityLevelCheckInSynchronization": "Activity level check-in synchronization",
+  "holdToTalk": "Hold to talk",
+  "releaseAndCancel": "Release and cancel",
+  "releaseToSendSwipeUpToCancel": "Release to send, swipe up to cancel"
 }

@@ -163,4 +163,13 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get activityLevelCheckInSynchronization => 'Activity level check-in synchronization';
+
+  @override
+  String get holdToTalk => 'Hold to talk';
+
+  @override
+  String get releaseAndCancel => 'Release and cancel';
+
+  @override
+  String get releaseToSendSwipeUpToCancel => 'Release to send, swipe up to cancel';
 }

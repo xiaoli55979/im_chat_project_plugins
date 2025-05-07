@@ -163,4 +163,13 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get activityLevelCheckInSynchronization => '活跃度签到同步';
+
+  @override
+  String get holdToTalk => '按住说话';
+
+  @override
+  String get releaseAndCancel => '松手取消';
+
+  @override
+  String get releaseToSendSwipeUpToCancel => '松手发送，上划取消';
 }

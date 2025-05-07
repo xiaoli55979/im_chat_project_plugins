@@ -134,6 +134,7 @@ class ChatSendMessageTools {
         imageQuality: 70, maxWidth: 1440, source: ImageSource.camera);
 
     if (result != null) {
+      print("图片地址是：${result.path}");
       final bytes = await result.readAsBytes();
       final image = await decodeImageFromList(bytes);
 
@@ -274,6 +275,62 @@ class ChatSendMessageTools {
       // );
     }
   }
+
+  /// 发送语音消息
+  void handleAudioSelection({
+    required types.User user,
+    Function(types.AudioMessage message)? onMessageCreated,
+  }) async {
+    JtpComponentsInit jtpInit = JtpComponentsInit();
+
+    /// 防止挂起锁屏
+    jtpInit.isLockScreen = true;
+    final result = await ImagePicker().pickVideo(
+        maxDuration: const Duration(seconds: 60), // 设置最大录制时长,
+        source: ImageSource.camera);
+
+    if (result != null) {
+      final file = File(result.path);
+      final videoFileSize = await file.length();
+
+      // 构造 VideoMessage
+      final message = types.AudioMessage(
+        author: user,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        name: result.name,
+        size: videoFileSize,
+        uri: result.path,
+        status: types.Status.sending, duration: Duration(seconds: 1),
+      );
+
+      // 触发回调
+      /// 触发回调
+      if (onMessageCreated != null) {
+        onMessageCreated(message);
+      }
+
+      jtpInit.isLockScreen = false;
+      // /// 开始上传
+      // MessageHandle.sendVideoMessage(
+      //   result: result,
+      //   videoController: videoController,
+      //   api: api,
+      //   channelId: channelID,
+      //   onStateChanged: (UploadState state) {
+      //     if (state.status == UploadStatus.failure) {
+      //       final updatedMessage = message.copyWith(
+      //         status: Status.error, // 使用 copyWith 方法更新状态
+      //       );
+      //
+      //       // 更新消息列表中的状态
+      //       _updateMessage(updatedMessage);
+      //     }
+      //   },
+      // );
+    }
+  }
+
 
   /// 打开文件
   static Future<void> openFileMessage(types.FileMessage message,

@@ -49,5 +49,8 @@
   "sign": "签到",
   "signSuccessContinuous": "签到成功连续",
   "accumulate": "累积",
-  "activityLevelCheckInSynchronization": "活跃度签到同步"
+  "activityLevelCheckInSynchronization": "活跃度签到同步",
+  "holdToTalk": "按住说话",
+  "releaseAndCancel": "松手取消",
+  "releaseToSendSwipeUpToCancel": "松手发送，上划取消"
 }

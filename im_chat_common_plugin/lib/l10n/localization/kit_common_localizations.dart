@@ -398,6 +398,24 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'活跃度签到同步'**
   String get activityLevelCheckInSynchronization;
+
+  /// No description provided for @holdToTalk.
+  ///
+  /// In zh, this message translates to:
+  /// **'按住说话'**
+  String get holdToTalk;
+
+  /// No description provided for @releaseAndCancel.
+  ///
+  /// In zh, this message translates to:
+  /// **'松手取消'**
+  String get releaseAndCancel;
+
+  /// No description provided for @releaseToSendSwipeUpToCancel.
+  ///
+  /// In zh, this message translates to:
+  /// **'松手发送，上划取消'**
+  String get releaseToSendSwipeUpToCancel;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {
