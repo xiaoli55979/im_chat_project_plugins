@@ -3,17 +3,22 @@ import 'dart:async';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-// import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:intl/intl.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/tools_bar_view.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/voice_record_ui.dart';
 
 import '../../../handle/message_content_type.dart';
+import '../../../tools/chat_send_message_tools.dart';
 
 /// A class that represents bottom bar widget with a text field, attachment and
 /// send buttons inside. By default hides send button when text field is empty.
@@ -30,6 +35,7 @@ class CustomInput extends StatefulWidget {
     this.requestFocus,
     this.focusChange = false,
     this.isReplied = false,
+    required this.onAudioValueChanged,
   });
 
   final bool isReplied;
@@ -43,7 +49,7 @@ class CustomInput extends StatefulWidget {
   /// See [AttachmentButton.onPressed].
   final VoidCallback? onAttachmentPressed;
   final ValueChanged<int>? onAttachmentPressedIndex;
-
+  final void Function(int seconds, String path) onAudioValueChanged;
   /// Will be called on [SendButton] tap. Has [types.PartialText] which can
   /// be transformed to [types.TextMessage] and added to the messages list.
   final void Function(types.PartialText) onSendPressed;
@@ -107,37 +113,125 @@ class _CustomInputState extends State<CustomInput> {
   /// 是否语音消息
   bool isAudioMsg = false;
 
+  /// 录音对象
+  AudioRecorder record = AudioRecorder();
+
+  /// 录音地址，不带后缀的hashcode
+  String path = "";
+
+  String _status = "等待长按";
+
+  /// 录音计时器
+  Timer? countdownTimer;
+
+  late OverlayEntry overlayEntry;
+
   final ValueNotifier<bool> isCancelling = ValueNotifier(false);
-  final ValueNotifier<int> remainingTime = ValueNotifier(60);
+  ValueNotifier<int> remainingTime = ValueNotifier(59);
 
-  // 开始录音
-  void _startRecording() {
-    // FlutterSoundRecorder recorderModule = FlutterSoundRecorder();
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      barrierDismissible: true,
-      builder: (context) {
-        return VoiceRecordOverlay(
-          isCancelling: isCancelling,
-          remainingTime: remainingTime,
-        );
-      },
-    );
+  Future<String> getRecordingFilePath() async {
+      // 获取文档目录路径
+      final directory = await getTemporaryDirectory();
 
-    // 模拟倒计时更新
-    Future.delayed(Duration.zero, () async {
-      for (var i = 60; i >= 0; i--) {
-        await Future.delayed(const Duration(seconds: 1));
-        remainingTime.value = i; // 更新剩余时间
-        if (i == 0) Navigator.of(context).pop(); // 倒计时结束，关闭对话框
-      }
+      // 获取当前时间并格式化为 yyyymmdd-HH:MM:SS
+      final now = DateTime.now();
+      final timestamp = DateFormat('yyyyMMdd-HHmmss').format(now);
+
+      // 拼接路径
+      final path = "${directory.path}/recording-$timestamp";
+
+      return path;
+  }
+
+  void _createAudioOverlay() {
+    overlayEntry = OverlayEntry(builder: (BuildContext context) {
+      return ValueListenableBuilder <bool>(valueListenable: isCancelling,
+          builder: (_, canCancel, child) {
+            return Positioned(
+              child: Scaffold(
+                  backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+              body:
+              VoiceRecordOverlay(
+              isCancelling: isCancelling,
+              remainingTime: remainingTime,
+            )
+            ));
+          });
     });
   }
 
+  showFloatingButtonOverlay(BuildContext context) {
+    OverlayState overlayState = Overlay.of(context);
+    overlayState.insert(overlayEntry);
+  }
+
+  initRecorder() {
+    record = AudioRecorder();
+  }
+
+  // 开始录音
+  Future<void> _startRecording() async {
+
+    // Check and request permission if needed
+    if (await record.hasPermission()) {
+      print("有权限");
+      // 获取完整路径
+      path = await getRecordingFilePath();
+      // Start recording to file
+      await record.start(const RecordConfig(), path: "$path.m4a");
+      // ... or to stream
+      // final stream = await record.startStream(
+      //     const RecordConfig(encoder: AudioEncoder.pcm16bits));
+      // FlutterSoundRecorder recorderModule = FlutterSoundRecorder();
+
+      // 模拟倒计时更新
+      countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+          if (remainingTime.value == 0) { _stopRecording(); overlayEntry.remove();} else {
+            remainingTime.value--;// 倒计时结束，关闭对话框
+          }
+      });
+    }
+  }
+
   // 停止录音
-  void _stopRecording() {
-    Navigator.of(context).pop();
+  Future<void> _stopRecording() async {
+    countdownTimer?.cancel(); // 停止计时器
+    remainingTime.value = 59;
+    print("停止录音");
+    // Stop recording...
+    final path1 = await record.stop();
+    final seconds = await getAudioDuration(path1 ?? "");
+    print("得到了录音数据地址：$path1");
+    widget.onAudioValueChanged(seconds, path1 ?? "");
+
+// ... or cancel it (and implicitly remove file/blob).
+    await record.cancel();
+    record.dispose();
+  }
+
+  Future<int> getAudioDuration(String path) async {
+    final player = AudioPlayer();
+
+    try {
+      // Load the audio file
+      await player.setFilePath(path);
+
+      // Get the duration
+      final duration = player.duration;
+      if (duration != null) {
+        print('Audio duration: ${duration.inSeconds} seconds');
+        return duration.inSeconds;
+      } else {
+        print('Unable to get duration.');
+        return 0;
+      }
+    } catch (e) {
+      print('Error: $e');
+      return 0;
+    } finally {
+      // Release the player resources
+      await player.dispose();
+    }
   }
 
   @override
@@ -147,6 +241,33 @@ class _CustomInputState extends State<CustomInput> {
         widget.options.textEditingController ?? InputTextFieldController();
     _handleSendButtonVisibilityModeChange();
     _toolsBarHeight = ToolsUtils.getIsPad() ? 300 : 250;
+
+    // _longPressGestureRecognizer = LongPressGestureRecognizer()
+    //   ..onLongPressStart = (details) {
+    //     setState(() {
+    //       _startRecording(); // 开始录音
+    //       _status = "长按开始: ${details.localPosition}";
+    //       print(_status);
+    //     });
+    //   }
+    //   ..onLongPressMoveUpdate = (details) {
+    //     setState(() {
+    //             if (details.localPosition.dy < -50) {
+    //               isCancelling.value = true; // 取消操作
+    //             } else {
+    //               isCancelling.value = false;
+    //             }
+    //       _status = "移动中: ${details.localOffsetFromOrigin}";
+    //             print(_status);
+    //     });
+    //   }
+    //   ..onLongPressEnd = (details) {
+    //     setState(() {
+    //       _stopRecording(); // 停止录音
+    //       _status = "长按结束: ${details.localPosition}";
+    //       print(_status);
+    //     });
+    //   };
   }
 
   void _handleSendButtonVisibilityModeChange() {
@@ -348,17 +469,17 @@ class _CustomInputState extends State<CustomInput> {
                     // 显示引用消息
                     if (widget.repliedMessage != null) _buildRepliedMessage(),
                     Row(
-                      textDirection: TextDirection.ltr,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // 语音切换按键
                         IconButton(
                           onPressed: () {
                             setState(() {
                               isAudioMsg = !isAudioMsg;
-                              print("<<<<<<<<<<setState");
+                              print("<<<<<<<<<<语音切换setState");
                             });
                           },
-                          icon: Icon(isAudioMsg ? Icons.mic : Icons.keyboard),
+                          icon: Icon(!isAudioMsg ? Icons.mic : Icons.keyboard),
                           color: Colors.black54,
                         ),
 
@@ -375,22 +496,88 @@ class _CustomInputState extends State<CustomInput> {
                                           color: Colors.black12, width: 1))
                                       : Border.fromBorderSide(BorderSide.none)),
                               child: isAudioMsg
-                                  ? Listener(
-                                      onPointerDown: (event) {
-                                        _startRecording(); // 500ms 后触发长按
-                                      },
-                                      onPointerMove: (event) {
-                                        print(event.localPosition.dy);
-                                        if (event.localPosition.dy < -50) {
-                                          isCancelling.value = true;
+                                  ?
+                              // Listener(
+                              //         onPointerDown: (event) {
+                              //           _longPressTimer = Timer(Duration(milliseconds: 500), () {
+                              //             _startRecording(); // 500ms 后执行长按逻辑
+                              //           });
+                              //           // event.stopPropagation(); // 阻止事件向上传递
+                              //         },
+                              //         onPointerMove: (event) {
+                              //           print(event.localPosition.dy);
+                              //           if (event.localPosition.dy < -50) {
+                              //             isCancelling.value = true;
+                              //           } else {
+                              //             isCancelling.value = false;
+                              //           }
+                              //         },
+                              //         onPointerUp: (event) {
+                              //           print("根本不是长按");
+                              //           _longPressTimer?.cancel(); // 手指抬起时取消计时器
+                              //           _stopRecording(); // 如果已经长按，则触发结束
+                              //         },
+                              //         onPointerCancel: (event) {
+                              //           print("根本不是长按");
+                              //           _longPressTimer?.cancel(); // 手指抬起时取消计时器
+                              //           _stopRecording(); // 如果已经长按，则触发结束
+                              //
+                              //         },
+                              // GestureDetector(
+                              //     onLongPressStart: (details) {
+                              //       _startRecording(); // 开始录音
+                              //     },
+                              //     onLongPressEnd: (details) {
+                              //       _stopRecording(); // 停止录音
+                              //     },
+                              //     onLongPressMoveUpdate: (details) {
+                              //       if (details.localPosition.dy < -50) {
+                              //         isCancelling.value = true; // 取消操作
+                              //       } else {
+                              //         isCancelling.value = false;
+                              //       }
+                              //     },
+                              GestureDetector(
+                              onLongPressDown: (LongPressDownDetails details) {
+                                debugPrint("long press down");
+                                _createAudioOverlay();
+                                initRecorder();
+                              },
+                                onLongPressUp: () {
+                                  _stopRecording();
+                                },
+                                onLongPressStart: (LongPressStartDetails details) async {
+                                showFloatingButtonOverlay(context);
+                                  _startRecording();
+                                  print("开始录音");
+                                },
+                                onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
+                                print(details.localPosition.dy);
+                                        if (details.localPosition.dy < -50) {
+                                          isCancelling.value = true; // 取消操作
                                         } else {
                                           isCancelling.value = false;
                                         }
                                       },
-                                      onPointerUp: (event) {
-                                        _stopRecording(); // 如果已经长按，则触发结束
-                                      },
-                                      onPointerCancel: (event) {},
+                                onLongPressEnd: (LongPressEndDetails details) {
+                                  overlayEntry.remove();
+                                  _stopRecording();
+                                  // 停止录音
+                                  // disposeRecorder();
+                                },
+                              // RawGestureDetector(
+                              //     gestures: {
+                              //       LongPressGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                              //           LongPressGestureRecognizer>(
+                              //             () => LongPressGestureRecognizer(),
+                              //             (LongPressGestureRecognizer instance) {
+                              //               print("长按持续");
+                              //           instance.onLongPressStart = _longPressGestureRecognizer?.onLongPressStart;
+                              //           instance.onLongPressMoveUpdate = _longPressGestureRecognizer?.onLongPressMoveUpdate;
+                              //           instance.onLongPressEnd = _longPressGestureRecognizer?.onLongPressEnd;
+                              //         },
+                              //       ),
+                              //     },
                                       child: TextButton(
                                         onPressed: () {
                                           // 按住说话
@@ -605,7 +792,8 @@ class _CustomInputState extends State<CustomInput> {
                 });
               }
             },
-            child: _inputBuilder(),
+            child:
+            _inputBuilder(),
           ),
         ],
       );

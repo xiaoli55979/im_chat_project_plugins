@@ -57,7 +57,7 @@ class VoiceRecordOverlay extends StatelessWidget {
               valueListenable: isCancelling,
               builder: (context, value, child) {
                 return Text(
-                  value ? "Release to Cancel" : "Release to Send",
+                  value ? SlocalCommon.getLocalizaContent(SlocalCommon.of(context).releaseAndCancel) : SlocalCommon.getLocalizaContent(SlocalCommon.of(context).releaseToSendSwipeUpToCancel),
                   style: TextStyle(
                     color: value ? Colors.red : Colors.white70,
                     fontSize: 14,

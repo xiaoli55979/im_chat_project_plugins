@@ -290,6 +290,7 @@ class ChatView extends GetView<ChatController> {
                 onAttachmentPressedIndex: controller.handleToolsPressed,
                 repliedMessage: controller.isReply ? controller.messages.first : controller.quotedMessage,
                 isReplied: controller.isReply,
+                onAudioValueChanged: controller.handleToolsAudioSend,
               ),
               onAttachmentPressedIndex: controller.handleToolsPressed,
               onMessageTap: controller.handleMessageTap,

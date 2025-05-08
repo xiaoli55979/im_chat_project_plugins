@@ -259,6 +259,19 @@ class ChatController extends GetxController {
     );
   }
 
+  /// 工具栏语音发送
+  void handleToolsAudioSend(int seconds, String path) {
+    print("object_handleToolsAudioSend");
+    ChatSendMessageTools().handleToolsAudioSend(
+      seconds,
+      path,
+      user: getUser(),
+      onMessageCreated: (types.Message message) {
+        addMessage(message);
+      },
+    );
+  }
+
   /// 点击背景
   void backgroundTap() {
     focusChange = !focusChange;

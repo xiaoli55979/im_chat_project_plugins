@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:http/http.dart' as http;
+import 'package:im_chat_common_plugin/l10n/SlocalUtils.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -88,9 +90,11 @@ class _CustomAudioMessageState extends State<CustomAudioMessage> {
 
   // 获取本地缓存文件路径
   Future<String> _getLocalFilePath(String url) async {
-    final directory = await getTemporaryDirectory();
-    final fileName = url.hashCode.toString() + '.amr'; // 使用 URL 哈希作为文件名
-    return '${directory.path}/$fileName';
+    // final directory = await getTemporaryDirectory();
+    // final fileName = '${url.hashCode}.m4a'; // 使用 URL 哈希作为文件名
+    // return '${directory.path}/$fileName';
+    print("拿出录音地址：$url");
+    return url;
   }
 
   // 检查本地文件是否存在
@@ -150,7 +154,8 @@ class _CustomAudioMessageState extends State<CustomAudioMessage> {
   @override
   Widget build(BuildContext context) {
     final metadata = widget.message.metadata ?? {};
-    final int timeTrad = metadata['timeTrad'] ?? 0;
+    // final int timeTrad = metadata['timeTrad'] ?? 0;
+    final int timeTrad = widget.message.duration.inSeconds;
     final String audioUrl = widget.message.uri;
     final String waveformBase64 = metadata['waveform'] ?? '';
     final List<double> waveform = parseWaveform(waveformBase64);
@@ -164,7 +169,7 @@ class _CustomAudioMessageState extends State<CustomAudioMessage> {
           stream: _audioPlayer.durationStream,
           builder: (context, durationSnapshot) {
             final Duration? totalDuration = durationSnapshot.data;
-            final double durationSeconds = totalDuration?.inSeconds.toDouble() ?? timeTrad.toDouble();
+            final double durationSeconds = timeTrad.toDouble();
 
             return StreamBuilder<Duration>(
               stream: _audioPlayer.positionStream,
@@ -176,66 +181,77 @@ class _CustomAudioMessageState extends State<CustomAudioMessage> {
                 final double durationTextWidth = getDurationTextWidth(durationSeconds);
 
                 return Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
+                  color: CupertinoColors.systemGrey5,
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      // 播放/暂停按钮
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                        icon: isBuffering
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : Icon(
-                                isPlaying ? Icons.pause : Icons.play_arrow,
-                                size: 20,
-                                color: isPlaying ? Colors.green : Colors.grey.shade600,
-                              ),
-                        onPressed: () => _togglePlayPause(audioUrl),
+                      Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
+                        style: TextStyle(color: Colors.red, fontSize: 12),
                       ),
-                      const SizedBox(width: 8),
-
-                      // 波形区域（带进度）
-                      SizedBox(
-                        height: 24,
-                        width: waveformWidth,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: waveform.asMap().entries.map((entry) {
-                            final int index = entry.key;
-                            final double value = entry.value;
-                            final double barProgress = waveform.isEmpty ? 0.0 : index / (waveform.length - 1);
-                            final bool isPlayed = barProgress <= progress;
-
-                            return Container(
-                              width: 2,
-                              height: 4 + (16 * value),
-                              decoration: BoxDecoration(
-                                color: isPlaying && isPlayed ? Colors.green : Colors.grey.shade600,
-                                borderRadius: BorderRadius.circular(1),
-                              ),
-                            );
-                          }).toList(),
+                      SizedBox(width: 6,),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(4),
                         ),
-                      ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // 播放/暂停按钮
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                              icon: isBuffering
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(strokeWidth: 2),
+                                    )
+                                  : Icon(
+                                      isPlaying ? Icons.pause : Icons.play_arrow,
+                                      size: 20,
+                                      color: isPlaying ? Colors.green : Colors.grey.shade600,
+                                    ),
+                              onPressed: () => _togglePlayPause(audioUrl),
+                            ),
+                            const SizedBox(width: 8),
 
-                      // 时长
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Text(
-                          "${durationSeconds.toStringAsFixed(0)}s",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                          ),
+                            // 波形区域（带进度）
+                            SizedBox(
+                              height: 24,
+                              width: waveformWidth,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: waveform.asMap().entries.map((entry) {
+                                  final int index = entry.key;
+                                  final double value = entry.value;
+                                  final double barProgress = waveform.isEmpty ? 0.0 : index / (waveform.length - 1);
+                                  final bool isPlayed = barProgress <= progress;
+
+                                  return Container(
+                                    width: 2,
+                                    height: 4 + (16 * value),
+                                    decoration: BoxDecoration(
+                                      color: isPlaying && isPlayed ? Colors.green : Colors.grey.shade600,
+                                      borderRadius: BorderRadius.circular(1),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+
+                            // 时长
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Text(
+                                "${durationSeconds.toStringAsFixed(0)}s",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

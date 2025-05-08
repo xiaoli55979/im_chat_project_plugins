@@ -18,6 +18,19 @@ import '../pages/views/chat/tools_bar_view.dart';
 
 class ChatSendMessageTools {
   /// 工具栏快捷入口
+  void handleToolsAudioSend(int seconds, String path, {
+    required types.User user,
+    Function(types.Message message)? onMessageCreated,
+  }) {
+    ChatSendMessageTools().handleAudioSelection(user: user,
+      onMessageCreated: (types.AudioMessage message) {
+        if (onMessageCreated != null) {
+          onMessageCreated(message);
+        }
+      }, seconds: seconds, path: path,
+    );
+  }
+  /// 工具栏快捷入口
   void handleToolsPressed(int index, {
     required types.User user,
     Function(types.Message message)? onMessageCreated,
@@ -87,7 +100,7 @@ class ChatSendMessageTools {
     if (result != null) {
       final bytes = await result.readAsBytes();
       final image = await decodeImageFromList(bytes);
-
+      print("图片地址：${result.path}");
       final message = types.ImageMessage(
         author: user,
         createdAt: DateTime
@@ -279,57 +292,54 @@ class ChatSendMessageTools {
   /// 发送语音消息
   void handleAudioSelection({
     required types.User user,
+    required int seconds,
+    required String path,
     Function(types.AudioMessage message)? onMessageCreated,
   }) async {
     JtpComponentsInit jtpInit = JtpComponentsInit();
 
     /// 防止挂起锁屏
     jtpInit.isLockScreen = true;
-    final result = await ImagePicker().pickVideo(
-        maxDuration: const Duration(seconds: 60), // 设置最大录制时长,
-        source: ImageSource.camera);
 
-    if (result != null) {
-      final file = File(result.path);
-      final videoFileSize = await file.length();
+    final file = File(path);
+    final AudioFileSize = await file.length();
 
-      // 构造 VideoMessage
-      final message = types.AudioMessage(
-        author: user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
-        name: result.name,
-        size: videoFileSize,
-        uri: result.path,
-        status: types.Status.sending, duration: Duration(seconds: 1),
-      );
+    // 构造 AudioMessage
+    final message = types.AudioMessage(
+      author: user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: const Uuid().v4(),
+      size: AudioFileSize,
+      // uri: Uri.file(path).toString(),
+      uri: path,
+      status: types.Status.sending, duration: Duration(seconds: seconds), name: '',
+    );
 
-      // 触发回调
-      /// 触发回调
-      if (onMessageCreated != null) {
-        onMessageCreated(message);
-      }
-
-      jtpInit.isLockScreen = false;
-      // /// 开始上传
-      // MessageHandle.sendVideoMessage(
-      //   result: result,
-      //   videoController: videoController,
-      //   api: api,
-      //   channelId: channelID,
-      //   onStateChanged: (UploadState state) {
-      //     if (state.status == UploadStatus.failure) {
-      //       final updatedMessage = message.copyWith(
-      //         status: Status.error, // 使用 copyWith 方法更新状态
-      //       );
-      //
-      //       // 更新消息列表中的状态
-      //       _updateMessage(updatedMessage);
-      //     }
-      //   },
-      // );
+    // 触发回调
+    /// 触发回调
+    if (onMessageCreated != null) {
+      onMessageCreated(message);
     }
-  }
+
+    jtpInit.isLockScreen = false;
+    // /// 开始上传
+    // MessageHandle.sendVideoMessage(
+    //   result: result,
+    //   videoController: videoController,
+    //   api: api,
+    //   channelId: channelID,
+    //   onStateChanged: (UploadState state) {
+    //     if (state.status == UploadStatus.failure) {
+    //       final updatedMessage = message.copyWith(
+    //         status: Status.error, // 使用 copyWith 方法更新状态
+    //       );
+    //
+    //       // 更新消息列表中的状态
+    //       _updateMessage(updatedMessage);
+    //     }
+    //   },
+    // );
+    }
 
 
   /// 打开文件
