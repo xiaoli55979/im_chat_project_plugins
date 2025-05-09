@@ -244,16 +244,31 @@ class _CustomAudioMessageState extends State<CustomAudioMessage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Text(
-                                "${durationSeconds.toStringAsFixed(0)}s",
+                                "${durationSeconds.toStringAsFixed(0)}\"",
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey.shade600,
+                                  color: Colors.blue,
                                 ),
                               ),
+                            ),
+                            SizedBox(width: 8), // 添加间距
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end, // 垂直对齐到底部
+                              crossAxisAlignment: CrossAxisAlignment.end, // 水平对齐到右侧
+                              children: [
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "21.04",
+                                    style: TextStyle(color: Colors.grey, fontSize: 10),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
+
                     ],
                   ),
                 );

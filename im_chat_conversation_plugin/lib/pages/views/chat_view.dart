@@ -234,7 +234,9 @@ class ChatView extends GetView<ChatController> {
               //   );
               // },
               textMessageBuilder: (types.TextMessage message, {required int messageWidth, required bool showName}) {
-                return CustomTextView(message: message, isOwner: controller.isOwner(message),);
+                return CustomTextView(message: message, isOwner: controller.isOwner(message), onMessageStatusTap: (context, message) {
+                  print("点按");
+                },);
             },
               videoMessageBuilder: (types.VideoMessage message, {required int messageWidth}) {
                 print("<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>");

@@ -1,4 +1,5 @@
 import 'dart:convert';
+// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,11 @@ class CustomTextView extends StatelessWidget {
   final types.TextMessage message;
   final int messageWidth;
   final bool isOwner;
+  final void Function(BuildContext context, types.Message)? onMessageStatusTap;
   const CustomTextView({
     super.key,
     required this.message,
-    this.messageWidth = 250, required this.isOwner,
+    this.messageWidth = 250, required this.isOwner, this.onMessageStatusTap,
   });
 
   Future<String> fetchUserName(WKMsg? msg) async {
@@ -53,58 +55,63 @@ class CustomTextView extends StatelessWidget {
     // builder: (context, snapshot) {
     //   final displayName = snapshot.data ?? username;
 
-    return Container(
-      color: CupertinoColors.systemGrey5,
-      width: maxDimension,
-      child: Row(
-        children: [
-          Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
-            style: TextStyle(color: Colors.red, fontSize: 12),
-          ),
-          SizedBox(width: 6,),
-          Expanded(
-            child: Container(
-                padding: EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: isOwner ? Radius.circular(0) : Radius.circular(8),
-                    topLeft: isOwner ? Radius.circular(8) : Radius.circular(0),
-                    bottomRight: Radius.circular(8),
-                    bottomLeft: Radius.circular(8)
-                  )
-                ),
-                width: messageWidth.toDouble(),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end, // 垂直对齐到底部
-                  children: [
-                    Expanded(
-                      child: Text(
-                        message.text,
-                        maxLines: 10,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(),
-                      ),
-                    ),
-                    SizedBox(width: 8), // 添加间距
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end, // 垂直对齐到底部
-                      crossAxisAlignment: CrossAxisAlignment.end, // 水平对齐到右侧
-                      children: [
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Text(
-                            "21.04",
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
+    return GestureDetector(
+      onTap: () {
+        onMessageStatusTap?.call(context, message);
+      },
+      child: Container(
+        color: CupertinoColors.systemGrey5,
+        width: maxDimension,
+        child: Row(
+          children: [
+            Text(SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
+              style: TextStyle(color: Colors.red, fontSize: 12),
             ),
-          )
-        ],
+            SizedBox(width: 6,),
+            Expanded(
+              child: Container(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: isOwner ? Radius.circular(0) : Radius.circular(8),
+                      topLeft: isOwner ? Radius.circular(8) : Radius.circular(0),
+                      bottomRight: Radius.circular(8),
+                      bottomLeft: Radius.circular(8)
+                    )
+                  ),
+                  width: messageWidth.toDouble(),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end, // 垂直对齐到底部
+                    children: [
+                      Expanded(
+                        child: Text(
+                          message.text,
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(),
+                        ),
+                      ),
+                      SizedBox(width: 8), // 添加间距
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end, // 垂直对齐到底部
+                        crossAxisAlignment: CrossAxisAlignment.end, // 水平对齐到右侧
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              "21.04",
+                              style: TextStyle(color: Colors.grey, fontSize: 10),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+              ),
+            )
+          ],
+        ),
       ),
     );
     //   },
