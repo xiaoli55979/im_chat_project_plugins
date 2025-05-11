@@ -52,5 +52,10 @@
   "activityLevelCheckInSynchronization": "Activity level check-in synchronization",
   "holdToTalk": "Hold to talk",
   "releaseAndCancel": "Release and cancel",
-  "releaseToSendSwipeUpToCancel": "Release to send, swipe up to cancel"
+  "releaseToSendSwipeUpToCancel": "Release to send, swipe up to cancel",
+  "aPictureSent": "A picture sent",
+  "aBusinessCardSentOver": "A business card sent over",
+  "aVideoSent": "A video sent over",
+  "aSignatureSent": "A signature sent over",
+  "aDocumentSent": "A document sent"
 }

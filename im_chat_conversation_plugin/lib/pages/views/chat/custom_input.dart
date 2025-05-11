@@ -201,10 +201,11 @@ class _CustomInputState extends State<CustomInput> {
     // Stop recording...
     final path1 = await record.stop();
     final seconds = await getAudioDuration(path1 ?? "");
-    print("得到了录音数据地址：$path1");
-    if (!isCancelling.value)
-    widget.onAudioValueChanged(seconds, path1 ?? "");
 
+    if (!isCancelling.value) {
+      print("得到了录音数据地址：$path1");
+      widget.onAudioValueChanged(seconds, path1 ?? "");
+    }
 
 // ... or cancel it (and implicitly remove file/blob).
     await record.cancel();

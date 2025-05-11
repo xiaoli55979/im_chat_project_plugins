@@ -172,4 +172,19 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get releaseToSendSwipeUpToCancel => '松手发送，上划取消';
+
+  @override
+  String get aPictureSent => '发来一张图片';
+
+  @override
+  String get aBusinessCardSentOver => '发来一张名片';
+
+  @override
+  String get aVideoSent => '发来一个视频';
+
+  @override
+  String get aSignatureSent => '发来一个签名';
+
+  @override
+  String get aDocumentSent => '发来的一份文件';
 }

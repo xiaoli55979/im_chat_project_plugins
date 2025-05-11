@@ -244,6 +244,7 @@ class ChatController extends GetxController {
   /// 添加一条消息
   void addMessage(types.Message message) {
     messages.insert(0, message);
+    // WKIM.shared.messageManager.sendMessage(WKTextContent('我是文本消息'), WKChannel('uid_1', WKChannelType.personal));
     update();
   }
 

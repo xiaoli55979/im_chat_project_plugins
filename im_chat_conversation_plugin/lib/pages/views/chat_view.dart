@@ -16,6 +16,8 @@ import 'chat/custom_audio_message.dart';
 import 'chat/custom_card_message.dart';
 import 'chat/custom_image_message.dart';
 import 'chat/custom_input.dart';
+import 'chat/custom_reply_image_message.dart';
+import 'chat/custom_reply_text_view.dart';
 import 'chat/custom_sign_message.dart';
 import 'chat/custom_unsupport_message.dart';
 import 'chat/custom_video_message.dart';
@@ -234,8 +236,10 @@ class ChatView extends GetView<ChatController> {
               //   );
               // },
               textMessageBuilder: (types.TextMessage message, {required int messageWidth, required bool showName}) {
-                return CustomTextView(message: message, isOwner: controller.isOwner(message), onMessageStatusTap: (context, message) {
+                return CustomReplyImageMessage(message: message, isOwner: controller.isOwner(message), onMessageStatusTap: (context, message) {
                   print("点按");
+                  controller.isReply = !controller.isReply;
+                  controller.update();
                 },);
             },
               videoMessageBuilder: (types.VideoMessage message, {required int messageWidth}) {
@@ -263,12 +267,16 @@ class ChatView extends GetView<ChatController> {
               fileMessageBuilder: (types.FileMessage message, {required int messageWidth}) {
                 return CustomFileView(message: message, isOwner: controller.isOwner(message));
             },
+              nameBuilder: (types.User user) {
+                return Text("nameBuilder");
+              },
 
               /// 消息滚动
               // onMessageVisibilityChanged: (types.Message message, bool visible) {
               //   messagehandleModel.markMessageAsRead(messageQueue, message);
               // },
               onMessageLongPress: (BuildContext context, message, LongPressStartDetails details) {
+                if (controller.isMultiple) return;
                 // longClick(context, message, details);
                 final renderBox = context.findRenderObject() as RenderBox;
 
@@ -367,8 +375,10 @@ class ChatView extends GetView<ChatController> {
           ],
           didSelectItem: (MultipleItemEnum item) {
             print("你点击了${item.label}");
+            removeOverlayEntry();
             controller.isMultiple = !controller.isMultiple;
             controller.update();
+
           },
         ),
       ),

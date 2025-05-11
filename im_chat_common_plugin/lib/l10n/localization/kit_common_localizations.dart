@@ -416,6 +416,36 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'松手发送，上划取消'**
   String get releaseToSendSwipeUpToCancel;
+
+  /// No description provided for @aPictureSent.
+  ///
+  /// In zh, this message translates to:
+  /// **'发来一张图片'**
+  String get aPictureSent;
+
+  /// No description provided for @aBusinessCardSentOver.
+  ///
+  /// In zh, this message translates to:
+  /// **'发来一张名片'**
+  String get aBusinessCardSentOver;
+
+  /// No description provided for @aVideoSent.
+  ///
+  /// In zh, this message translates to:
+  /// **'发来一个视频'**
+  String get aVideoSent;
+
+  /// No description provided for @aSignatureSent.
+  ///
+  /// In zh, this message translates to:
+  /// **'发来一个签名'**
+  String get aSignatureSent;
+
+  /// No description provided for @aDocumentSent.
+  ///
+  /// In zh, this message translates to:
+  /// **'发来的一份文件'**
+  String get aDocumentSent;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

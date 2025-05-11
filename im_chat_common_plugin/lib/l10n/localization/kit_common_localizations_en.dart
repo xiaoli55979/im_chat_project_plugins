@@ -172,4 +172,19 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get releaseToSendSwipeUpToCancel => 'Release to send, swipe up to cancel';
+
+  @override
+  String get aPictureSent => 'A picture sent';
+
+  @override
+  String get aBusinessCardSentOver => 'A business card sent over';
+
+  @override
+  String get aVideoSent => 'A video sent over';
+
+  @override
+  String get aSignatureSent => 'A signature sent over';
+
+  @override
+  String get aDocumentSent => 'A document sent';
 }
