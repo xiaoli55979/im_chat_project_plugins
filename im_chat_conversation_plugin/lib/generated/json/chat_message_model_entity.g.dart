@@ -1,7 +1,8 @@
 import 'package:im_chat_conversation_plugin/generated/json/base/json_convert_content.dart';
 import 'package:im_chat_conversation_plugin/models/chat_message_model_entity.dart';
 
-ChatMessageModelEntity $ChatMessageModelEntityFromJson(Map<String, dynamic> json) {
+ChatMessageModelEntity $ChatMessageModelEntityFromJson(
+    Map<String, dynamic> json) {
   final ChatMessageModelEntity chatMessageModelEntity = ChatMessageModelEntity();
   final String? userId = jsonConvert.convert<String>(json['userId']);
   if (userId != null) {
@@ -38,7 +39,8 @@ ChatMessageModelEntity $ChatMessageModelEntityFromJson(Map<String, dynamic> json
   return chatMessageModelEntity;
 }
 
-Map<String, dynamic> $ChatMessageModelEntityToJson(ChatMessageModelEntity entity) {
+Map<String, dynamic> $ChatMessageModelEntityToJson(
+    ChatMessageModelEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['userId'] = entity.userId;
   data['avatar'] = entity.avatar;

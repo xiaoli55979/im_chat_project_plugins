@@ -187,4 +187,25 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get aDocumentSent => 'A document sent';
+
+  @override
+  String get chatFiles => 'Chat files';
+
+  @override
+  String get select => 'select';
+
+  @override
+  String get sortByTime => 'Sort by time';
+
+  @override
+  String get downloaded => 'Downloaded';
+
+  @override
+  String get loadingCompleted => 'Loading completed';
+
+  @override
+  String get deleteCache => 'DeleteCache';
+
+  @override
+  String get clear => 'Clear';
 }

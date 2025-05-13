@@ -8,6 +8,7 @@ import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/custom_file_view.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/custom_text_view.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/multiple_bar_view.dart';
+import 'package:im_chat_conversation_plugin/routes/app_routes_conversation.dart';
 import 'package:intl/intl.dart';
 
 import '../../handle/message_content_type.dart';
@@ -184,12 +185,13 @@ class ChatView extends GetView<ChatController> {
               avatarBuilder: (types.User author, bool isMultipleSelect, types.Message msg) {
                 return GestureDetector(
                   onTap: () {
-                    if (isMultipleSelect) {
-                      controller.didSelectedMsg(msg);
-                      controller.update();
-                    } else {
-                      controller.showUserInfo(author.id);
-                    }
+                    // if (isMultipleSelect) {
+                    //   controller.didSelectedMsg(msg);
+                    //   controller.update();
+                    // } else {
+                    //   controller.showUserInfo(author.id);
+                    // }
+                    Get.toNamed(AppRoutesConversation.chatFile);
                     removeOverlayEntry();
                   },
                   child: Container(

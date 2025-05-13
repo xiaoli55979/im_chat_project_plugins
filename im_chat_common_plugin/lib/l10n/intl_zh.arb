@@ -57,5 +57,12 @@
   "aBusinessCardSentOver": "发来一张名片",
   "aVideoSent": "发来一个视频",
   "aSignatureSent": "发来一个签名",
-  "aDocumentSent": "发来的一份文件"
+  "aDocumentSent": "发来的一份文件",
+  "chatFiles": "聊天文件",
+  "select": "选择",
+  "sortByTime": "时间排序",
+  "downloaded": "已下载",
+  "loadingCompleted": "加载完毕",
+  "deleteCache": "删除缓存",
+  "clear": "清理"
 }

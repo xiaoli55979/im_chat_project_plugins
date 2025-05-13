@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+im_chat_auth_plugin/example/ios/Runner.xcodeproj/README.md
+im_chat_common_plugin/example/ios/Runner.xcodeproj/README.md
+im_chat_home_plugin/example/ios/Runner.xcodeproj/README.md

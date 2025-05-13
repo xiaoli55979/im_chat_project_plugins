@@ -446,6 +446,48 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'发来的一份文件'**
   String get aDocumentSent;
+
+  /// No description provided for @chatFiles.
+  ///
+  /// In zh, this message translates to:
+  /// **'聊天文件'**
+  String get chatFiles;
+
+  /// No description provided for @select.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择'**
+  String get select;
+
+  /// No description provided for @sortByTime.
+  ///
+  /// In zh, this message translates to:
+  /// **'时间排序'**
+  String get sortByTime;
+
+  /// No description provided for @downloaded.
+  ///
+  /// In zh, this message translates to:
+  /// **'已下载'**
+  String get downloaded;
+
+  /// No description provided for @loadingCompleted.
+  ///
+  /// In zh, this message translates to:
+  /// **'加载完毕'**
+  String get loadingCompleted;
+
+  /// No description provided for @deleteCache.
+  ///
+  /// In zh, this message translates to:
+  /// **'删除缓存'**
+  String get deleteCache;
+
+  /// No description provided for @clear.
+  ///
+  /// In zh, this message translates to:
+  /// **'清理'**
+  String get clear;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

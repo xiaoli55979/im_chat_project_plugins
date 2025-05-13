@@ -12,4 +12,7 @@ class AppRoutesConversation {
 
   /// 聊天频率设置
   static const chatFrequency = '/chatFrequency';
+
+  /// 聊天文件
+  static const chatFile = '/chatFile';
 }

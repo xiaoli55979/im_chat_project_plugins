@@ -187,4 +187,25 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get aDocumentSent => '发来的一份文件';
+
+  @override
+  String get chatFiles => '聊天文件';
+
+  @override
+  String get select => '选择';
+
+  @override
+  String get sortByTime => '时间排序';
+
+  @override
+  String get downloaded => '已下载';
+
+  @override
+  String get loadingCompleted => '加载完毕';
+
+  @override
+  String get deleteCache => '删除缓存';
+
+  @override
+  String get clear => '清理';
 }

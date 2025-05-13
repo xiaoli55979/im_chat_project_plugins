@@ -57,5 +57,12 @@
   "aBusinessCardSentOver": "A business card sent over",
   "aVideoSent": "A video sent over",
   "aSignatureSent": "A signature sent over",
-  "aDocumentSent": "A document sent"
+  "aDocumentSent": "A document sent",
+  "chatFiles": "Chat files",
+  "select": "select",
+  "sortByTime": "Sort by time",
+  "downloaded": "Downloaded",
+  "loadingCompleted": "Loading completed",
+  "deleteCache": "DeleteCache",
+  "clear": "Clear"
 }
