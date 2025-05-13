@@ -64,5 +64,8 @@
   "downloaded": "已下载",
   "loadingCompleted": "加载完毕",
   "deleteCache": "删除缓存",
-  "clear": "清理"
+  "clear": "清理",
+  "tips": "提示",
+  "yourFriend": "你的好友",
+  "screenShotTips": "设置了截屏惩罚，您已被惩罚清除与他的聊天会话记录"
 }

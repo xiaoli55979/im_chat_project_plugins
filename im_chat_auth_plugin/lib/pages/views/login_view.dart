@@ -29,18 +29,20 @@ class LoginView extends GetView<LoginController> {
             ),
           ),
           actions: [
-            // TextButton(
-            //   onPressed: () {
-            //     controller.seartCheckLine();
-            //   },
-            //   child: Text(
-            //     SlocalAuth.getLocalizaContent(SlocalAuth.of(context).auth_line_check),
-            //     style: TextStyle(
-            //       fontSize: FontUtils.navFont,
-            //       textBaseline: TextBaseline.ideographic, // 设置基线对齐方式为 alphabetic
-            //     ),
-            //   ),
-            // ),
+            TextButton(
+              onPressed: () {
+                // controller.seartCheckLine();
+                print("跳转至帮助与设置");
+              },
+              child: Text(
+                SlocalAuth.getLocalizaContent(SlocalAuth.of(context).help_and_set),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: FontUtils.desFontSize,
+                  textBaseline: TextBaseline.ideographic, // 设置基线对齐方式为 alphabetic
+                ),
+              ),
+            ),
           ],
         ),
         body: GetBuilder<LoginController>(builder: (controller) {

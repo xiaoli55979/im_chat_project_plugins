@@ -63,5 +63,6 @@
   "auth_receive_qrcode": "收款二维码",
   "auth_save_photo": "保存到相册",
   "auth_share_adress": "分享地址",
-  "auth_share_qrcode_adress": "分享收款二维码"
+  "auth_share_qrcode_adress": "分享收款二维码",
+  "help_and_set": "帮助与设置"
 }

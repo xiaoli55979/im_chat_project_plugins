@@ -174,8 +174,9 @@ class LoginController extends GetxController {
         UserInfoModelEntity? getModel = await userManager.getCurrentUser();
         GlobalService.to.loginDefault(model.token).then((value){
           if (value) {
-            // print("object_uid:${getModel?.uid}");
+            print("object_uid:${getModel?.uid}去到主页}");
             Get.offAllNamed("/home");
+
             GlobalService.to.isLoggedIn.value = true;
           }
         });

@@ -8,6 +8,7 @@ import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/custom_file_view.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/custom_text_view.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/multiple_bar_view.dart';
+import 'package:im_chat_conversation_plugin/pages/views/components/screen_shot_view.dart';
 import 'package:im_chat_conversation_plugin/routes/app_routes_conversation.dart';
 import 'package:intl/intl.dart';
 
@@ -26,6 +27,7 @@ import 'package:im_chat_common_plugin/l10n/SlocalUtils.dart';
 
 class ChatView extends GetView<ChatController> {
   OverlayEntry? overlayEntry;
+
   ChatView({super.key});
 
   @override
@@ -45,17 +47,31 @@ class ChatView extends GetView<ChatController> {
             appBar: AppBar(
               // leading: Text("123", style: TextStyle(color: Colors.black54),),
               leadingWidth: controller.isMultiple ? 100 : 50,
-              leading: controller.isMultiple ?
-              Column(
-                children: [
-                  SizedBox(height: 20,),
-                  Row(children: [
-                    SizedBox(width: 10,),
-                    Text("${controller.didSelectedMsgs.length}条已选中", softWrap: false, style: TextStyle(color: Colors.black),)
-                  ],)
-                ],
-              )
-                  : IconButton(onPressed: () {Get.back();}, icon: Icon(Icons.navigate_before)),
+              leading: controller.isMultiple
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "${controller.didSelectedMsgs.length}条已选中",
+                              softWrap: false,
+                              style: TextStyle(color: Colors.black),
+                            )
+                          ],
+                        )
+                      ],
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(Icons.navigate_before)),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -64,15 +80,13 @@ class ChatView extends GetView<ChatController> {
                     children: [
                       SizedBox(width: 10),
                       Expanded(
-                        child:
-                        Text(
-                            "${controller.channelName}(1234/13441)",
-                            style: TextStyle(fontSize: 16),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                          )
-                      ),
+                          child: Text(
+                        "${controller.channelName}(1234/13441)",
+                        style: TextStyle(fontSize: 16),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      )),
                       SizedBox(width: 10),
                     ],
                   ),
@@ -81,17 +95,19 @@ class ChatView extends GetView<ChatController> {
               actions: [
                 /// 占位符,使标题居中
                 // SizedBox(width: 50),
-                 controller.isMultiple ?
-                 TextButton(onPressed: () {
-                   controller.isMultiple = !controller.isMultiple;
-                   controller.update();
-                 }, child: Text("取消")) :
-                 IconButton(
-                    onPressed: () {
-                      controller.gotoGroupSetting();
-                      removeOverlayEntry();
-                    },
-                    icon: Icon(Icons.more_vert)),
+                controller.isMultiple
+                    ? TextButton(
+                        onPressed: () {
+                          controller.isMultiple = !controller.isMultiple;
+                          controller.update();
+                        },
+                        child: Text("取消"))
+                    : IconButton(
+                        onPressed: () {
+                          controller.gotoGroupSetting();
+                          removeOverlayEntry();
+                        },
+                        icon: Icon(Icons.more_vert)),
               ],
             ),
             body: Chat(
@@ -103,7 +119,8 @@ class ChatView extends GetView<ChatController> {
                   MatchText(
                     pattern: sensitivePattern,
                     style: const TextStyle(color: Colors.black),
-                    renderText: ({required String str, required String pattern}) => {
+                    renderText:
+                        ({required String str, required String pattern}) => {
                       'display': '***', // 替换成 ***
                     },
                   ),
@@ -123,12 +140,14 @@ class ChatView extends GetView<ChatController> {
                 },
               ),
               theme: DefaultChatTheme(
-                bubbleMargin: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 1),
+                bubbleMargin:
+                    EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 1),
                 messageBorderRadius: 8,
                 messageInsetsHorizontal: 10,
                 messageInsetsVertical: 10,
                 messageMaxWidth: MediaQuery.of(context).size.width * 0.7,
-                dateDividerTextStyle: const TextStyle(color: Colors.grey, fontSize: 14),
+                dateDividerTextStyle:
+                    const TextStyle(color: Colors.grey, fontSize: 14),
                 dateDividerMargin: const EdgeInsets.only(top: 5, bottom: 5),
                 inputTextColor: Colors.black,
                 inputTextCursorColor: Colors.black,
@@ -140,17 +159,23 @@ class ChatView extends GetView<ChatController> {
                 secondaryColor: Colors.white,
                 userAvatarNameColors: [Colors.blueAccent],
                 userAvatarImageBackgroundColor: Colors.blueAccent,
-                userNameTextStyle: TextStyle(color: Colors.blueAccent, fontSize: 16),
-                receivedMessageBodyLinkTextStyle: TextStyle(color: Colors.blue), // 接受消息里面的超链接
-                sentMessageBodyTextStyle: TextStyle(color: Colors.white, fontSize: 16),
+                userNameTextStyle:
+                    TextStyle(color: Colors.blueAccent, fontSize: 16),
+                receivedMessageBodyLinkTextStyle: TextStyle(color: Colors.blue),
+                // 接受消息里面的超链接
+                sentMessageBodyTextStyle:
+                    TextStyle(color: Colors.white, fontSize: 16),
               ),
               topConfig: TopConfigOption(
                 showHistory: false,
                 loading: false,
                 loadingColor: Theme.of(context).primaryColor,
-                content: Text("加载历史消息", style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor)),
+                content: Text("加载历史消息",
+                    style: TextStyle(
+                        fontSize: 16, color: Theme.of(context).primaryColor)),
               ),
-              imageGalleryOptions: ImageGalleryOptions(maxScale: 2.0, minScale: 0.5),
+              imageGalleryOptions:
+                  ImageGalleryOptions(maxScale: 2.0, minScale: 0.5),
               scrollToUnreadOptions: ScrollToUnreadOptions(scrollOnOpen: true),
               inputOptions: InputOptions(enabled: true),
               usePreviewData: true,
@@ -182,7 +207,8 @@ class ChatView extends GetView<ChatController> {
                 controller.update();
                 removeOverlayEntry();
               },
-              avatarBuilder: (types.User author, bool isMultipleSelect, types.Message msg) {
+              avatarBuilder: (types.User author, bool isMultipleSelect,
+                  types.Message msg) {
                 return GestureDetector(
                   onTap: () {
                     // if (isMultipleSelect) {
@@ -191,40 +217,59 @@ class ChatView extends GetView<ChatController> {
                     // } else {
                     //   controller.showUserInfo(author.id);
                     // }
-                    Get.toNamed(AppRoutesConversation.chatFile);
+                    // Get.toNamed(AppRoutesConversation.chatSetting);
+                    Get.toNamed(AppRoutesConversation.chatSetting);
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return Dialog(
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(12), // 设置边角圆润
+                    //         ),
+                    //         child: ScreenShotView(
+                    //           describeText:
+                    //               "${SlocalCommon.getLocalizaContent(SlocalCommon.of(context).yourFriend)}"
+                    //               "大佬"
+                    //               "${SlocalCommon.getLocalizaContent(SlocalCommon.of(context).screenShotTips)}",
+                    //         ),
+                    //       );
+                    //     });
                     removeOverlayEntry();
                   },
                   child: Container(
-                    padding: EdgeInsets.only(right: 10),
-                    child:
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: ImageTools.asset("default_avatar.png", isCommon: true, width: 40, height: 40, fit: BoxFit.cover),
-                    )
-                    // author.imageUrl == null
-                    //     ? ImageTools.asset("default_avatar.png", isCommon: true, width: 35, height: 35, fit: BoxFit.cover)
-                    //     : SizedBox(
-                    //         width: 30,
-                    //         height: 30,
-                    //         child: ClipRRect(
-                    //           borderRadius: BorderRadius.circular(15), // 调整圆角
-                    //           child: CachedNetworkImage(
-                    //             imageUrl: author.imageUrl!,
-                    //             fit: BoxFit.fill, // 让图片填充整个框
-                    //             placeholder: (context, url) => Container(
-                    //               width: double.infinity,
-                    //               height: double.infinity,
-                    //               color: Colors.grey[300], // 占位颜色
-                    //             ),
-                    //             errorWidget: (context, url, error) => Container(
-                    //               color: Colors.grey[300],
-                    //               alignment: Alignment.center,
-                    //               child: Icon(Icons.error, size: 20, color: Colors.red),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                  ),
+                      padding: EdgeInsets.only(right: 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: ImageTools.asset("default_avatar.png",
+                            isCommon: true,
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover),
+                      )
+                      // author.imageUrl == null
+                      //     ? ImageTools.asset("default_avatar.png", isCommon: true, width: 35, height: 35, fit: BoxFit.cover)
+                      //     : SizedBox(
+                      //         width: 30,
+                      //         height: 30,
+                      //         child: ClipRRect(
+                      //           borderRadius: BorderRadius.circular(15), // 调整圆角
+                      //           child: CachedNetworkImage(
+                      //             imageUrl: author.imageUrl!,
+                      //             fit: BoxFit.fill, // 让图片填充整个框
+                      //             placeholder: (context, url) => Container(
+                      //               width: double.infinity,
+                      //               height: double.infinity,
+                      //               color: Colors.grey[300], // 占位颜色
+                      //             ),
+                      //             errorWidget: (context, url, error) => Container(
+                      //               color: Colors.grey[300],
+                      //               alignment: Alignment.center,
+                      //               child: Icon(Icons.error, size: 20, color: Colors.red),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      ),
                 );
               },
               topTapCallBack: () {
@@ -237,38 +282,65 @@ class ChatView extends GetView<ChatController> {
               //     child: ToolsUtils.asset("localIcons.png", width: 30, height: 30),
               //   );
               // },
-              textMessageBuilder: (types.TextMessage message, {required int messageWidth, required bool showName}) {
-                return CustomReplyImageMessage(message: message, isOwner: controller.isOwner(message), onMessageStatusTap: (context, message) {
-                  print("点按");
-                  controller.isReply = !controller.isReply;
-                  controller.update();
-                },);
-            },
-              videoMessageBuilder: (types.VideoMessage message, {required int messageWidth}) {
+              textMessageBuilder: (types.TextMessage message,
+                  {required int messageWidth, required bool showName}) {
+                return CustomReplyImageMessage(
+                  message: message,
+                  isOwner: controller.isOwner(message),
+                  onMessageStatusTap: (context, message) {
+                    print("点按");
+                    controller.isReply = !controller.isReply;
+                    controller.update();
+                  },
+                );
+              },
+              videoMessageBuilder: (types.VideoMessage message,
+                  {required int messageWidth}) {
                 print("<<<<<<<<<<<<<<<<<object>>>>>>>>>>>>>>>>>");
-                return CustomVideoMessage(message: message, isOwner: controller.isOwner(message),);
+                return CustomVideoMessage(
+                  message: message,
+                  isOwner: controller.isOwner(message),
+                );
               },
-              imageMessageBuilder: (types.ImageMessage message, {required int messageWidth}) {
-                return CustomImageMessage(message: message, messageWidth: 250, isOwner: controller.isOwner(message),);
+              imageMessageBuilder: (types.ImageMessage message,
+                  {required int messageWidth}) {
+                return CustomImageMessage(
+                  message: message,
+                  messageWidth: 250,
+                  isOwner: controller.isOwner(message),
+                );
               },
-              customMessageBuilder: (types.CustomMessage customMessage, {required int messageWidth}) {
+              customMessageBuilder: (types.CustomMessage customMessage,
+                  {required int messageWidth}) {
                 final metadata = customMessage.metadata;
                 int type = metadata?["type"];
                 if (type == MessageContentType.CARD) {
-                  return CustomCardMessage(message: customMessage, isOwner: controller.isOwner(customMessage),);
+                  return CustomCardMessage(
+                    message: customMessage,
+                    isOwner: controller.isOwner(customMessage),
+                  );
                 } else if (type == MessageContentType.SIGN) {
-                  return CustomSignMessage(message: customMessage, isOwner: controller.isOwner(customMessage),);
+                  return CustomSignMessage(
+                    message: customMessage,
+                    isOwner: controller.isOwner(customMessage),
+                  );
                 } else {
                   return CustomUnsupportMessage();
                 }
               },
-              audioMessageBuilder: (types.AudioMessage message, {required int messageWidth}) {
-                return CustomAudioMessage(message: message, isOwner: controller.isOwner(message),);
+              audioMessageBuilder: (types.AudioMessage message,
+                  {required int messageWidth}) {
+                return CustomAudioMessage(
+                  message: message,
+                  isOwner: controller.isOwner(message),
+                );
               },
 
-              fileMessageBuilder: (types.FileMessage message, {required int messageWidth}) {
-                return CustomFileView(message: message, isOwner: controller.isOwner(message));
-            },
+              fileMessageBuilder: (types.FileMessage message,
+                  {required int messageWidth}) {
+                return CustomFileView(
+                    message: message, isOwner: controller.isOwner(message));
+              },
               nameBuilder: (types.User user) {
                 return Text("nameBuilder");
               },
@@ -277,33 +349,36 @@ class ChatView extends GetView<ChatController> {
               // onMessageVisibilityChanged: (types.Message message, bool visible) {
               //   messagehandleModel.markMessageAsRead(messageQueue, message);
               // },
-              onMessageLongPress: (BuildContext context, message, LongPressStartDetails details) {
+              onMessageLongPress: (BuildContext context, message,
+                  LongPressStartDetails details) {
                 if (controller.isMultiple) return;
                 // longClick(context, message, details);
                 final renderBox = context.findRenderObject() as RenderBox;
 
                 // 获取被点击视图左上角的全局位置
                 // 获取视图右上角的全局坐标
-                final viewRightTopOffset = renderBox.localToGlobal(Offset(renderBox.size.width, 0));
-                showBubbleMenu(context,
-                  viewRightTopOffset,
-                  false
-                );
+                final viewRightTopOffset =
+                    renderBox.localToGlobal(Offset(renderBox.size.width, 0));
+                showBubbleMenu(context, viewRightTopOffset, false);
                 // removeOverlayEntry();
               },
 
-              customBottomWidget: controller.isMultiple ?
-              MultipleBarView(didSelectedCount: controller.didSelectedMsgs.length,
-                total: controller.messages.length,)
+              customBottomWidget: controller.isMultiple
+                  ? MultipleBarView(
+                      didSelectedCount: controller.didSelectedMsgs.length,
+                      total: controller.messages.length,
+                    )
                   : CustomInput(
-                requestFocus: controller.requestFocus,
-                focusChange: controller.focusChange,
-                onSendPressed: controller.handleSendPressed,
-                onAttachmentPressedIndex: controller.handleToolsPressed,
-                repliedMessage: controller.isReply ? controller.messages.first : controller.quotedMessage,
-                isReplied: controller.isReply,
-                onAudioValueChanged: controller.handleToolsAudioSend,
-              ),
+                      requestFocus: controller.requestFocus,
+                      focusChange: controller.focusChange,
+                      onSendPressed: controller.handleSendPressed,
+                      onAttachmentPressedIndex: controller.handleToolsPressed,
+                      repliedMessage: controller.isReply
+                          ? controller.messages.first
+                          : controller.quotedMessage,
+                      isReplied: controller.isReply,
+                      onAudioValueChanged: controller.handleToolsAudioSend,
+                    ),
               onAttachmentPressedIndex: controller.handleToolsPressed,
               onMessageTap: controller.handleMessageTap,
               onPreviewDataFetched: controller.handlePreviewDataFetched,
@@ -358,29 +433,38 @@ class ChatView extends GetView<ChatController> {
             removeOverlayEntry();
           },
           menuItems: [
-            MultipleItemEnum('assets/icons/reply.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).reply)),
-            MultipleItemEnum('assets/icons/copy.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).copy)),
-            MultipleItemEnum('assets/icons/forward.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).forward)),
-            MultipleItemEnum('assets/icons/select_all.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).multipleChoice)),
-            MultipleItemEnum('assets/icons/delete.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).delete)),
-            MultipleItemEnum('assets/icons/archive.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).collect)),
-            MultipleItemEnum('assets/icons/push_pin.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).top)),
-            MultipleItemEnum('assets/icons/more.png', SlocalCommon.getLocalizaContent(
-                SlocalCommon.of(context).more)),
+            MultipleItemEnum(
+                'assets/icons/reply.png',
+                SlocalCommon.getLocalizaContent(
+                    SlocalCommon.of(context).reply)),
+            MultipleItemEnum('assets/icons/copy.png',
+                SlocalCommon.getLocalizaContent(SlocalCommon.of(context).copy)),
+            MultipleItemEnum(
+                'assets/icons/forward.png',
+                SlocalCommon.getLocalizaContent(
+                    SlocalCommon.of(context).forward)),
+            MultipleItemEnum(
+                'assets/icons/select_all.png',
+                SlocalCommon.getLocalizaContent(
+                    SlocalCommon.of(context).multipleChoice)),
+            MultipleItemEnum(
+                'assets/icons/delete.png',
+                SlocalCommon.getLocalizaContent(
+                    SlocalCommon.of(context).delete)),
+            MultipleItemEnum(
+                'assets/icons/archive.png',
+                SlocalCommon.getLocalizaContent(
+                    SlocalCommon.of(context).collect)),
+            MultipleItemEnum('assets/icons/push_pin.png',
+                SlocalCommon.getLocalizaContent(SlocalCommon.of(context).top)),
+            MultipleItemEnum('assets/icons/more.png',
+                SlocalCommon.getLocalizaContent(SlocalCommon.of(context).more)),
           ],
           didSelectItem: (MultipleItemEnum item) {
             print("你点击了${item.label}");
             removeOverlayEntry();
             controller.isMultiple = !controller.isMultiple;
             controller.update();
-
           },
         ),
       ),
@@ -391,8 +475,8 @@ class ChatView extends GetView<ChatController> {
 
   void removeOverlayEntry() {
     if (overlayEntry != null) {
-    overlayEntry?.remove();
-    overlayEntry = null;
+      overlayEntry?.remove();
+      overlayEntry = null;
     }
   }
 }

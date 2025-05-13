@@ -1,9 +1,11 @@
-// Copyright (c) 2022 NetEase, Inc. All rights reserved.
-// Use of this source code is governed by a MIT license that can be
-// found in the LICENSE file.
-
+// Copyright (c) 2022 NetEase, Inc. All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 
+
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'kit_client_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -203,4 +205,7 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
 
   @override
   String get auth_share_qrcode_adress => '分享收款二维码';
+
+  @override
+  String get help_and_set => '帮助与设置';
 }

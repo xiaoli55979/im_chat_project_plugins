@@ -208,4 +208,13 @@ class KitCommonLocalizationsEn extends KitCommonLocalizations {
 
   @override
   String get clear => 'Clear';
+
+  @override
+  String get tips => 'Tips';
+
+  @override
+  String get yourFriend => '你的好友';
+
+  @override
+  String get screenShotTips => 'has set a screenshot penalty, and you have been penalized to clear chat session records with him';
 }

@@ -208,4 +208,13 @@ class KitCommonLocalizationsZh extends KitCommonLocalizations {
 
   @override
   String get clear => '清理';
+
+  @override
+  String get tips => '提示';
+
+  @override
+  String get yourFriend => '你的好友';
+
+  @override
+  String get screenShotTips => '设置了截屏惩罚，您已被惩罚清除与他的聊天会话记录';
 }

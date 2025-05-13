@@ -488,6 +488,24 @@ abstract class KitCommonLocalizations {
   /// In zh, this message translates to:
   /// **'清理'**
   String get clear;
+
+  /// No description provided for @tips.
+  ///
+  /// In zh, this message translates to:
+  /// **'提示'**
+  String get tips;
+
+  /// No description provided for @yourFriend.
+  ///
+  /// In zh, this message translates to:
+  /// **'你的好友'**
+  String get yourFriend;
+
+  /// No description provided for @screenShotTips.
+  ///
+  /// In zh, this message translates to:
+  /// **'设置了截屏惩罚，您已被惩罚清除与他的聊天会话记录'**
+  String get screenShotTips;
 }
 
 class _KitCommonLocalizationsDelegate extends LocalizationsDelegate<KitCommonLocalizations> {

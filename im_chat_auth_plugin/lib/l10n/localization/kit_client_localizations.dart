@@ -480,6 +480,12 @@ abstract class KitClientLocalizations {
   /// In zh, this message translates to:
   /// **'分享收款二维码'**
   String get auth_share_qrcode_adress;
+
+  /// No description provided for @help_and_set.
+  ///
+  /// In zh, this message translates to:
+  /// **'帮助与设置'**
+  String get help_and_set;
 }
 
 class _KitClientLocalizationsDelegate extends LocalizationsDelegate<KitClientLocalizations> {

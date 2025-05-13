@@ -64,5 +64,7 @@
   "downloaded": "Downloaded",
   "loadingCompleted": "Loading completed",
   "deleteCache": "DeleteCache",
-  "clear": "Clear"
+  "clear": "Clear",
+  "tips": "Tips",
+  "screenShotTips": "has set a screenshot penalty, and you have been penalized to clear chat session records with him"
 }
