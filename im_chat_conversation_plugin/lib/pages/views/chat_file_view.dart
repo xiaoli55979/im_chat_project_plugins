@@ -6,8 +6,10 @@ import 'package:im_chat_common_plugin/l10n/SlocalUtils.dart';
 import 'package:im_chat_common_plugin/tools/image_tools.dart';
 import 'package:im_chat_common_plugin/widget/base_view.dart';
 import 'package:im_chat_conversation_plugin/pages/controllers/chat_file_controller.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChatFileView extends GetView<ChatFileController> {
+
   const ChatFileView({super.key});
 
   @override
@@ -53,18 +55,23 @@ class ChatFileView extends GetView<ChatFileController> {
                   SizedBox(
                     width: 8,
                   ),
-                  TextButton(onPressed: () {
-                    controller.isChronological.value = !controller.isChronological.value;
-                  }, child: Text(
-                    SlocalCommon.getLocalizaContent(
-                        SlocalCommon.of(context).sortByTime),
-                    style: TextStyle(color: Colors.black87, fontSize: 14),
-                  )),
+                  TextButton(
+                      onPressed: () {
+                        controller.isChronological.value =
+                            !controller.isChronological.value;
+                      },
+                      child: Text(
+                        SlocalCommon.getLocalizaContent(
+                            SlocalCommon.of(context).sortByTime),
+                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                      )),
                   SizedBox(
                     width: 4,
                   ),
                   Obx(() {
-                    return controller.isChronological.value ? Icon(Icons.arrow_drop_down) : Icon(Icons.arrow_drop_up);
+                    return controller.isChronological.value
+                        ? Icon(Icons.arrow_drop_down)
+                        : Icon(Icons.arrow_drop_up);
                   }),
                   Expanded(child: Obx(() {
                     return Text(
@@ -81,128 +88,129 @@ class ChatFileView extends GetView<ChatFileController> {
 
             // 文件列表部分
             Expanded(
-                child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.files.value.length,
-                    itemBuilder: (context, index) {
-                      final file = controller.files[index];
-                      return GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            controller.toggleFileSelection(file);
-                          },
-                          child: Container(
-                            color: Colors.white,
-                            // height: 70,
-                            child: Column(
-                              children: [
-                                Row(children: [
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Obx(() {
-                                    return Visibility(
-                                      visible: controller.isMultiple.value,
-                                      child:
-                                         Icon(controller
-                                                .selectedFiles.value
-                                                .contains(file)
-                                            ? Icons.check_circle_outline
-                                            : Icons.check_circle)
-                                    );
-                                  }),
-                                  Obx(() {
-                                    return Visibility(
-                                      visible: controller.isMultiple.value,
-                                      child:
-                                         SizedBox(
-                                          width: 20,
-                                        )
-                                    );
-                                  }),
-                                  Icon(
-                                    Icons.circle,
-                                    weight: 40,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                      child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "1.docx",
-                                            style: TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 14),
-                                          ),
-                                          Text(
-                                            "我发送的文件",
-                                            style: TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 14),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "23.0 kb",
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14),
-                                              ),
-                                              Text(
-                                                "17:56",
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        SlocalCommon.getLocalizaContent(
-                                            SlocalCommon.of(context)
-                                                .downloaded),
-                                        style: TextStyle(
-                                            color: Colors.blue, fontSize: 14),
-                                      )),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                ]),
+              child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[];
+              }, body: SmartRefresher(
+                controller: controller.refreshController,
+                onRefresh: controller.onRefresh,
+                onLoading: controller.onLoading,
+                enablePullUp: true,
+                enablePullDown: true,
+                child:
+                ListView.builder(
+                  itemCount: controller.files.value.length,
+                  itemBuilder: (context, index) {
+                    final file = controller.files[index];
+                    return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          controller.toggleFileSelection(file);
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          // height: 70,
+                          child: Column(
+                            children: [
+                              Row(children: [
                                 SizedBox(
-                                  height: 10,
+                                  width: 10,
                                 ),
-                                Visibility(
-                                    visible: index !=
-                                        controller.files.value.length - 1,
-                                    child: Divider(
-                                      color: Colors.grey,
-                                      thickness: 0.5,
-                                      indent: 90,
-                                    ))
-                              ],
-                            ),
-                          ));
-                    },
-                  ),
+                                Obx(() {
+                                  return Visibility(
+                                      visible: controller.isMultiple.value,
+                                      child: Icon(controller
+                                          .selectedFiles.value
+                                          .contains(file)
+                                          ? Icons.check_circle_outline
+                                          : Icons.check_circle));
+                                }),
+                                Obx(() {
+                                  return Visibility(
+                                      visible: controller.isMultiple.value,
+                                      child: SizedBox(
+                                        width: 20,
+                                      ));
+                                }),
+                                Icon(
+                                  Icons.circle,
+                                  weight: 40,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "1.docx",
+                                              style: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 14),
+                                            ),
+                                            Text(
+                                              "我发送的文件",
+                                              style: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 14),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "23.0 kb",
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 14),
+                                                ),
+                                                Text(
+                                                  "17:56",
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 14),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      SlocalCommon.getLocalizaContent(
+                                          SlocalCommon.of(context)
+                                              .downloaded),
+                                      style: TextStyle(
+                                          color: Colors.blue, fontSize: 14),
+                                    )),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                              ]),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Visibility(
+                                  visible: index !=
+                                      controller.files.value.length - 1,
+                                  child: Divider(
+                                    color: Colors.grey,
+                                    thickness: 0.5,
+                                    indent: 90,
+                                  ))
+                            ],
+                          ),
+                        ));
+                  },
                 ),
-              ],
-            )),
+              )),
+            ),
             Container(
               width: double.infinity,
               height: 50,

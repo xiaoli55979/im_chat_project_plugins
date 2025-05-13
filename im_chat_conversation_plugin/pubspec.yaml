@@ -27,6 +27,7 @@ dependencies:
   just_audio: ^0.9.46
 #  image_picker: ^1.1.2
   screenshot_callback_plus: ^1.0.0  # 截屏检测
+  pull_to_refresh: ^2.0.0 # 上拉加载，下拉刷新
   flutter_advanced_avatar: ^1.5.2
   get: ^5.0.0-release-candidate-9.3.2
   provider: ^6.1.5
