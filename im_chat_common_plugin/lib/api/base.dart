@@ -156,7 +156,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
           return options;
         },
         onRetrySuccess: (options) {
-          __updateBaseUrl(options.baseUrl);
+          updateBaseUrl(options.baseUrl);
         },
         getRetries: () => LinkUtils.endpoints.length, // retry count (optional)
       );
@@ -167,7 +167,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
   }
 
   /// 统一更新BaseUrl
-  __updateBaseUrl(String baseUrl) {
+  updateBaseUrl(String baseUrl) {
     /// 测试
     dio.options.baseUrl = baseUrl;
     // ossDio.options.baseUrl = baseUrl.replaceFirst("app", "oss");
@@ -534,7 +534,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
     // ToolsUtils.instance.lineChangeStatus.addListener(() async {
     //   String? baseUrl = ToolsUtils.instance.isDebugModel ? LinkUtils.testBaseUrl : MySharedPref.getBaseUrl();
     //   if (baseUrl != null) {
-    //     __updateBaseUrl(baseUrl);
+    //     updateBaseUrl(baseUrl);
     //   }
     // });
   }

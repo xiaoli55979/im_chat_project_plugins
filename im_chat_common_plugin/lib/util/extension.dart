@@ -70,4 +70,5 @@ extension StringExtension on String? {
     }
     return text.isNotEmpty;
   }
+
 }

@@ -81,19 +81,19 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
   String get auth_line_check => '线路检测';
 
   @override
-  String get auth_login_with_password => '密码登录';
+  String get auth_login_with_password => '手机密码登录';
 
   @override
-  String get auth_login_with_phone => '手机登录';
+  String get auth_login_with_phone => '手机验证码登录';
 
   @override
   String get auth_forget_username => '忘记用户名';
 
   @override
-  String get auth_forget_password => '忘记密码';
+  String get auth_forget_password => '忘记登陆密码';
 
   @override
-  String get auth_regist_now => '没有账号？立即注册 >';
+  String get auth_regist_new => '注册新用户';
 
   @override
   String get auth_connect_server => '联系客服';
@@ -108,7 +108,10 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
   String get auth_passworld_length => '密码长度不正确';
 
   @override
-  String get auth_phone => '手机号码';
+  String get auth_verification_length => '验证码长度不正确';
+
+  @override
+  String get auth_phone => '手机号';
 
   @override
   String get auth_phone_hint => '请输入手机号码';
@@ -144,7 +147,7 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
   String get auth_face => '人脸核验';
 
   @override
-  String get auth_reset_password => '重置登录密码';
+  String get auth_reset_password => '重置密码';
 
   @override
   String get auth_reset_password_apply => '申请重置登录密码';
@@ -208,4 +211,61 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
 
   @override
   String get help_and_set => '帮助与设置';
+
+  @override
+  String get send => '发送';
+
+  @override
+  String get checkProtocolTips => '请阅读并勾选用户协议与隐私协议';
+
+  @override
+  String get passwordFormatTips => '密码必须包含英文大小写字母和数字';
+
+  @override
+  String get sms_code_verify_send_success => '短信验证码发送成功';
+
+  @override
+  String get auth_reset_pwd_success => '重置密码成功';
+
+  @override
+  String get auth_reset_pwd_failed => '重置密码失败';
+
+  @override
+  String get service => '服务器';
+
+  @override
+  String get join => '加入';
+
+  @override
+  String get scanQRCodeToJoin => '扫描二维码加入';
+
+  @override
+  String get service_hint => '请输入服务器ID';
+
+  @override
+  String get unableToReceiveVerifyCode => '收不到验证码';
+
+  @override
+  String get general => '通用';
+
+  @override
+  String get version => '版本';
+
+  @override
+  String get privacyAgreement => '隐私协议';
+
+  @override
+  String get userAgreement => '用户协议';
+
+  @override
+  String get uploadMalfunction => '上报故障';
+
+  @override
+  String get clearLocalCache => '清除本地缓存';
+
+  @override
+  String get fontSize => '字体大小';
+
+  @override
+  String get multilingual => '多语言';
 }

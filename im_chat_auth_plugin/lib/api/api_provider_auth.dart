@@ -1,5 +1,7 @@
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 
+import '../pages/model/forget_pwd_entity.dart';
+
 class ApiProviderAuth extends BaseProvider {
   /// 登录
   Future<Result<UserInfoModelEntity>> login({
@@ -17,6 +19,34 @@ class ApiProviderAuth extends BaseProvider {
           'device': device,
         },
         decoder: (obj) => Result<UserInfoModelEntity>.fromJson(obj),
+      );
+
+  /// 获取验证码
+  Future<Result<UserInfoModelEntity>> getVerifyCode({
+    required String phone,
+    required String zone,
+  }) =>
+      post(
+        '/v1/user/sms/registercode',
+        {
+          'phone': phone,
+          'zone': zone,
+        },
+        decoder: (obj) => Result<UserInfoModelEntity>.fromJson(obj),
+      );
+
+  Future<Result<ForgetPwdEntity>> resetPassword(
+          {required String phone,
+          required String code,
+          required String pwd,
+          required String zone}) =>
+      post('/v1/user/pwdforget', {
+        "code": code,
+        "phone": phone,
+        "pwd": pwd,
+        "zone": zone
+      },
+      decoder: (obj) => Result<ForgetPwdEntity>.fromJson(obj),
       );
 
   /// 注册
