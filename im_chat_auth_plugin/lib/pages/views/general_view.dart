@@ -23,7 +23,9 @@ class GeneralView extends GetView<GeneralController> {
             height: 10,
           ),
           MenuItem(
-              onPressed: () {},
+              onPressed: () {
+                controller.clearCache();
+              },
               icon: Icons.import_contacts,
               title: SlocalAuth.getLocalizaContent(
                   SlocalAuth.of(context).clearLocalCache)),

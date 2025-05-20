@@ -218,7 +218,7 @@ class ChatView extends GetView<ChatController> {
                     //   controller.showUserInfo(author.id);
                     // }
                     // Get.toNamed(AppRoutesConversation.chatSetting);
-                    Get.toNamed(AppRoutesConversation.chatSetting);
+                    Get.toNamed(AppRoutesConversation.chatFile);
                     // showDialog(
                     //     context: context,
                     //     builder: (BuildContext context) {

@@ -18,4 +18,7 @@ class AppRoutesAuth {
 
   /// 通用
   static const general = '/general';
+
+  /// 上报故障
+  static const reportMalfunction = '/reportMalfunction';
 }

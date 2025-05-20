@@ -527,13 +527,13 @@ class LoginView extends GetView<LoginController> {
                     FormBuilderValidators.required(
                         errorText: SlocalAuth.getLocalizaContent(
                             SlocalAuth.of(context).auth_passworld_hint)),
-              FormBuilderValidators.minLength(8,
+              FormBuilderValidators.minLength(6,
                   errorText: SlocalAuth.getLocalizaContent(
                       SlocalAuth.of(context).auth_verification_length)),
-              FormBuilderValidators.match(
-                r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$',
-                errorText: SlocalAuth.getLocalizaContent(SlocalAuth.of(context).passwordFormatTips),
-              ),
+              // FormBuilderValidators.match(
+              //   r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$',
+              //   errorText: SlocalAuth.getLocalizaContent(SlocalAuth.of(context).passwordFormatTips),
+              // ),
                   ]),
             autovalidateMode: controller.shouldShowError.value
                 ? AutovalidateMode.always // 始终显示校验错误

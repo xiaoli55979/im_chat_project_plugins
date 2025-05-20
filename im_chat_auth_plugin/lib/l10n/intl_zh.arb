@@ -82,7 +82,9 @@
   "privacyAgreement": "隐私协议",
   "userAgreement": "用户协议",
   "uploadMalfunction": "上报故障",
+  "malfunctionInfo": "故障信息",
   "clearLocalCache": "清除本地缓存",
   "fontSize": "字体大小",
-  "multilingual": "多语言"
+  "multilingual": "多语言",
+  "malfunctionDesTips": "请输入故障详情"
 }

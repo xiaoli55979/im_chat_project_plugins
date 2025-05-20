@@ -152,14 +152,15 @@ class _SuspensionViewState extends State<SuspensionView> {
       children: <Widget>[
         widget.itemCount == 0
             ? Container()
-            : ScrollablePositionedList.builder(
+            :
+    ScrollablePositionedList.builder(
                 itemCount: widget.itemCount,
                 itemBuilder: (context, index) => _buildItem(context, index),
                 itemScrollController: itemScrollController,
                 itemPositionsListener: itemPositionsListener,
                 physics: widget.physics,
                 padding: widget.padding,
-              ),
+              )
         /*_buildSusWidget(context),*/
       ],
     );

@@ -88,9 +88,10 @@ class ChatFileView extends GetView<ChatFileController> {
 
             // 文件列表部分
             Expanded(
-              child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[];
-              }, body: SmartRefresher(
+              // child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              //   return <Widget>[];
+              // }, body: ),
+              child: SmartRefresher(
                 controller: controller.refreshController,
                 onRefresh: controller.onRefresh,
                 onLoading: controller.onLoading,
@@ -209,7 +210,7 @@ class ChatFileView extends GetView<ChatFileController> {
                         ));
                   },
                 ),
-              )),
+              )
             ),
             Container(
               width: double.infinity,

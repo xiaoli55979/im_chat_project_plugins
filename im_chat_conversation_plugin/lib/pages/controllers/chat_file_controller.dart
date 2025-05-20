@@ -45,7 +45,10 @@ class ChatFileController extends GetxController {
   }
 
   void onRefresh() {
-      loadData();
+      // loadData();
+    Future.delayed(Duration(seconds: 3), () {
+      refreshController.refreshCompleted();
+    });
   }
 
   void onLoading() {

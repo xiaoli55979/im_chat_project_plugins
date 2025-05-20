@@ -589,6 +589,12 @@ abstract class KitClientLocalizations {
   /// **'上报故障'**
   String get uploadMalfunction;
 
+  /// No description provided for @malfunctionInfo.
+  ///
+  /// In zh, this message translates to:
+  /// **'故障信息'**
+  String get malfunctionInfo;
+
   /// No description provided for @clearLocalCache.
   ///
   /// In zh, this message translates to:
@@ -606,6 +612,12 @@ abstract class KitClientLocalizations {
   /// In zh, this message translates to:
   /// **'多语言'**
   String get multilingual;
+
+  /// No description provided for @malfunctionDesTips.
+  ///
+  /// In zh, this message translates to:
+  /// **'请输入故障详情'**
+  String get malfunctionDesTips;
 }
 
 class _KitClientLocalizationsDelegate extends LocalizationsDelegate<KitClientLocalizations> {

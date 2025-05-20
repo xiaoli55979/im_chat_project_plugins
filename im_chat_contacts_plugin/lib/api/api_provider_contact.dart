@@ -21,6 +21,11 @@ class ApiProviderContact extends BaseProvider {
   //   return {};
   // }
 
+  Future<Result<List<FriendModelEntity>>> getContacts()
+  => get(API.getContacts.path,
+          decoder: (obj) => Result<List<FriendModelEntity>>.fromJson(obj),
+);
+
   Future<Result<List<FriendModelEntity>>> friendSync({
     String apiVersion = "1",
     int limit = 100,

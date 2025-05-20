@@ -23,7 +23,7 @@ class RegisterController extends GetxController {
   var leftCount = 0.obs;
   RxBool isChecked = false.obs;
   String phoneNum = "";
-  String zoneNum = "86";
+  String zoneNum = "0086";
   TextEditingController phoneController = TextEditingController();
   @override
   void onReady() {
@@ -51,7 +51,8 @@ class RegisterController extends GetxController {
     }
     if (leftCount.value > 0) return;
     // var res = await
-    api.getVerifyCode(phone: "18123224973", zone: "86");
+    await api.getVerifyCode(phone: phoneNum, zone: "0086");
+    print(phoneNum);
     print("验证码发了：");
     leftCount.value = 60;
     _countdown();
@@ -96,7 +97,7 @@ class RegisterController extends GetxController {
             device: ToolsUtils.getDeviceMap(),
             phone: phoneNum,
             name: nickName,
-            zone: zoneNum,
+            zone: "0086",
             code: smsCode,
           );
           print("验证码发了：${res.data}");

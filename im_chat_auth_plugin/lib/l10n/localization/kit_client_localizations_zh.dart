@@ -261,6 +261,9 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
   String get uploadMalfunction => '上报故障';
 
   @override
+  String get malfunctionInfo => '故障信息';
+
+  @override
   String get clearLocalCache => '清除本地缓存';
 
   @override
@@ -268,4 +271,7 @@ class KitClientLocalizationsZh extends KitClientLocalizations {
 
   @override
   String get multilingual => '多语言';
+
+  @override
+  String get malfunctionDesTips => '请输入故障详情';
 }
