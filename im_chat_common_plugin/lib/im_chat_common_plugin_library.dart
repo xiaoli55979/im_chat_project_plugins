@@ -2,11 +2,11 @@
 library im_chat_common_plugin_library;
 
 /// api
-export 'api/base_provider.dart';
+export 'api/provider/base_provider.dart';
 export 'api/exception.dart';
-export 'api/im_provider.dart';
+export 'api/provider/im_provider.dart';
 export 'api/lines_config.dart';
-export 'api/user_provider.dart';
+export 'api/provider/user_provider.dart';
 export 'api/result.dart';
 export 'api/retry_evaluator.dart';
 /// components
@@ -80,7 +80,7 @@ export 'routes/app_routes_common.dart';
 /// services
 export 'services/global_service.dart';
 /// tools
-export 'tools/app_lifecycle_manager.dart';
+export 'manager/app_lifecycle_manager.dart';
 export 'tools/apputil_handle.dart';
 export 'tools/avatar_manager.dart';
 export 'tools/cache_manager_tool.dart';

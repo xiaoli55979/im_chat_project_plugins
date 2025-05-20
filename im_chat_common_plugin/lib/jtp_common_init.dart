@@ -1,25 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
-import 'package:im_chat_common_plugin/config/theme/app_theme.dart';
-import 'package:im_chat_common_plugin/generated/locales.g.dart';
+import 'package:im_chat_common_plugin/app.dart';
 import 'package:im_chat_common_plugin/manager/app_manager.dart';
 import 'package:im_chat_common_plugin/routes/app_pages_common.dart';
-import 'package:im_chat_common_plugin/services/global_service.dart';
-import 'package:im_chat_common_plugin/tools/app_lifecycle_manager.dart';
 import 'package:im_chat_common_plugin/tools/common_config_option.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
-import 'package:im_chat_common_plugin/tools/project_utils.dart';
-import 'package:im_chat_common_plugin/tools/tools_utils.dart';
-import 'package:im_chat_common_plugin/util/constant.dart';
-import 'package:im_chat_common_plugin/util/storage.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'api/lines_config.dart';
@@ -197,23 +182,7 @@ class JtpComponentsInit {
     final combinedRoutes = [...AppPagesCommon.routes, ...routes];
 
     /// 初始化默认配置
-    await AppManager.shared.initial();
-    await initDefaultConfig(commonConfig);
-
-    /// 注册生命周期管理
-    AppLifecycleManager.instance.init();
-
-    // String rootPath = "/launch"; // splash
-    String rootPath = "/splash"; //
-
-    // /// 获取项目id
-    // String projectId = MySharedPref.getProjectIdKey();
-    // if (projectId.isNotEmpty) {
-    //   rootPath = "/login";
-    //   if (GlobalService.to.isLoggedInValue) {
-    //     rootPath = "/home";
-    //   }
-    // }
+    await AppManager.shared.initial(commonConfig);
 
     /// 初始化异常上报SDK
     await SentryFlutter.init(
@@ -223,96 +192,8 @@ class JtpComponentsInit {
         options.debug = false;
         options.enablePrintBreadcrumbs = false;
       },
-      appRunner: () => initRunApp(rootPath, combinedRoutes, additionalBinds),
+      appRunner: () => runApp(App(routes: combinedRoutes, additionalBinds: additionalBinds)),
     );
-
-    // 透明状态栏
-    if (Platform.isAndroid) {
-      SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-      SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-    }
-  }
-
-  /// 初始化入口
-  static void initRunApp(String initial, List<GetPage> routes, [List<Bind>? additionalBinds]) {
-    runApp(
-      ScreenUtilInit(
-        // 填入设计稿中设备的屏幕尺寸,单位dp
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        useInheritedMediaQuery: true,
-        rebuildFactor: (old, data) => true,
-        builder: (context, widget) {
-          /// 通知UI初始完成
-          _instance.notifyUpdateUIComplete(context);
-          return GetMaterialApp(
-            theme: AppTheme.getThemeData(isLight: Storage.getIsLightTheme()),
-            title: kAppName.tr,
-            initialRoute: initial,
-            binds: [
-              Bind.put(UserProvider()),
-              // Bind.put(GlobalService(api: Get.find())),
-              ...?additionalBinds,
-            ],
-            getPages: routes,
-            unknownRoute: null,
-            useInheritedMediaQuery: true,
-            debugShowCheckedModeBanner: false,
-            navigatorObservers: [FlutterSmartDialog.observer],
-            defaultTransition: Platform.isAndroid ? Transition.rightToLeft : Transition.cupertino,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              // RefreshLocalizations.delegate,
-            ],
-            translations: Language(),
-            locale: AppManager.shared.locale ?? Get.deviceLocale,
-            fallbackLocale: China,
-            builder: FlutterSmartDialog.init(
-              builder: EasyLoading.init(
-                builder: (context, child) {
-                  return MediaQuery(
-                    data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
-                    child: child ?? Container(),
-                  );
-                },
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  /// 初始化默认配置
-  static Future<void> initDefaultConfig(CommonConfigOption config) async {
-    /// 设置升级提示版本号
-    GlobalService.to.versionCode = config.version;
-
-    // /// 获取版本号
-    // ToolsUtils.instance.version = await ToolsUtils.getVersion();
-    //
-    // /// 获取头信息
-    // ToolsUtils.instance.userAgent = await BaseProvider.getUserAgent();
-
-    ///项目名称
-    ProjectUtils.setGlobalProjectType(config.projectName);
-    ToolsUtils.instance.isJtp = true;
-
-    /// 注册事件统计
-    // startSensorsAnalyticsSDK();
-    // 添加 App 生命周期监听
-    AppLifecycleManager.instance.addListener(_onAppLifecycleChange);
-  }
-
-  /// 监听 App 生命周期状态变化
-  static void _onAppLifecycleChange(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive) {
-      print("🚀 SplashScreenView: 应用挂起");
-      ToolsUtils.showLockScreen();
-    }
   }
 
   /// 刷新余额

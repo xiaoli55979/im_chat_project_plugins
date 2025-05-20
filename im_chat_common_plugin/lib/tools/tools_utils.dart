@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screen_lock_plug/lock_screen_manager.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:intl/intl.dart';
 import 'package:line_detection_plugin/line_detection.dart';

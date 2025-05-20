@@ -3,14 +3,15 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
 import 'package:im_chat_common_plugin/generated/locales.g.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
+import 'package:im_chat_common_plugin/manager/app_lifecycle_manager.dart';
+import 'package:im_chat_common_plugin/tools/common_config_option.dart';
 import 'package:im_chat_common_plugin/tools/hide_keyboard_utils.dart';
 import 'package:im_chat_common_plugin/tools/log_manager.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:im_chat_common_plugin/util/constant.dart';
 import 'package:im_chat_common_plugin/util/storage.dart';
@@ -80,46 +81,70 @@ class AppManager {
     return AppLanguageType.system;
   }
 
-  Future<void> initial() async {
-    /// 如果需要 ensureInitialized，请在这里运行。
+  Future<void> initial(CommonConfigOption config) async {
+    ///如果需要 ensureInitialized，请在这里运行。
     WidgetsFlutterBinding.ensureInitialized();
-    /// init 初始化数据存储
+    ///init 初始化数据存储
     await Storage.init();
-    /// init shared preference
+    ///init shared preference
     await MySharedPref.init();
 
     HideKeybUtils.hideKeyShowfocus();
 
-    /// 初始化日志管理
+    ////初始化日志管理
     LogManager.initialize();
-    // log
+    ///log
     LogUtil.init(tag: 'iChat', isDebug: kDebugMode, maxLen: 256);
 
-    /// 加载htttpdns缓存配置
+    ///加载htttpdns缓存配置
     LinkInfoCacheManager cacheManager = LinkInfoCacheManager();
     LineHttpDnsModelEntity? entity = await cacheManager.getLineHttpDnsModelEntity();
     ToolsUtils.instance.httpDnsModelEntity = entity;
 
-    /// 设置运行模式
+    ///设置运行模式
     ToolsUtils.instance.isDebugModel = MySharedPref.getDebugMode();
 
-    /// 获取设备信息
+    ///获取设备信息
     DeviceInfo deviceInfo = await getDeviceInfo();
     ToolsUtils.instance.deviceInfo = deviceInfo;
 
-    /// 竖屏 Portrait 模式
+    ///设置升级提示版本号
+    GlobalService.to.versionCode = config.version;
+
+    // ///获取版本号
+    // ToolsUtils.instance.version = await ToolsUtils.getVersion();
+    // ///获取头信息
+    // ToolsUtils.instance.userAgent = await BaseProvider.getUserAgent();
+
+    ///项目名称
+    ProjectUtils.setGlobalProjectType(config.projectName);
+    ToolsUtils.instance.isJtp = true;
+
+    /// 注册事件统计
+    // startSensorsAnalyticsSDK();
+    // 添加 App 生命周期监听
+    AppLifecycleManager.instance.addListener(_onAppLifecycleChange);
+
+    ///竖屏 Portrait 模式
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    // 打开状态
+    ///打开状态
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
 
-    // 注册 GlobalService
-    Get.put(GlobalService(api: UserProvider()));
-
+    ///获取权限
     getPermission();
 
+    ///默认语言
     locale = Storage.getLocale();
     final currentLocale = locale ?? Get.locale ?? Get.deviceLocale;
     currentLocaler = Rx<Locale?>(currentLocale);
+  }
+
+  ///监听 App 生命周期状态变化
+  void _onAppLifecycleChange(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) {
+      print("🚀 SplashScreenView: 应用挂起");
+      ToolsUtils.showLockScreen();
+    }
   }
 
   void changeLocale(Locale? locale) {
@@ -145,7 +170,7 @@ class AppManager {
     );
   }
 
-  /// 检查是否有权限，用于安卓
+  ///检查是否有权限，用于安卓
   Future<void> getPermission() async {
     if (GetPlatform.isAndroid) {
       final storage = await Permission.storage.isGranted;

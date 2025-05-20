@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:im_chat_common_plugin/api/base_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/base_provider.dart';
 import 'package:im_chat_common_plugin/api/result.dart';
 import 'package:im_chat_common_plugin/models/app_config_model_entity.dart';
 import 'package:im_chat_common_plugin/models/app_model_entity.dart';

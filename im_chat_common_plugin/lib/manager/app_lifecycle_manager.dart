@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppLifecycleManager with WidgetsBindingObserver {
   // 私有构造函数
-  AppLifecycleManager._privateConstructor();
+  AppLifecycleManager._();
 
   // 单例实例
-  static final AppLifecycleManager _instance = AppLifecycleManager._privateConstructor();
+  static final AppLifecycleManager _instance = AppLifecycleManager._();
 
   // 获取单例实例的方法
   static AppLifecycleManager get instance => _instance;
