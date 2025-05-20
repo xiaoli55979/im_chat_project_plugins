@@ -4,14 +4,34 @@ class Assets {
 
   static const String assetsGenerateAssets = 'assets/generate_assets.dart';
   static const String commonDefaultAvatar = 'assets/images/common/default_avatar.png';
+  static const String commonIcIndexBarBubbleGray = 'assets/images/common/ic_index_bar_bubble_gray.png';
+  static const String commonIconActionAdd = 'assets/images/common/icon_action_add.png';
+  static const String commonIconAddImage = 'assets/images/common/icon_add_image.png';
+  static const String commonIconClose = 'assets/images/common/icon_close.png';
+  static const String commonIconCommonEmpty = 'assets/images/common/icon_common_empty.png';
+  static const String commonIconCopy = 'assets/images/common/icon_copy.png';
+  static const String commonIconCustomerService = 'assets/images/common/icon_customer_service.png';
+  static const String commonIconFilter = 'assets/images/common/icon_filter.png';
+  static const String commonIconMessage = 'assets/images/common/icon_message.png';
+  static const String commonIconNotice = 'assets/images/common/icon_notice.png';
+  static const String commonIconNoticeMore = 'assets/images/common/icon_notice_more.png';
+  static const String commonIconRightArrow = 'assets/images/common/icon_right_arrow.png';
+  static const String commonIconRightArrowBig = 'assets/images/common/icon_right_arrow_big.png';
+  static const String commonIconSearch = 'assets/images/common/icon_search.png';
+  static const String commonIconSelect = 'assets/images/common/icon_select.png';
+  static const String commonIconTips = 'assets/images/common/icon_tips.png';
+  static const String commonIconUnselect = 'assets/images/common/icon_unselect.png';
+  static const String commonIconVisibility = 'assets/images/common/icon_visibility.png';
+  static const String commonIconVisibilityOff = 'assets/images/common/icon_visibility_off.png';
   static const String commonMenuChats = 'assets/images/common/menu_chats.png';
   static const String commonMenuEdit = 'assets/images/common/menu_edit.png';
+  static const String commonNavBack = 'assets/images/common/nav_back.png';
+  static const String commonPlaceholder = 'assets/images/common/placeholder.png';
   static const String commonUpgrade2 = 'assets/images/common/upgrade_2.png';
   static const String commonUpgrade2Pad = 'assets/images/common/upgrade_2_pad.png';
   static const String contactIcIndexBarBubbleGray = 'assets/images/contact/ic_index_bar_bubble_gray.png';
   static const String contactIconGroups = 'assets/images/contact/icon_groups.png';
   static const String contactIconNewFriend = 'assets/images/contact/icon_new_friend.png';
   static const String ichatLogo = 'assets/images/ichat/logo.png';
-  static const String imagesPlaceholder = 'assets/images/placeholder.png';
 
 }

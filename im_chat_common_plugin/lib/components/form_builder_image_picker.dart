@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/tools/dialog_utils.dart';
+import 'package:im_chat_common_plugin/tools/font_utils.dart';
+import 'package:im_chat_common_plugin/tools/image_compress_utils.dart';
+import 'package:im_chat_common_plugin/tools/text_field_utils.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_compress/video_compress.dart';
 
-import '../api/provider.dart';
-import '../tools/dialog_utils.dart';
-import '../tools/font_utils.dart';
-import '../tools/image_compress_utils.dart';
-import '../tools/text_field_utils.dart';
 import 'bottom_sheet_view.dart';
 import 'main_button.dart';
 
@@ -579,7 +579,7 @@ class _XFileImageState extends State<XFileImage> {
   bool uploadSuccess = false;
   String uploadStatusStr = "";
 
-  var api = Get.find<ApiProvider>();
+  var api = Get.find<UserProvider>();
   Subscription? _subscription;
 
   void _uploadFile(String filePath) {

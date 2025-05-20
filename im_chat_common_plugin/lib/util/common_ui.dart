@@ -1,29 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:im_chat_common_plugin/config/theme/dark_theme_colors.dart';
-import 'package:im_chat_common_plugin/config/theme/light_theme_colors.dart';
-import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
+import 'package:im_chat_common_plugin/generated/locales.g.dart';
+import 'package:im_chat_common_plugin/util/asset_util.dart';
 import 'package:im_chat_common_plugin/util/constant.dart';
 import 'package:im_chat_common_plugin/util/fonts.dart';
-import 'package:im_chat_common_plugin/widget/form/custom_menu_item.dart';
+import 'package:im_chat_common_plugin/widget/form/multi_menu_item.dart';
+import 'package:im_chat_resource_plugin/generated/assets.dart';
+
+LinearGradient appbarGeneralGradient() {
+  return LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      const Color(0xffCAD5F9),
+      const Color(0xffF3F3F7),
+    ],
+    stops: [0, 1],
+  );
+}
+
+LinearGradient generalLRGradient({isReverse = false, List<Color>? colors}) {
+  return LinearGradient(
+    begin: isReverse ? Alignment.centerRight : Alignment.centerLeft,
+    end: isReverse ? Alignment.centerLeft : Alignment.centerRight,
+    colors: colors ??
+        [
+          IMColors.primaryColor,
+          IMColors.accentColor,
+        ],
+    stops: [0, 1],
+  );
+}
+
+LinearGradient subGeneralLRGradient({isReverse = false, List<Color>? colors}) {
+  return LinearGradient(
+    begin: isReverse ? Alignment.centerRight : Alignment.centerLeft,
+    end: isReverse ? Alignment.centerLeft : Alignment.centerRight,
+    colors: colors ??
+        [
+          const Color(0xff4387F5),
+          const Color(0xff66B1F9),
+        ],
+    stops: [0, 1],
+  );
+}
+
+LinearGradient generalTBGradient({isReverse = false, List<Color>? colors}) {
+  return LinearGradient(
+    begin: isReverse ? Alignment.bottomCenter : Alignment.topCenter,
+    end: isReverse ? Alignment.topCenter : Alignment.bottomCenter,
+    colors: colors ??
+        [
+          IMColors.primaryColor,
+          IMColors.accentColor,
+        ],
+    stops: [0, 1],
+  );
+}
 
 Widget loadingIndicator({Color? color, double size = 60}) {
-  final effectiveColor = color ?? (MySharedPref.getThemeIsLight() ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor);
   return Container(
     width: size,
     height: size,
     padding: const EdgeInsets.all(1),
     child: Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(effectiveColor),
+        valueColor: AlwaysStoppedAnimation<Color>(IMColors.primaryColor),
         strokeWidth: 2,
       ),
     ),
   );
 }
 
-getDivider({
+Widget getDivider({
   bool visible = true,
   double? height = 0.5,
   double? thickness,
@@ -34,28 +86,28 @@ getDivider({
     child: Divider(
       height: height,
       thickness: thickness,
-      color: color ?? (MySharedPref.getThemeIsLight() ? LightThemeColors.dividerColor : DarkThemeColors.dividerColor),
+      color: color ?? IMColors.dividerColor,
     ),
   );
 }
 
 radiusView(
     {required Widget child,
-    Color? backgroundColor,
-    double? minHeight,
-    EdgeInsetsGeometry? margin,
-    EdgeInsetsGeometry? padding,
-    GestureTapCallback? onTap}) {
+      Color? backgroundColor,
+      double? minHeight,
+      EdgeInsetsGeometry? margin,
+      EdgeInsetsGeometry? padding,
+      GestureTapCallback? onTap}) {
   return Container(
     constraints: minHeight == null
         ? null
         : BoxConstraints(
-            minHeight: minHeight,
-          ),
+      minHeight: minHeight,
+    ),
     margin: margin ?? EdgeInsets.only(left: 12.w, top: 15.h, right: 12.w, bottom: 15.h),
     padding: padding ?? EdgeInsets.only(left: 12.w, top: 8.h, right: 12.w, bottom: 8.h),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(10),
       color: backgroundColor ?? Colors.white,
     ),
     child: GestureDetector(
@@ -65,28 +117,37 @@ radiusView(
   );
 }
 
-buildTextFormView(String title, CustomMenuItemType type,
+buildTextFormView(String title, MultiMenuItemType type,
     {bool enable = true,
-    bool showDivider = false,
-    EdgeInsetsGeometry? padding,
-    Function()? onTap,
-    ValueChanged<String>? onChange,
-    String? hintText,
-    String? subTitle,
-    TextStyle? titleStyle,
-    TextStyle? subTitleStyle,
-    TextStyle? hintTitleStyle,
-    Widget? suffixWidget,
-    Widget? arrowWidget,
-    double? spacing,
-    TextInputType? keyboardType,
-    List<TextInputFormatter>? inputFormatters,
-    bool showCleanButton = false,
-    TextAlign subTitleTextAlign = TextAlign.right}) {
+      bool showDivider = false,
+      double? height,
+      EdgeInsetsGeometry? padding,
+      Decoration? decoration,
+      Function()? onTap,
+      ValueChanged<String>? onChange,
+      String? hintText,
+      String? subTitle,
+      TextStyle? titleStyle,
+      TextStyle? subTitleStyle,
+      TextStyle? hintTitleStyle,
+      Widget? prefixWidget,
+      Widget? suffixWidget,
+      Widget? arrowWidget,
+      double? spacing,
+      TextInputType? keyboardType,
+      List<TextInputFormatter>? inputFormatters,
+      bool showCleanButton = false,
+      TextAlign subTitleTextAlign = TextAlign.right,
+      Axis direction = Axis.horizontal,
+      bool showPwdText = false,
+      TextEditingController? controller,}) {
   return Column(
     children: [
-      CustomMenuItem(
+      MultiMenuItem(
         key: UniqueKey(),
+        type: type,
+        height: height,
+        direction: direction,
         hintText: hintText,
         title: title,
         titleStyle: titleStyle,
@@ -95,21 +156,41 @@ buildTextFormView(String title, CustomMenuItemType type,
         subTitleStyle: subTitleStyle,
         hintTextStyle: hintTitleStyle,
         spacing: spacing,
-        padding: padding ?? EdgeInsets.symmetric(vertical: 16.h),
+        padding: padding,
+        decoration: decoration,
         onTap: onTap,
         subTitleTextAlign: subTitleTextAlign,
         inputFormatters: inputFormatters,
+        keyboardType: keyboardType,
         onChanged: onChange,
         showCleanButton: showCleanButton,
-        type: type,
+        prefixWidget: prefixWidget,
         suffixWidget: suffixWidget,
         arrowWidget: arrowWidget,
+        showPwdText: showPwdText,
+        controller: controller,
       ),
       Visibility(
         visible: showDivider,
         child: getDivider(),
       ),
     ],
+  );
+}
+
+commonEmptyView({EdgeInsetsGeometry? margin, Decoration? decoration}){
+  return Container(
+    margin: margin,
+    width: double.infinity,
+    height: 111.h,
+    decoration: decoration,
+    child: Column(
+      children: [
+        AssetUtil.asset(Assets.commonIconCommonEmpty),
+        SizedBox(height: 8.h),
+        CommonText.instance(kCommonEmptyDes.tr, 14.sp, color: IMColors.hintTextColor)
+      ],
+    ),
   );
 }
 
@@ -124,9 +205,6 @@ PopupMenuItem<T> popupMenuItem<T>({
   bool showDivider = false,
   bool isLast = false,
 }) {
-  final chooseTextColor = MySharedPref.getThemeIsLight() ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor;
-  final textColor = MySharedPref.getThemeIsLight() ? LightThemeColors.bodyTextColor : DarkThemeColors.bodyTextColor;
-  final dividerColor = MySharedPref.getThemeIsLight() ? LightThemeColors.dividerColor : DarkThemeColors.dividerColor;
   return PopupMenuItem(
     value: value,
     height: height ?? kMinInteractiveDimension,
@@ -136,23 +214,26 @@ PopupMenuItem<T> popupMenuItem<T>({
       padding: padding ?? EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         border: showDivider && !isLast
-            ? Border(bottom: BorderSide(color: dividerColor, width: 0.5))
+            ? Border(bottom: BorderSide(color: IMColors.dividerColor, width: 0.5))
             : null,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (image != null)
-            ...[
-              Image.asset(image, package: resourcePackageName, color: imageColor, width: 20, height: 20),
-              const SizedBox(width: 12),
-            ],
+          if (image != null) ...[
+            Image.asset(image,
+                color: imageColor,
+                width: 20,
+                height: 20,
+                package: resourcePackageName),
+            const SizedBox(width: 12),
+          ],
           CommonText.instance(
             title,
             14,
             color: value == currentValue
-                ? chooseTextColor
-                : textColor,
+                ? IMColors.chooseTextColor
+                : IMColors.normalTextColor,
           ),
         ],
       ),

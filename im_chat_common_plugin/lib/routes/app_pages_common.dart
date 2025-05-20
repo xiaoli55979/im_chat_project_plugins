@@ -1,12 +1,12 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:im_chat_common_plugin/components/splash_screen_view.dart';
+import 'package:im_chat_common_plugin/pages/bingings/launch_bindings.dart';
+import 'package:im_chat_common_plugin/pages/bingings/search_bindings.dart';
+import 'package:im_chat_common_plugin/pages/bingings/user_info_bindings.dart';
+import 'package:im_chat_common_plugin/pages/views/launch_page_view.dart';
+import 'package:im_chat_common_plugin/pages/views/search_view.dart';
+import 'package:im_chat_common_plugin/pages/views/user_info_view.dart';
 
-import '../components/splash_screen_view.dart';
-import '../pages/bingings/launch_bindings.dart';
-import '../pages/bingings/search_bindings.dart';
-import '../pages/bingings/user_info_bindings.dart';
-import '../pages/views/launch_page_view.dart';
-import '../pages/views/search_view.dart';
-import '../pages/views/user_info_view.dart';
 import 'app_routes_common.dart';
 
 class AppPagesCommon {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 
 class LaunchPageController extends GetxController {
-  final ApiProvider api;
+  final UserProvider api;
 
   // 定义输入框控制器
   TextEditingController projectIdController = TextEditingController();

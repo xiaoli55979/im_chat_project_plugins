@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:im_chat_common_plugin/config/theme/dark_theme_colors.dart';
-import 'package:im_chat_common_plugin/config/theme/light_theme_colors.dart';
-import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
+
+class FontUtils {
+  static const double contentTitleFontSize = 16;
+  static const double contentSubFontSize = 14;
+  static const double contentFontSize = 12;
+}
 
 extension CommonFontWeight on FontWeight {
   static const FontWeight regular = FontWeight.w400;
@@ -14,58 +18,60 @@ extension CommonFontWeight on FontWeight {
 
 extension CommonTextStyle on TextStyle {
   static TextStyle instance(
-    double fontSize, {
-    Color? color,
-    FontStyle? fontStyle,
-    FontWeight fontWeight = CommonFontWeight.regular,
-    TextDecoration? decoration,
-    double? height,
-    double? letterSpacing,
-    List<Shadow>? shadows,
-  }) {
-    final effectiveColor = color ?? (MySharedPref.getThemeIsLight() ? LightThemeColors.bodyTextColor : DarkThemeColors.bodyTextColor);
+      double fontSize, {
+        Color? color,
+        FontStyle? fontStyle,
+        FontWeight fontWeight = CommonFontWeight.regular,
+        TextDecoration? decoration,
+        double? height,
+        double? letterSpacing,
+        TextBaseline? textBaseline,
+        List<Shadow>? shadows,
+      }) {
     return TextStyle(
       fontSize: fontSize,
-      color: effectiveColor,
+      color: color ?? IMColors.normalTextColor,
       fontStyle: fontStyle,
       fontWeight: fontWeight,
       decoration: decoration,
       height: height,
       letterSpacing: letterSpacing,
       shadows: shadows,
+      textBaseline: textBaseline,
     );
   }
 }
 
 extension CommonText on Text {
   static Text instance(
-    String text,
-    double fontSize, {
-    Color? color,
-    bool isTitle = false,
-    FontStyle? fontStyle,
-    FontWeight fontWeight = CommonFontWeight.regular,
-    int? maxLines,
-    TextOverflow? overflow,
-    TextAlign? textAlign,
-    double? height,
-    double? letterSpacing,
-    List<Shadow>? shadows,
-    StrutStyle? strutStyle,
-  }) {
-    final effectiveColor = color ?? (MySharedPref.getThemeIsLight() ? LightThemeColors.bodyTextColor : DarkThemeColors.bodyTextColor);
+      String text,
+      double fontSize, {
+        Color? color,
+        bool isTitle = false,
+        FontStyle? fontStyle,
+        FontWeight fontWeight = CommonFontWeight.regular,
+        int? maxLines,
+        TextOverflow? overflow,
+        TextAlign? textAlign,
+        double? height,
+        double? letterSpacing,
+        List<Shadow>? shadows,
+        StrutStyle? strutStyle,
+        TextBaseline? textBaseline,
+      }) {
     return Text(
       text,
       maxLines: maxLines,
       strutStyle: strutStyle,
       style: CommonTextStyle.instance(
         fontSize,
-        color: effectiveColor,
+        color: color ?? IMColors.normalTextColor,
         fontStyle: fontStyle,
         fontWeight: fontWeight,
         height: height,
         letterSpacing: letterSpacing,
         shadows: shadows,
+        textBaseline: textBaseline,
       ),
       overflow: overflow,
       textAlign: textAlign,

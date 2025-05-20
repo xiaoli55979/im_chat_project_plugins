@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:lpinyin/lpinyin.dart';
 
 extension MapExtension on Map<String, dynamic> {
@@ -69,5 +73,35 @@ extension StringExtension on String? {
       return false;
     }
     return text.isNotEmpty;
+  }
+
+  String? parseHtmlToPlainText() {
+    // 用正则移除所有 HTML 标签
+    return this?.replaceAll(RegExp(r'<[^>]*>'), '')
+        .replaceAll(RegExp(r'(\n|\r|\t)'), '') // 仅移除换行类字符
+        .replaceAll(RegExp(r' {2,}'), ' ')     // 合并连续空格
+        .trim();
+  }
+
+  void copy() {
+    Clipboard.setData(ClipboardData(text: this ?? ''));
+    EasyLoading.showSuccess('复制成功');
+  }
+
+  Size size({TextStyle? style, double minWidth = 0.0, double maxWidth = double.infinity}) {
+    if (isEmpty(this)) {
+      return Size.zero;
+    }
+    TextPainter painter = TextPainter(
+      text: TextSpan(
+        text: this,
+        style: style,
+        locale: Get.locale,
+      ),
+      textDirection: TextDirection.ltr,
+    );
+
+    painter.layout(minWidth: minWidth, maxWidth: maxWidth);
+    return painter.size;
   }
 }

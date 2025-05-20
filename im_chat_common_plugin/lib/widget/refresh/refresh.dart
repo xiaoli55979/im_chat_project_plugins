@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:im_chat_common_plugin/config/theme/dark_theme_colors.dart';
-import 'package:im_chat_common_plugin/config/theme/light_theme_colors.dart';
-import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
 
 class CommonRefresh {
   static EasyRefresh instance({
@@ -18,7 +16,6 @@ class CommonRefresh {
     EasyRefreshController? controller,
     ScrollController? scrollController,
   }) {
-    final themeColor = MySharedPref.getThemeIsLight() ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor;
     return EasyRefresh(
       key: key,
       header: hasBefore && onRefresh != null
@@ -27,7 +24,7 @@ class CommonRefresh {
               springRebound: true,
               triggerOffset: triggerOffset,
               backgroundColor: Colors.white,
-              color: themeColor,
+              color: IMColors.primaryColor,
             )
           : null,
       onRefresh: hasBefore ? onRefresh : null,
@@ -35,7 +32,7 @@ class CommonRefresh {
           ? MaterialFooter(
               triggerOffset: triggerOffset,
               backgroundColor: Colors.white,
-              color: themeColor,
+              color: IMColors.primaryColor,
             )
           : null,
       onLoad: hasMore ? onLoad : null,

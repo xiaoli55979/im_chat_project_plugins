@@ -4,9 +4,8 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:line_detection_plugin/line_detection.dart';
-
-import '../tools/tools_utils.dart';
 
 class EasySplashScreen extends StatefulWidget {
   final Text? title;

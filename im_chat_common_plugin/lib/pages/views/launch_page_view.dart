@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/generated/locales.g.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 
 class LaunchPageView extends GetView<LaunchPageController> {
@@ -24,7 +25,7 @@ class LaunchPageView extends GetView<LaunchPageController> {
               const SizedBox(height: 100),
               Center(
                 child: Obx(() => Text(
-                      '${SlocalCommon.getLocalizaContent(SlocalCommon.of(context).welcome)}${controller.jtpInit.commonConfig.appName.value}',
+                      '${kLaunchWelcomeDes.tr}${controller.jtpInit.commonConfig.appName.value}',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -34,7 +35,7 @@ class LaunchPageView extends GetView<LaunchPageController> {
               ),
               const SizedBox(height: 50), // 间距
               Text(
-                SlocalCommon.getLocalizaContent(SlocalCommon.of(context).inputPassword),
+                kSecurityCodeTitle.tr,
                 style: const TextStyle(fontSize: 16, color: Colors.black),
               ),
               const SizedBox(height: 10),
@@ -43,7 +44,7 @@ class LaunchPageView extends GetView<LaunchPageController> {
                 keyboardType: TextInputType.number,
                 // obscureText: true, // 隐藏输入内容
                 decoration: InputDecoration(
-                  hintText: "${SlocalCommon.getLocalizaContent(SlocalCommon.of(context).inputPasswordHit)}",
+                  hintText: kSecurityCodeHintText.tr,
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -66,7 +67,7 @@ class LaunchPageView extends GetView<LaunchPageController> {
                 child: SizedBox(
                   width: 350,
                   child: MainButton(
-                      onPressed: controller.validatePassword, text: SlocalCommon.getLocalizaContent(SlocalCommon.of(context).confirm)),
+                      onPressed: controller.validatePassword, text: kConfirm.tr),
                 ),
               ),
             ],

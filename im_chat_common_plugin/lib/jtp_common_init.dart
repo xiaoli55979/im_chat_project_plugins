@@ -1,8 +1,5 @@
 import 'dart:io';
 
-import 'package:common_utils/common_utils.dart';
-import 'package:device_info/device_info.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,23 +7,22 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/config/theme/app_theme.dart';
+import 'package:im_chat_common_plugin/generated/locales.g.dart';
+import 'package:im_chat_common_plugin/manager/app_manager.dart';
 import 'package:im_chat_common_plugin/routes/app_pages_common.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
 import 'package:im_chat_common_plugin/tools/app_lifecycle_manager.dart';
 import 'package:im_chat_common_plugin/tools/common_config_option.dart';
-import 'package:im_chat_common_plugin/tools/hide_keyboard_utils.dart';
-import 'package:im_chat_common_plugin/tools/log_manager.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
 import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
+import 'package:im_chat_common_plugin/util/constant.dart';
 import 'package:im_chat_common_plugin/util/storage.dart';
-import 'package:line_detection_plugin/line_detection.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'api/lines_config.dart';
-import 'api/provider.dart';
-import 'config/theme/my_theme.dart';
-import 'config/translations/localization_service.dart';
 
 // bool debugModel = false; //kDebugMode;
 // bool debugModel = kDebugMode;
@@ -201,6 +197,7 @@ class JtpComponentsInit {
     final combinedRoutes = [...AppPagesCommon.routes, ...routes];
 
     /// 初始化默认配置
+    await AppManager.shared.initial();
     await initDefaultConfig(commonConfig);
 
     /// 注册生命周期管理
@@ -250,51 +247,39 @@ class JtpComponentsInit {
           /// 通知UI初始完成
           _instance.notifyUpdateUIComplete(context);
           return GetMaterialApp(
-            title: ToolsUtils.getAppName(),
-            // enableLog: true,
-            // logWriterCallback: (text, {isError = false}) {
-            //   print("logWriterCallback:$text");
-            // },
-            unknownRoute: null,
+            theme: AppTheme.getThemeData(isLight: Storage.getIsLightTheme()),
+            title: kAppName.tr,
+            initialRoute: initial,
             binds: [
-              Bind.put(ApiProvider()),
+              Bind.put(UserProvider()),
               // Bind.put(GlobalService(api: Get.find())),
               ...?additionalBinds,
             ],
+            getPages: routes,
+            unknownRoute: null,
             useInheritedMediaQuery: true,
-            debugShowCheckedModeBanner: true,
-            theme: MyTheme.getThemeData(isLight: MySharedPref.getThemeIsLight()),
+            debugShowCheckedModeBanner: false,
             navigatorObservers: [FlutterSmartDialog.observer],
             defaultTransition: Platform.isAndroid ? Transition.rightToLeft : Transition.cupertino,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              // RefreshLocalizations.delegate,
+            ],
+            translations: Language(),
+            locale: AppManager.shared.locale ?? Get.deviceLocale,
+            fallbackLocale: China,
             builder: FlutterSmartDialog.init(
               builder: EasyLoading.init(
                 builder: (context, child) {
                   return MediaQuery(
-                    // 设置字体不跟随系统变化
-                    data: MediaQuery.of(context).copyWith(
-                      textScaler: const TextScaler.linear(1.0),
-                    ),
+                    data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
                     child: child ?? Container(),
                   );
                 },
               ),
             ),
-            onUnknownRoute: null,
-            initialRoute: initial,
-
-            // first screen to show when app is running
-            getPages: routes,
-            // app screens
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: LocalizationService.supportedLanguages.entries.map((e) => e.value).toList(),
-            // support locales
-            locale: MySharedPref.getCurrentLocal(),
-            // app language
-            translations: LocalizationService.getInstance(), // localization services in app (controller app language)
           );
         },
       ),
@@ -303,35 +288,8 @@ class JtpComponentsInit {
 
   /// 初始化默认配置
   static Future<void> initDefaultConfig(CommonConfigOption config) async {
-    /// 如果需要 ensureInitialized，请在这里运行。
-    WidgetsFlutterBinding.ensureInitialized();
-
-    /// init 初始化数据存储
-    await Storage.init();
-
-    /// init shared preference
-    await MySharedPref.init();
-
-    /// 获取设备信息
-    DeviceInfo deviceInfo = await getDeviceInfo();
-    ToolsUtils.instance.deviceInfo = deviceInfo;
-
-    /// 初始化日志管理
-    LogManager.initialize();
-
-    /// 加载htttpdns缓存配置
-    LinkInfoCacheManager cacheManager = LinkInfoCacheManager();
-    LineHttpDnsModelEntity? entity = await cacheManager.getLineHttpDnsModelEntity();
-    ToolsUtils.instance.httpDnsModelEntity = entity;
-
-    /// 设置运行模式
-    ToolsUtils.instance.isDebugModel = await MySharedPref.getDebugMode();
-
     /// 设置升级提示版本号
     GlobalService.to.versionCode = config.version;
-
-    /// 竖屏 Portrait 模式
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     // /// 获取版本号
     // ToolsUtils.instance.version = await ToolsUtils.getVersion();
@@ -342,15 +300,6 @@ class JtpComponentsInit {
     ///项目名称
     ProjectUtils.setGlobalProjectType(config.projectName);
     ToolsUtils.instance.isJtp = true;
-    String logName = "iChat";
-
-    // log
-    LogUtil.init(tag: logName, isDebug: kDebugMode, maxLen: 256);
-    // 打开状态
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    // 注册 GlobalService
-    Get.put(GlobalService(api: ApiProvider()));
-    HideKeybUtils.hideKeyShowfocus();
 
     /// 注册事件统计
     // startSensorsAnalyticsSDK();

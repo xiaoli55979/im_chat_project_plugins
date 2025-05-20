@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:im_chat_common_plugin/tools/dialog_utils.dart';
+import 'package:im_chat_common_plugin/tools/font_utils.dart';
 
-import '../config/theme/my_styles.dart';
-import '../tools/dialog_utils.dart';
-import '../tools/font_utils.dart';
 import 'empty_view.dart';
 
 /// 表单底部选择项
@@ -44,7 +43,7 @@ class FormBuilderSelect<T> extends FormBuilderFieldDecoration<T> {
           var theme = Theme.of(state.context);
           return Container(
             decoration: BoxDecoration(
-                borderRadius: MyStyles.getBorderRadius,
+                borderRadius: BorderRadius.circular(8.h),
                 border: Border.all(
                   color: state.value == null ? Colors.grey : theme.primaryColor,
                 )),

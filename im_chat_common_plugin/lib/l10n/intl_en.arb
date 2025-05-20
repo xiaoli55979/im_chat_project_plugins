@@ -1,8 +1,0 @@
-{
-  "@@locale": "en",
-  "welcome": "Welcome to ",
-  "inputPassword": "Please enter your security id",
-  "inputPasswordHit": "Please enter your id",
-  "defaultPassword": "The default id is:",
-  "confirm": "Confirm"
-}

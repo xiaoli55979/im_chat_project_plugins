@@ -3,20 +3,20 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 import 'package:im_chat_common_plugin/immanager/user_info.dart';
+import 'package:im_chat_common_plugin/tools/link_utils.dart';
+import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:wukongimfluttersdk/entity/channel.dart';
 import 'package:wukongimfluttersdk/entity/conversation.dart';
 import 'package:wukongimfluttersdk/entity/msg.dart';
 import 'package:wukongimfluttersdk/type/const.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
 
-import '../api/provider.dart';
-import '../tools/link_utils.dart';
-import '../tools/my_shared_pref.dart';
-import '../tools/tools_utils.dart';
 
 class HttpUtils {
-  static ApiProvider get api => Get.find<ApiProvider>();
+  static UserProvider get api => Get.find<UserProvider>();
 
   static String getBaseUrl() {
     var appUrl = ToolsUtils.instance.isDebugModel ? LinkUtils.testBaseUrl : MySharedPref.getBaseUrl() ?? LinkUtils.prodBaseUrl;

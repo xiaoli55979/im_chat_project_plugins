@@ -27,6 +27,7 @@ class AzListView extends StatefulWidget {
     this.hapticFeedback = false,
     this.indexBarAlignment = Alignment.centerRight,
     this.indexBarMargin,
+    this.indexBarPadding,
     this.indexBarOptions = const IndexBarOptions(),
   });
 
@@ -89,6 +90,8 @@ class AzListView extends StatefulWidget {
 
   /// IndexBar margin.
   final EdgeInsetsGeometry? indexBarMargin;
+
+  final EdgeInsetsGeometry? indexBarPadding;
 
   /// IndexBar options.
   final IndexBarOptions indexBarOptions;
@@ -195,6 +198,7 @@ class _AzListViewState extends State<AzListView> {
             height: widget.indexBarHeight,
             itemHeight: widget.indexBarItemHeight,
             margin: widget.indexBarMargin,
+            padding: widget.indexBarPadding,
             indexHintBuilder: widget.indexHintBuilder,
             indexBarDragListener: dragListener,
             options: widget.indexBarOptions,

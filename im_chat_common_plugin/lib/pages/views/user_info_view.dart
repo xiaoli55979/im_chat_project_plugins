@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/components/basic_view.dart';
 import 'package:im_chat_common_plugin/components/main_button.dart';
+import 'package:im_chat_common_plugin/pages/controllers/user_info_controller.dart';
+import 'package:im_chat_common_plugin/tools/snack_bar_util.dart';
 
-import '../../tools/snack_bar_util.dart';
-import '../controllers/user_info_controller.dart';
 
 class UserInfoView extends GetView<UserInfoController> {
   const UserInfoView({super.key});

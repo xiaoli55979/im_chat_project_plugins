@@ -14,7 +14,7 @@ class CommonImageView extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.alignment,
     this.needFadeIn = true,
-    this.placeholderName = Assets.imagesPlaceholder,
+    this.placeholderName = Assets.commonPlaceholder,
     this.onPress,
   });
 
@@ -41,7 +41,7 @@ class CommonImageView extends StatelessWidget {
     this.needFadeIn = true,
     this.onPress,
   }) {
-    placeholderName = Assets.imagesPlaceholder;
+    placeholderName = Assets.commonPlaceholder;
   }
 
   final String? imageUrl;
@@ -68,15 +68,15 @@ class CommonImageView extends StatelessWidget {
     final Widget content;
     if (isValidUrl) {
       content = CachedNetworkImage(
-            fadeInDuration: needFadeIn ? const Duration(milliseconds: 500) : Duration.zero,
-            alignment: alignment ?? Alignment.center,
-            width: width,
-            height: height,
-            fit: fit,
-            imageUrl: imageUrl!,
-            placeholder: (context, url) => placeholder,
-            errorWidget: (context,url,error)=> placeholder,
-          );
+        fadeInDuration: needFadeIn ? const Duration(milliseconds: 500) : Duration.zero,
+        alignment: alignment ?? Alignment.center,
+        width: width,
+        height: height,
+        fit: fit,
+        imageUrl: imageUrl!,
+        placeholder: (context, url) => placeholder,
+        errorWidget: (context,url,error)=> placeholder,
+      );
     } else {
       content = placeholder;
     }

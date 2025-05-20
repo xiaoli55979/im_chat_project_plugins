@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/provider.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 
 class SearchBarController extends GetxController {
   SearchBarController({required this.api});
-  final ApiProvider api;
+  final UserProvider api;
 
   // 搜索结果
   var searchResults = [].obs;

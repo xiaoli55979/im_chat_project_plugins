@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/components/basic_view.dart';
-
-import '../controllers/search_bar_controller.dart';
+import 'package:im_chat_common_plugin/pages/controllers/search_bar_controller.dart';
 
 class SearchView extends GetView<SearchBarController> {
   const SearchView({super.key});

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/config/theme/dark_theme_colors.dart';
-import 'package:im_chat_common_plugin/config/theme/light_theme_colors.dart';
-import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
+import 'package:im_chat_common_plugin/generated/locales.g.dart';
 import 'package:im_chat_common_plugin/util/app_values.dart';
+import 'package:im_chat_common_plugin/util/asset_util.dart';
 import 'package:im_chat_common_plugin/util/common_ui.dart';
 import 'package:im_chat_common_plugin/util/fonts.dart';
 import 'package:im_chat_common_plugin/widget/button/common_button.dart';
+import 'package:im_chat_resource_plugin/generated/assets.dart';
 
 enum EmptyActionType {
+  custom,
   ///只显示文字
   text,
 
@@ -57,7 +59,7 @@ class MultiStatusView extends StatefulWidget {
     this.action,
     this.actionText,
     this.scrollController,
-  }) : backgroundColor = backgroundColor ?? (MySharedPref.getThemeIsLight() ? LightThemeColors.scaffoldBackgroundColor : DarkThemeColors.scaffoldBackgroundColor);
+  }) : backgroundColor = backgroundColor ?? IMColors.background;
 
   final Widget child;
   final MultiStatusType currentStatus;
@@ -137,10 +139,11 @@ class _MultiStatusViewState extends State<MultiStatusView>
   }
 
   _buildEmptyWidget() {
+    if (widget.emptyWidget != null && widget.emptyActionType == EmptyActionType.custom) return widget.emptyWidget;
     List<Widget> content = widget.emptyWidget != null
         ? [widget.emptyWidget!]
         : [
-            Icon(Icons.search, size: 64, color: Colors.grey.withOpacity(0.5)),
+            AssetUtil.asset(Assets.commonIconCommonEmpty),
             SizedBox(height: 16.h),
             ..._getActions(widget.emptyActionType),
           ];
@@ -249,47 +252,27 @@ class _MultiStatusViewState extends State<MultiStatusView>
   }
 
   _getActions(EmptyActionType emptyActionType) {
-    final buttonColor = MySharedPref.getThemeIsLight() ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor;
-    final themedisabledColor = MySharedPref.getThemeIsLight() ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor;
     switch (emptyActionType) {
-      case EmptyActionType.all:
-        return [
-          CommonText.instance(widget.emptyText ?? '暂无内容', 12.sp,
-              color: Colors.grey.withOpacity(0.7),
-              textAlign: TextAlign.center),
-          SizedBox(height: 22.h),
-          IntrinsicWidth(
-            child: CommonButton(
-              padding: EdgeInsets.only(left: 17.w, right: 12.w),
-              minSize: 32.h,
-              borderRadius: BorderRadius.circular(8),
-              color: buttonColor,
-              disabledColor: themedisabledColor,
-              onPressed: widget.action,
-              child: CommonText.instance(widget.actionText ?? '', 14.sp,
-                  color: Colors.white),
-            ),
-          ),
-        ];
       case EmptyActionType.text:
         return [
-          CommonText.instance(widget.emptyText ?? '暂无内容', 12.sp,
-              color: Colors.grey.withOpacity(0.7),
-              textAlign: TextAlign.center)
+          CommonText.instance(widget.emptyText ?? kCommonEmptyDes.tr, 14.sp, color: IMColors.hintTextColor),
         ];
       case EmptyActionType.button:
         return [
-          IntrinsicWidth(
-            child: CommonButton(
-              padding: EdgeInsets.only(left: 17.w, right: 12.w),
-              minSize: 32.h,
-              borderRadius: BorderRadius.circular(8),
-              color: buttonColor,
-              disabledColor: themedisabledColor,
-              onPressed: widget.action,
-              child: CommonText.instance(widget.actionText ?? '', 14.sp,
-                  color: Colors.white),
-            ),
+          CommonButton.text(
+            text: widget.actionText ?? '',
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            onPressed: widget.action,
+          ),
+        ];
+      default:
+        return [
+          CommonText.instance(widget.emptyText ?? '暂无内容', 15.sp, color: IMColors.hintTextColor, textAlign: TextAlign.center),
+          SizedBox(height: 40.h),
+          CommonButton.text(
+            text: widget.actionText ?? '',
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            onPressed: widget.action,
           ),
         ];
     }

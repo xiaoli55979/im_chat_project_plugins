@@ -1,6 +1,7 @@
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 
 /// 全局认证服务
@@ -10,11 +11,11 @@ class GlobalService extends GetxService {
     try {
       return Get.find<GlobalService>();
     } catch (e) {
-      return Get.put(GlobalService(api: ApiProvider()));
+      return Get.put(GlobalService(api: UserProvider()));
     }
   }
 
-  final ApiProvider api;
+  final UserProvider api;
 
   /// APP升级版 本
   int versionCode = 190;

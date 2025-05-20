@@ -1,4 +1,5 @@
-import '../generated/json/base/json_convert_content.dart';
+
+import 'package:im_chat_common_plugin/generated/json/base/json_convert_content.dart';
 
 /// 结果返回封装
 class Result<T> {

@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/base_provider.dart';
+import 'package:im_chat_common_plugin/api/lines_config.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import '../api/base.dart';
-import '../api/lines_config.dart';
-import '../api/provider.dart';
 import 'encryption_utils.dart';
 import 'logger_utils.dart';
 import 'my_shared_pref.dart';
@@ -32,7 +32,7 @@ class LineChecker {
   bool forceRefresh;
 
   /// API
-  ApiProvider api = Get.find<ApiProvider>();
+  UserProvider api = Get.find<UserProvider>();
 
   LineChecker({this.onStep, required this.onComplete, this.onCheck, this.forceRefresh = false});
 
@@ -167,7 +167,7 @@ class LineChecker {
       try {
         // 检测健康状态
         String? baseUrl = MySharedPref.getBaseUrl();
-        await ApiProvider.getLinkDelayTime(baseUrl!);
+        await UserProvider.getLinkDelayTime(baseUrl!);
 
         if (forceRefresh) {
           await loadLines(manager, baseUrlAvailable: true);

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
+import 'package:im_chat_common_plugin/util/asset_util.dart';
 import 'package:im_chat_common_plugin/util/fonts.dart';
 import 'package:im_chat_common_plugin/widget/button/common_button.dart';
-
-enum SearchIconDirectional {
-  left,
-  right,
-}
+import 'package:im_chat_resource_plugin/generated/assets.dart';
 
 // 搜索框
 class CommonSearchBar extends StatefulWidget {
@@ -23,6 +22,7 @@ class CommonSearchBar extends StatefulWidget {
     this.onSearch,
     this.textFieldDecoration,
     this.showCleanButton = true,
+    this.showSearchIcon = true,
     this.decoration,
     this.padding,
     this.textFieldPadding,
@@ -44,6 +44,7 @@ class CommonSearchBar extends StatefulWidget {
   final EdgeInsetsGeometry? textFieldPadding;
   final Decoration? textFieldDecoration;
   final bool showCleanButton;
+  final bool showSearchIcon;
   final Widget? prefixWidget;
   final Widget? suffixWidget;
 
@@ -96,9 +97,7 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
     super.dispose();
   }
 
-  final double _fontSize = 16;
-  final double _cleanButtonSize = 16;
-  final double _cleanButtonSpacing = 5;
+  final double _fontSize = 16.sp;
 
   TextFormField _getTextFormField() {
     _showCleanButton = _getController.text.isNotEmpty;
@@ -129,61 +128,65 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
   }
 
   _getTextStyle() {
-    return widget.textStyle ?? CommonTextStyle.instance(_fontSize, color: Colors.black87);
+    return widget.textStyle ?? CommonTextStyle.instance(_fontSize, color: IMColors.normalTextColor);
   }
 
   _getHintTextStyle() {
-    return widget.hintTextStyle ?? CommonTextStyle.instance(_fontSize, color: Colors.grey);
+    return widget.hintTextStyle ?? CommonTextStyle.instance(_fontSize, color: IMColors.hintTextColor);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: widget.decoration,
-      padding: widget.padding ?? const EdgeInsets.all(16.0),
+      padding: widget.padding ?? EdgeInsets.all(16.0.w),
       child: Row(
         children: [
           widget.prefixWidget ?? Container(),
           Expanded(
             child: Container(
-              padding: widget.textFieldPadding ?? const EdgeInsets.all(12),
+              padding: widget.textFieldPadding ?? EdgeInsets.all(12.w),
               decoration: widget.textFieldDecoration ??
                   BoxDecoration(
                     color: Colors.grey.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.h),
                   ),
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      _onSearch(_getController.text);
-                    },
-                    child: const Icon(Icons.search, color: Colors.grey),
-                  ),
-                  const SizedBox(width: 15),
+                  if(widget.showSearchIcon)
+                    ...[
+                      GestureDetector(
+                        onTap: () {
+                          _onSearch(_getController.text);
+                        },
+                        child: AssetUtil.asset(Assets.commonIconSearch, width: 16.w, height: 16.w),
+                      ),
+                      SizedBox(width: 8.w),
+                    ],
                   Expanded(
                     child: _getTextFormField(),
                   ),
-                  const SizedBox(width: 10),
-                  CommonButton(
-                    padding: EdgeInsets.zero,
-                    minSize: 16,
-                    child: const Icon(Icons.cancel, color: Colors.grey, size: 16),
-                    onPressed: () {
-                      setState(() {
-                        _getController.clear();
-                        _showCleanButton = false;
-                      });
-                      if (widget.onCancel != null) {
-                        widget.onCancel!();
-                      }
-                    },
-                  )
+                  SizedBox(width: 10.w),
+                  if(_showCleanButton & widget.showCleanButton)
+                    CommonButton(
+                      padding: EdgeInsets.zero,
+                      minSize: 16.w,
+                      child: Icon(Icons.cancel, color: Colors.grey, size: 16.w),
+                      onPressed: () {
+                        setState(() {
+                          _getController.clear();
+                          _showCleanButton = false;
+                        });
+                        if (widget.onCancel != null) {
+                          widget.onCancel!();
+                        }
+                      },
+                    ),
+                  widget.suffixWidget ?? Container(),
                 ],
               ),
             ),
           ),
-          widget.suffixWidget ?? Container(),
         ],
       ),
     );

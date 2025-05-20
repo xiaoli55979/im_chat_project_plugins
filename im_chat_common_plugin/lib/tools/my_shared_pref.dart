@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:im_chat_common_plugin/tools/time_tools_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../config/translations/localization_service.dart';
 import '../models/http_dns_lines_model_entity.dart';
 
 class MySharedPref {
@@ -210,14 +208,4 @@ class MySharedPref {
 
   /// save current locale
   static Future<void> setCurrentLanguage(String languageCode) => _sharedPreferences.setString(_currentLocalKey, languageCode);
-
-  /// get current locale
-  static Locale getCurrentLocal() {
-    String? langCode = _sharedPreferences.getString(_currentLocalKey);
-    // default language is english
-    if (langCode == null) {
-      return LocalizationService.defaultLanguage;
-    }
-    return LocalizationService.supportedLanguages[langCode]!;
-  }
 }

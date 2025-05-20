@@ -228,6 +228,7 @@ class IndexBar extends StatefulWidget {
     this.height,
     this.itemHeight = kIndexBarItemHeight,
     this.margin,
+    this.padding,
     this.indexHintBuilder,
     IndexBarDragListener? indexBarDragListener,
     this.options = const IndexBarOptions(),
@@ -249,6 +250,8 @@ class IndexBar extends StatefulWidget {
 
   /// Empty space to surround the [decoration] and [child].
   final EdgeInsetsGeometry? margin;
+
+  final EdgeInsetsGeometry? padding;
 
   /// IndexHint Builder
   final IndexHintBuilder? indexHintBuilder;
@@ -428,22 +431,25 @@ class _IndexBarState extends State<IndexBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: _isActionDown() ? widget.options.downColor : widget.options.color,
-      decoration: _isActionDown() ? widget.options.downDecoration : widget.options.decoration,
-      width: widget.width,
-      height: widget.height,
-      margin: widget.margin,
-      alignment: Alignment.center,
-      child: BaseIndexBar(
-        data: widget.data,
+    return IntrinsicHeight(
+      child: Container(
+        color: _isActionDown() ? widget.options.downColor : widget.options.color,
+        decoration: _isActionDown() ? widget.options.downDecoration : widget.options.decoration,
         width: widget.width,
-        itemHeight: widget.itemHeight,
-        hapticFeedback: widget.options.hapticFeedback,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildItem(context, index);
-        },
-        indexBarDragNotifier: widget.indexBarDragNotifier,
+        height: widget.height,
+        margin: widget.margin,
+        padding: widget.padding,
+        alignment: Alignment.center,
+        child: BaseIndexBar(
+          data: widget.data,
+          width: widget.width,
+          itemHeight: widget.itemHeight,
+          hapticFeedback: widget.options.hapticFeedback,
+          itemBuilder: (BuildContext context, int index) {
+            return _buildItem(context, index);
+          },
+          indexBarDragNotifier: widget.indexBarDragNotifier,
+        ),
       ),
     );
   }

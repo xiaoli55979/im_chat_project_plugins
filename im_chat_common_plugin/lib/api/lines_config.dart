@@ -1,10 +1,9 @@
+import 'package:im_chat_common_plugin/models/http_dns_lines_model_entity.dart';
+import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
+import 'package:im_chat_common_plugin/tools/project_utils.dart';
+import 'package:im_chat_common_plugin/tools/text_field_utils.dart';
+import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:line_detection_plugin/line_detection.dart';
-
-import '../models/http_dns_lines_model_entity.dart';
-import '../tools/my_shared_pref.dart';
-import '../tools/project_utils.dart';
-import '../tools/text_field_utils.dart';
-import '../tools/tools_utils.dart';
 
 class LinesConfig {
   /// 当可用线路小于几条时候更新线路

@@ -2,11 +2,11 @@
 library im_chat_common_plugin_library;
 
 /// api
-export 'api/base.dart';
+export 'api/base_provider.dart';
 export 'api/exception.dart';
-export 'api/im_api_provider.dart';
+export 'api/im_provider.dart';
 export 'api/lines_config.dart';
-export 'api/provider.dart';
+export 'api/user_provider.dart';
 export 'api/result.dart';
 export 'api/retry_evaluator.dart';
 /// components
@@ -37,20 +37,10 @@ export 'config/icon/icon_font.dart';
 export 'config/icon/iconfont.dart';
 export 'config/icon/local_svg_icon.dart';
   /// theme
-export 'config/theme/color_extension.dart';
-export 'config/theme/color_mycolors.dart';
-export 'config/theme/dark_theme_colors.dart';
-export 'config/theme/light_theme_colors.dart';
-export 'config/theme/my_fonts.dart';
-export 'config/theme/my_styles.dart';
-export 'config/theme/my_theme.dart';
-  /// translations
-    /// en_US
-export 'config/translations/en_US/en_us_translation.dart';
-export 'config/translations/localization_service.dart';
-export 'config/translations/strings_enum.dart';
-    /// zh_CN
-export 'config/translations/zh_CN/zh_cn_translation.dart';
+export 'config/theme/app_theme.dart';
+export 'config/color/colors.dart';
+export 'config/color/light_theme_colors.dart';
+export 'config/color/dark_theme_colors.dart';
 /// database
 export 'database/database_manager.dart';
 export 'database/user_manager.dart';
@@ -61,12 +51,6 @@ export 'immanager/im_manager_utils.dart';
 export 'immanager/im_options_utils.dart';
 export 'immanager/user_info.dart';
 export 'jtp_common_init.dart';
-/// l10n
-export 'l10n/SlocalUtils.dart';
-  /// localization
-export 'l10n/localization/kit_common_localizations.dart';
-export 'l10n/localization/kit_common_localizations_en.dart';
-export 'l10n/localization/kit_common_localizations_zh.dart';
 /// models
 export 'models/app_config_model_entity.dart';
 export 'models/app_model_entity.dart';

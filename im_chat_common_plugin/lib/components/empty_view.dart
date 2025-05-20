@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:im_chat_common_plugin/tools/font_utils.dart';
 
-import '../tools/font_utils.dart';
 
 /// 空显示界面
 class EmptyView extends StatelessWidget {

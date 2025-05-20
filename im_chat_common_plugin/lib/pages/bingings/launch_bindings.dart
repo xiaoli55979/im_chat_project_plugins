@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/pages/controllers/launch_page_controller.dart';
 
-import '../controllers/launch_page_controller.dart';
 
 class LaunchBinding extends Binding {
   @override

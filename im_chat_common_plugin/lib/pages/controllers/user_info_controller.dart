@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/provider.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 
 class UserInfoController extends GetxController {
   UserInfoController({required this.api});
-  final ApiProvider api;
+  final UserProvider api;
 
   String pageName = "13445";
 

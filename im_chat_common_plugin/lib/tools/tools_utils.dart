@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screen_lock_plug/lock_screen_manager.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/api/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:intl/intl.dart';
 import 'package:line_detection_plugin/line_detection.dart';
@@ -100,7 +101,7 @@ class ToolsUtils {
       if (ToolsUtils.instance.prKy.isNotEmpty) {
         return ToolsUtils.instance.prKy;
       }
-      final ApiProvider api = Get.find();
+      final UserProvider api = Get.find();
       // var res = await api.getky();
       // if (res.msg != null && res.msg!.isNotEmpty) {
       //   ToolsUtils.instance.prKy = res.msg!;
