@@ -11,16 +11,17 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+#  pull_to_refresh: ^2.0.0 # 上拉加载，下拉刷新
   im_chat_common_plugin:
-    path: ../../im_chat_project_plugins/im_chat_common_plugin
+   path: ../../im_chat_project_plugins/im_chat_common_plugin
   get: ^5.0.0-release-candidate-9.3.2
 
 
 
 dev_dependencies:
-
   flutter_lints: ^5.0.0
-
+#  im_chat_conversation_plugin:
+#    path: ../im_chat_conversation_plugin/lib/routes/app_routes_conversation.dart
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

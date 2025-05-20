@@ -7,11 +7,12 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 class CustomImageMessage extends StatelessWidget {
   final types.ImageMessage message;
   final int messageWidth;
+  final bool isOwner;
   const CustomImageMessage({
-    Key? key,
+    super.key,
     required this.message,
-    this.messageWidth = 250,
-  }) : super(key: key);
+    this.messageWidth = 250, required this.isOwner,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +64,19 @@ class CustomImageMessage extends StatelessWidget {
                     ),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
+            Positioned(
+                right: 10,
+                bottom: 10,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 4,horizontal: 8),
+              child: Text("21.04",
+              style: TextStyle(color: Colors.white, fontSize: 10),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                color: Colors.black87
+              ),
+            ))
           ],
         ),
       ),

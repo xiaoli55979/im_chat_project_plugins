@@ -5,6 +5,7 @@ import 'package:im_chat_common_plugin/util/app_values.dart';
 import 'package:im_chat_common_plugin/widget/az_listview/az_common.dart';
 import 'package:im_chat_common_plugin/widget/status/multi_status_view.dart';
 import 'package:im_chat_contacts_plugin/model/ui_contact_entity.dart';
+import 'package:im_chat_contacts_plugin/routes/app_routes_contacts.dart';
 import 'package:wukongimfluttersdk/entity/channel_member.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
 import 'package:wukongimfluttersdk/entity/channel.dart';
@@ -41,11 +42,18 @@ enum ContactsHeader {
 
 class ContactsController extends BaseController {
   ContactsController({required this.api});
+
   final ApiProviderContact api;
 
   var multiStatus = MultiStatusType.statusLoading;
 
   var contactList = <UiContactEntity>[];
+
+  /// 页面状态
+  int currentPage = 1;
+  int pageSize = 20;
+  int totalPages = 0;
+  int totalRecords = 0;
 
   @override
   void handRegister() {
@@ -61,14 +69,15 @@ class ContactsController extends BaseController {
     ///未同步过通讯录数据
     if (!Storage.getFriendSync()) {
       // 加载通讯录数据
-      _loadContactDataFromServer();
+    _loadContactDataFromServer();
     } else {
-      _loadContactDataFromIM();
+    _loadContactDataFromIM();
     }
   }
 
   void listenerMembers() {
-    WKIM.shared.channelMemberManager.addOnRefreshMemberListener("contacts", (WKChannelMember member, bool status) {
+    WKIM.shared.channelMemberManager.addOnRefreshMemberListener("contacts",
+        (WKChannelMember member, bool status) {
       print("object_addOnRefreshMemberListener:${member.memberName}");
     });
   }
@@ -76,7 +85,10 @@ class ContactsController extends BaseController {
   ///从服务器获取联系人列表
   void _loadContactDataFromServer() async {
     try {
-      var result = await api.friendSync();
+      // var result = await api.friendSync();
+      // var result = await api.getContacts();
+      var result = await api.searchFriend(keyword: "");
+      print(result);
       if (result.isSuccess) {
         final list = [];
         final friendEntity = FriendModelEntity();
@@ -139,7 +151,7 @@ class ContactsController extends BaseController {
         friendEntity3.robot = 1;
         list.add(friendEntity3);
 
-        final channelList = list.map((friendModel){
+        final channelList = list.map((friendModel) {
           final wkChannel = WKChannel(friendModel.uid, WKChannelType.personal);
           wkChannel.channelRemark = friendModel.remark;
           wkChannel.channelName = friendModel.name;
@@ -153,11 +165,11 @@ class ContactsController extends BaseController {
           wkChannel.receipt = friendModel.receipt;
           wkChannel.robot = friendModel.robot;
           wkChannel.category = friendModel.category;
-          wkChannel.follow = 1;//指定为好友
+          wkChannel.follow = 1; //指定为好友
           return wkChannel;
         }).toList();
 
-        final dataList = result.data ?? [];
+        // final dataList = result.data ?? [];
         // var channelList = dataList.map((friendModel){
         //   final wkChannel = WKChannel(friendModel.uid, WKChannelType.personal);
         //   wkChannel.channelRemark = friendModel.remark;
@@ -175,6 +187,16 @@ class ContactsController extends BaseController {
         //   wkChannel.follow = 1;//指定为好友
         //   return wkChannel;
         // }).toList();
+
+        /// 群数据源
+        // final groupEntity = GroupModelEntity();
+        // groupEntity.channelID = '101010';
+        // groupEntity.channelRemark = '随便写的';
+        // groupEntity.status = 1;
+        // groupEntity.category = WKSystemAccount.accountCategorySystem.value;
+        // groupEntity.robot = 1;
+        // final groupList = [];
+        // groupList.add(groupEntity);
 
         Storage.putFriendSync(true);
 
@@ -194,22 +216,27 @@ class ContactsController extends BaseController {
 
   ///从IM数据库获取联系人列表
   void _loadContactDataFromIM() async {
-    final channelList = await WKIM.shared.channelManager.getWithFollowAndStatus(WKChannelType.personal, 1, 1);
+    final channelList = await WKIM.shared.channelManager
+        .getWithFollowAndStatus(WKChannelType.personal, 1, 1);
+
     ///配置数据
     _configData(channelList);
   }
 
   ///配置数据
-  void _configData(List<WKChannel> channelList){
-    contactList = channelList.map((wkChannel){
+  void _configData(List<WKChannel> channelList) {
+    contactList = channelList.map((wkChannel) {
       return UiContactEntity(wkChannel: wkChannel);
     }).toList();
 
     ///页面状态
-    multiStatus = contactList.isNotEmpty ? MultiStatusType.statusContent : MultiStatusType.statusEmpty;
+    multiStatus = contactList.isNotEmpty
+        ? MultiStatusType.statusContent
+        : MultiStatusType.statusEmpty;
 
     ///根据首字母排序
     SuspensionUtil.sortListBySuspensionTag(contactList);
+
     ///是否显示首字母
     SuspensionUtil.setShowSuspensionStatus(contactList);
 
@@ -220,11 +247,24 @@ class ContactsController extends BaseController {
   }
 
   ///添加默认分组
-  _addDefaultContactGroups(){
-    final defaultGroupList = ContactsHeader.values.map((element){
+  _addDefaultContactGroups() {
+    final defaultGroupList = ContactsHeader.values.map((element) {
       return UiContactEntity(contactsHeader: element);
     }).toList();
 
     contactList.insertAll(0, defaultGroupList);
   }
+
+  toMyManagedGroup() {
+    Get.toNamed(AppRoutesContacts.myManagedGroup);
+  }
+
+  toFriend() {
+    Get.toNamed(AppRoutesContacts.friendInfo);
+  }
+
+  toSelectFriendCreateGroup() {
+    Get.toNamed(AppRoutesContacts.selectContacts);
+  }
+
 }

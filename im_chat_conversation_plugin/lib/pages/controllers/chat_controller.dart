@@ -51,10 +51,20 @@ class ChatController extends GetxController {
   /// 焦点变化了
   bool focusChange = false;
 
+  /// 是否是多选
+  bool isMultiple = false;
+  /// isSelectedMultiple 是否选中多选
+  bool isSelectedMultiple = true;
+
+  /// 是否回复
+  bool isReply = false;
+
   /// 消息
   UIConversation? messageModel;
 
   List<UIMsg> msgList = [];
+
+  List<types.Message> didSelectedMsgs = [];
 
   String channelID = "";
   int channelType = 0;
@@ -223,9 +233,18 @@ class ChatController extends GetxController {
     return types.User(id: "1234");
   }
 
+  /// 是否是自己
+  bool isOwner(types.Message msg) {
+    final currentId = getUser().id;
+    if (currentId == msg.id) { return true; } else {
+      return false;
+    }
+  }
+
   /// 添加一条消息
   void addMessage(types.Message message) {
     messages.insert(0, message);
+    // WKIM.shared.messageManager.sendMessage(WKTextContent('我是文本消息'), WKChannel('uid_1', WKChannelType.personal));
     update();
   }
 
@@ -241,14 +260,30 @@ class ChatController extends GetxController {
     );
   }
 
+  /// 工具栏语音发送
+  void handleToolsAudioSend(int seconds, String path) {
+    print("object_handleToolsAudioSend");
+    ChatSendMessageTools().handleToolsAudioSend(
+      seconds,
+      path,
+      user: getUser(),
+      onMessageCreated: (types.Message message) {
+        addMessage(message);
+      },
+    );
+  }
+
   /// 点击背景
   void backgroundTap() {
     focusChange = !focusChange;
+    isSelectedMultiple != isSelectedMultiple;
+    isMultiple != isMultiple;
     update();
   }
 
   /// 点击消息
   void handleMessageTap(BuildContext _, types.Message message) async {
+    backgroundTap();
     print("object_handleMessageTap");
     try {
       int type = int.tryParse('${message.metadata?["type"]}') ?? -1;
@@ -297,6 +332,15 @@ class ChatController extends GetxController {
 
     if (route != null) {
       Get.toNamed(route, arguments: {"channelID": channelID, "channelType": channelType});
+    }
+  }
+
+  /// 已选择消息
+  void didSelectedMsg(types.Message msg) {
+    if (didSelectedMsgs.contains(msg)) {
+      didSelectedMsgs.remove(msg);
+    } else {
+      didSelectedMsgs.add(msg);
     }
   }
 }

@@ -29,9 +29,14 @@ class AzListView extends StatefulWidget {
     this.indexBarMargin,
     this.indexBarPadding,
     this.indexBarOptions = const IndexBarOptions(),
+    // this.refreshController,
+    // this.onRefresh,
+    // this.onLoading
   });
-
-  /// with  ISuspensionBean Data
+  // final RefreshController refreshController;
+  // final Function() onRefresh;
+  // final Function() onLoading;
+  // /// with  ISuspensionBean Data
   final List<ISuspensionBean> data;
 
   /// Number of items the [itemBuilder] can produce.
@@ -127,6 +132,7 @@ class _AzListViewState extends State<AzListView> {
   @override
   void dispose() {
     super.dispose();
+    // widget.refreshController.dispose();
     dragListener.dragDetails.removeListener(_valueChanged);
     if (widget.indexBarOptions.selectItemDecoration != null) {
       itemPositionsListener.itemPositions.removeListener(_positionsChanged);

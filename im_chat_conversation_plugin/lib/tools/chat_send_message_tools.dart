@@ -13,18 +13,39 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
 
+import '../handle/message_content_type.dart';
 import '../pages/views/chat/tools_bar_view.dart';
 
 class ChatSendMessageTools {
   /// 工具栏快捷入口
-  void handleToolsPressed(
-    int index, {
+  void handleToolsAudioSend(int seconds, String path, {
+    required types.User user,
+    Function(types.Message message)? onMessageCreated,
+  }) {
+    ChatSendMessageTools().handleAudioSelection(user: user,
+      onMessageCreated: (types.AudioMessage message) {
+        if (onMessageCreated != null) {
+          onMessageCreated(message);
+        }
+      }, seconds: seconds, path: path,
+    );
+  }
+  /// 工具栏快捷入口
+  void handleToolsPressed(int index, {
     required types.User user,
     Function(types.Message message)? onMessageCreated,
   }) {
     if (index == ToolType.image.value) {
       ChatSendMessageTools().handleImageSelection(
         user: user,
+        onMessageCreated: (types.ImageMessage message) {
+          if (onMessageCreated != null) {
+            onMessageCreated(message);
+          }
+        },
+      );
+    } else if (index == ToolType.carmera.value) {
+      ChatSendMessageTools().handleCameraSelection(user: user,
         onMessageCreated: (types.ImageMessage message) {
           if (onMessageCreated != null) {
             onMessageCreated(message);
@@ -49,6 +70,22 @@ class ChatSendMessageTools {
           }
         },
       );
+    } else if (index == ToolType.card.value) {
+      ChatSendMessageTools().handleCardSelection(user: user,
+        onMessageCreated: (types.CustomMessage message) {
+          if (onMessageCreated != null) {
+            onMessageCreated(message);
+          }
+        },
+      );
+    } else if (index == ToolType.sign.value) {
+      ChatSendMessageTools().handleSignSelection(user: user,
+        onMessageCreated: (types.CustomMessage message) {
+          if (onMessageCreated != null) {
+            onMessageCreated(message);
+          }
+        },
+      );
     }
   }
 
@@ -57,15 +94,68 @@ class ChatSendMessageTools {
     required types.User user,
     Function(types.ImageMessage message)? onMessageCreated,
   }) async {
-    final result = await ImagePicker().pickImage(imageQuality: 70, maxWidth: 1440, source: ImageSource.gallery);
+    final result = await ImagePicker().pickImage(
+        imageQuality: 70, maxWidth: 1440, source: ImageSource.gallery);
 
     if (result != null) {
+      final bytes = await result.readAsBytes();
+      final image = await decodeImageFromList(bytes);
+      print("图片地址：${result.path}");
+      final message = types.ImageMessage(
+        author: user,
+        createdAt: DateTime
+            .now()
+            .millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        name: result.name,
+        size: bytes.length,
+        uri: result.path,
+        width: image.width.toDouble(),
+        height: image.height.toDouble(),
+        status: types.Status.sending,
+      );
+
+      // 触发回调
+      if (onMessageCreated != null) {
+        onMessageCreated(message);
+      }
+
+      // /// 开始上传
+      // MessageHandle.sendImageMessage(
+      //     result: result,
+      //     api: api,
+      //     channelId: channelID,
+      //     onStateChanged: (UploadState state) {
+      //       if (state.status == UploadStatus.failure) {
+      //         final updatedMessage = message.copyWith(
+      //           status: Status.error, // 使用 copyWith 方法更新状态
+      //         );
+      //
+      //         // 更新消息列表中的状态
+      //         _updateMessage(updatedMessage);
+      //       }
+      //     });
+    }
+  }
+
+  /// 发送相机拍摄图片消息
+  void handleCameraSelection({
+    required types.User user,
+    Function(types.ImageMessage message)? onMessageCreated,
+  }) async {
+    final result = await ImagePicker().pickImage(
+        imageQuality: 70, maxWidth: 1440, source: ImageSource.camera);
+
+    if (result != null) {
+      print("图片地址是：${result.path}");
       final bytes = await result.readAsBytes();
       final image = await decodeImageFromList(bytes);
 
       final message = types.ImageMessage(
         author: user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
+        createdAt: DateTime
+            .now()
+            .millisecondsSinceEpoch,
         id: const Uuid().v4(),
         name: result.name,
         size: bytes.length,
@@ -108,27 +198,25 @@ class ChatSendMessageTools {
     /// 防止挂起锁屏
     jtpInit.isLockScreen = true;
     final result = await ImagePicker().pickVideo(
-      source: ImageSource.gallery,
-    );
-    if (result != null) {
-      final videoBytes = await result.readAsBytes();
-      final videoController = VideoPlayerController.file(File(result.path));
-      // 异步加载视频
-      await videoController.initialize();
+        maxDuration: const Duration(seconds: 60), // 设置最大录制时长,
+        source: ImageSource.camera);
 
+    if (result != null) {
+      final file = File(result.path);
+      final videoFileSize = await file.length();
+
+      // 构造 VideoMessage
       final message = types.VideoMessage(
         author: user,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: const Uuid().v4(),
         name: result.name,
-        size: videoBytes.length,
+        size: videoFileSize,
         uri: result.path,
-        width: videoController.value.size.width,
-        height: videoController.value.size.height,
-        status: Status.sending,
-        // duration: videoController.value.duration.inMilliseconds,
+        status: types.Status.sending,
       );
 
+      // 触发回调
       /// 触发回调
       if (onMessageCreated != null) {
         onMessageCreated(message);
@@ -167,7 +255,9 @@ class ChatSendMessageTools {
     if (result != null && result.files.single.path != null) {
       final message = types.FileMessage(
         author: user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
+        createdAt: DateTime
+            .now()
+            .millisecondsSinceEpoch,
         id: const Uuid().v4(),
         mimeType: lookupMimeType(result.files.single.path!),
         name: result.files.single.name,
@@ -199,12 +289,63 @@ class ChatSendMessageTools {
     }
   }
 
+  /// 发送语音消息
+  void handleAudioSelection({
+    required types.User user,
+    required int seconds,
+    required String path,
+    Function(types.AudioMessage message)? onMessageCreated,
+  }) async {
+    JtpComponentsInit jtpInit = JtpComponentsInit();
+
+    /// 防止挂起锁屏
+    jtpInit.isLockScreen = true;
+
+    final file = File(path);
+    final AudioFileSize = await file.length();
+
+    // 构造 AudioMessage
+    final message = types.AudioMessage(
+      author: user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: const Uuid().v4(),
+      size: AudioFileSize,
+      // uri: Uri.file(path).toString(),
+      uri: path,
+      status: types.Status.sending, duration: Duration(seconds: seconds), name: '',
+    );
+
+    // 触发回调
+    /// 触发回调
+    if (onMessageCreated != null) {
+      onMessageCreated(message);
+    }
+
+    jtpInit.isLockScreen = false;
+    // /// 开始上传
+    // MessageHandle.sendVideoMessage(
+    //   result: result,
+    //   videoController: videoController,
+    //   api: api,
+    //   channelId: channelID,
+    //   onStateChanged: (UploadState state) {
+    //     if (state.status == UploadStatus.failure) {
+    //       final updatedMessage = message.copyWith(
+    //         status: Status.error, // 使用 copyWith 方法更新状态
+    //       );
+    //
+    //       // 更新消息列表中的状态
+    //       _updateMessage(updatedMessage);
+    //     }
+    //   },
+    // );
+    }
+
+
   /// 打开文件
-  static Future<void> openFileMessage(
-    types.FileMessage message,
-    List<types.Message> listMessages,
-    VoidCallback? callback,
-  ) async {
+  static Future<void> openFileMessage(types.FileMessage message,
+      List<types.Message> listMessages,
+      VoidCallback? callback,) async {
     JtpComponentsInit jtpInit = JtpComponentsInit();
     jtpInit.isLockScreen = true;
     var localPath = message.uri;
@@ -218,8 +359,10 @@ class ChatSendMessageTools {
     } else if (message.uri.startsWith('http')) {
       // 如果缓存不存在并且是网络文件，则下载
       try {
-        final index = listMessages.indexWhere((element) => element.id == message.id);
-        final updatedMessage = (listMessages[index] as types.FileMessage).copyWith(
+        final index = listMessages.indexWhere((element) =>
+        element.id == message.id);
+        final updatedMessage = (listMessages[index] as types.FileMessage)
+            .copyWith(
           isLoading: true,
         );
         listMessages[index] = updatedMessage;
@@ -235,8 +378,10 @@ class ChatSendMessageTools {
         localPath = cachedFilePath;
       } finally {
         // 更新消息状态
-        final index = listMessages.indexWhere((element) => element.id == message.id);
-        final updatedMessage = (listMessages[index] as types.FileMessage).copyWith(
+        final index = listMessages.indexWhere((element) =>
+        element.id == message.id);
+        final updatedMessage = (listMessages[index] as types.FileMessage)
+            .copyWith(
           isLoading: null,
         );
         listMessages[index] = updatedMessage;
@@ -247,5 +392,59 @@ class ChatSendMessageTools {
     // 打开文件
     await OpenFilex.open(localPath);
     jtpInit.isLockScreen = false;
+  }
+
+  /// 发送名片消息
+  void handleCardSelection({
+    required types.User user,
+    Function(types.CustomMessage message)? onMessageCreated,
+  }) async {
+    final message = types.CustomMessage(
+      author: user,
+      createdAt: DateTime
+          .now()
+          .millisecondsSinceEpoch,
+      metadata: {
+        'type': MessageContentType.CARD, // 自定义元数据，表示这是一个名片类型消息
+        'name': '招商总局(官方)',
+        'avatar': 'https://example.com/avatar.jpg', // 头像图片链接
+      },
+      status: types.Status.sending,
+      id: '${DateTime
+          .now()
+          .millisecondsSinceEpoch}',
+    );
+
+    // 触发回调
+    if (onMessageCreated != null) {
+      onMessageCreated(message);
+    }
+  }
+
+  /// 发送签到消息
+  void handleSignSelection({
+    required types.User user,
+    Function(types.CustomMessage message)? onMessageCreated,
+  }) async {
+    final message = types.CustomMessage(
+      author: user,
+      createdAt: DateTime
+          .now()
+          .millisecondsSinceEpoch,
+      metadata: {
+        'type': MessageContentType.SIGN, // 自定义元数据，表示这是一个签到类型消息
+        'continueDays': '2',
+        'total':"5"
+      },
+      status: types.Status.sending,
+      id: '${DateTime
+          .now()
+          .millisecondsSinceEpoch}',
+    );
+
+    // 触发回调
+    if (onMessageCreated != null) {
+      onMessageCreated(message);
+    }
   }
 }

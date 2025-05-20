@@ -23,6 +23,9 @@ class ConversationController extends GetxController {
   void onReady() {
     super.onReady();
     _getDataList();
+    // 构造测试数据
+    final conversation = UIConversation(WKUIConversationMsg());
+    msgList.add(conversation);
     _initListener();
   }
 

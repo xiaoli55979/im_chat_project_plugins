@@ -17,6 +17,7 @@ class MessageContentType {
   static const int LOTTIE_STICKER = 12; // lottie 贴图
   static const int EMOJI_STICKER = 13; // emoji 贴图
   static const int RICH_TEXT = 14; // 富文本消息
+  static const int SIGN = 15; // 签到
   static const int TYPING = 101; // 正在输入
 
   // 1000-2000 系统消息

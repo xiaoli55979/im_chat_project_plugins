@@ -32,6 +32,9 @@ class Assets {
   static const String contactIcIndexBarBubbleGray = 'assets/images/contact/ic_index_bar_bubble_gray.png';
   static const String contactIconGroups = 'assets/images/contact/icon_groups.png';
   static const String contactIconNewFriend = 'assets/images/contact/icon_new_friend.png';
+  static const String contactMoreWhite = 'assets/images/contact/more_white.png';
+  static const String conversationAudio = 'assets/images/conversation/audio.png';
+  static const String conversationSystemMsg = 'assets/images/conversation/system_msg.png';
   static const String ichatLogo = 'assets/images/ichat/logo.png';
 
 }

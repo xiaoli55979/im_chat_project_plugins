@@ -16,16 +16,13 @@ class ChatPersonalSettingView extends GetView<ChatPersonalSettingController> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.symmetric(vertical: 15),
               child: Column(
                 children: [
                   _buildUserInfoSection(),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10,),
                   _buildChatFilesSection(context),
-                  SizedBox(height: 10),
                   _buildPrivacySettingsSection(context),
-                  SizedBox(height: 10),
-                  _buildReportSection(),
                 ],
               ),
             ),
@@ -39,6 +36,7 @@ class ChatPersonalSettingView extends GetView<ChatPersonalSettingController> {
   /// **用户信息模块**
   Widget _buildUserInfoSection() {
     return MenuItem(
+      radius: 0,
       radiusTop: true,
       radiusBottom: true,
       title: '用户名称',
@@ -57,8 +55,9 @@ class ChatPersonalSettingView extends GetView<ChatPersonalSettingController> {
       radiusTop: true,
       radiusBottom: true,
       title: '聊天文件',
-      hideLine: true,
-      icon: Icons.folder,
+      radius: 0,
+      hideLine: false,
+      icon: null,
     );
   }
 
@@ -67,32 +66,28 @@ class ChatPersonalSettingView extends GetView<ChatPersonalSettingController> {
     return Column(
       children: [
         MenuItem(
+          radius: 0,
           radiusTop: true,
           title: '分享名片',
-          icon: Icons.share,
-        ),
+          icon: null,        ),
         MenuItem(
+          radius: 0,
+          radiusTop: true,
+          radiusBottom: true,
+          title: '举报',
+          hideLine: false,
+          icon: null,        ),
+        MenuItem(
+          radius: 0,
           title: '消息免打扰',
-          icon: Icons.notifications_off,
-        ),
+          icon: null,        ),
         MenuItem(
+          radius: 0,
           radiusBottom: true,
           title: '截屏惩罚',
           hideLine: true,
-          icon: Icons.screenshot,
-        ),
+          icon: null,        ),
       ],
-    );
-  }
-
-  /// **投诉模块**
-  Widget _buildReportSection() {
-    return MenuItem(
-      radiusTop: true,
-      radiusBottom: true,
-      title: '投诉',
-      hideLine: true,
-      icon: Icons.report,
     );
   }
 
@@ -111,7 +106,7 @@ class ChatPersonalSettingView extends GetView<ChatPersonalSettingController> {
             foregroundColor: Colors.white,
             minimumSize: Size(double.infinity, 48), // 按钮撑满
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4),
             ),
           ),
           child: Text("删除好友"),

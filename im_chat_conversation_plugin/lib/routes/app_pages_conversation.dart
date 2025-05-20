@@ -1,4 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:im_chat_conversation_plugin/pages/bingings/chat_file_bindings.dart';
+import 'package:im_chat_conversation_plugin/pages/views/chat_file_view.dart';
 
 import '../pages/bingings/chat_bindings.dart';
 import '../pages/bingings/chat_frequency_limit_bindings.dart';
@@ -50,5 +52,11 @@ class AppPagesConversation {
         ChatFrequencyLimitBindings(),
       ],
     ),
+
+    /// 聊天文件
+    GetPage(
+        name: AppRoutesConversation.chatFile,
+        page: () => ChatFileView(),
+        bindings: [ChatFileBindings()]),
   ];
 }

@@ -47,6 +47,7 @@ flutter:
     - assets/images/common/
     - assets/images/contact/
     - assets/images/ichat/
+    - assets/images/conversation/
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

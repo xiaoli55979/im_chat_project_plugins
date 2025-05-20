@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:im_chat_common_plugin/l10n/SlocalUtils.dart';
 import 'package:im_chat_conversation_plugin/pages/views/chat/video_player_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -10,18 +11,22 @@ class CustomVideoMessage extends StatefulWidget {
   final types.VideoMessage message;
   final double maxThumbnailHeight; // 视频缩略图最大高度
   final double maxThumbnailWidth; // 视频缩略图最大宽度
+  final bool isOwner;
+
   const CustomVideoMessage({
-    Key? key,
+    super.key,
     required this.message,
     this.maxThumbnailHeight = 250,
     this.maxThumbnailWidth = 250,
-  }) : super(key: key);
+    required this.isOwner,
+  });
 
   @override
   _CustomVideoMessageState createState() => _CustomVideoMessageState();
 }
 
-class _CustomVideoMessageState extends State<CustomVideoMessage> with AutomaticKeepAliveClientMixin {
+class _CustomVideoMessageState extends State<CustomVideoMessage>
+    with AutomaticKeepAliveClientMixin {
   String? _thumbnailPath;
   bool _isThumbnailLoading = true;
 
@@ -113,61 +118,88 @@ class _CustomVideoMessageState extends State<CustomVideoMessage> with AutomaticK
     double height = widget.message.height?.toDouble() ?? 400;
     final Size scaledSize = _calculateScaledSize(width, height);
 
-    return GestureDetector(
-      onTap: _showVideoPlayer,
-      child: _isThumbnailLoading
-          ? Container(
-              width: scaledSize.width,
-              height: scaledSize.height,
-              color: Colors.grey[300], // 占位背景颜色
-              child: const Center(
-                child: CircularProgressIndicator(strokeWidth: 1.5),
-              ),
-            )
-          : _thumbnailPath != null
-              ? SizedBox(
-                  width: scaledSize.width,
-                  height: scaledSize.height,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.file(
-                        File(_thumbnailPath!),
-                        fit: BoxFit.cover,
-                        width: scaledSize.width,
-                        height: scaledSize.height,
-                      ),
-                      Center(
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          margin: EdgeInsets.zero,
-                          decoration: BoxDecoration(
-                            color: Colors.black26,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.9), // 边框颜色
-                              width: 1.0, // 边框宽度
+    return Row(children: [
+      Text(
+        SlocalCommon.getLocalizaContent(SlocalCommon.of(context).read),
+        style: TextStyle(color: Colors.red, fontSize: 12),
+      ),
+      SizedBox(
+        width: 6,
+      ),
+      GestureDetector(
+        onTap: _showVideoPlayer,
+        child: _isThumbnailLoading
+            ? Container(
+                width: scaledSize.width,
+                height: scaledSize.height,
+                color: Colors.grey[300], // 占位背景颜色
+                child: const Center(
+                  child: CircularProgressIndicator(strokeWidth: 1.5),
+                ),
+              )
+            : _thumbnailPath != null
+                ? SizedBox(
+                    width: scaledSize.width,
+                    height: scaledSize.height,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.file(
+                          File(_thumbnailPath!),
+                          fit: BoxFit.cover,
+                          width: scaledSize.width,
+                          height: scaledSize.height,
+                        ),
+                        Center(
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            margin: EdgeInsets.zero,
+                            decoration: BoxDecoration(
+                              color: Colors.black26,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color:
+                                    Colors.white.withValues(alpha: 0.9), // 边框颜色
+                                width: 1.0, // 边框宽度
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.play_arrow,
+                              color: Colors.white.withValues(alpha: 0.9),
+                              size: 25,
                             ),
                           ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.play_arrow,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            size: 25,
-                          ),
                         ),
-                      )
-                    ],
+                        Positioned(
+                            right: 10,
+                            bottom: 10,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 8),
+                              child: Text(
+                                "21.04",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 10),
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                  color: Colors.black87),
+                            ))
+                      ],
+                    ),
+                  )
+                : Container(
+                    width: scaledSize.width,
+                    height: scaledSize.height,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.play_circle_fill,
+                        color: Colors.white, size: 44),
                   ),
-                )
-              : Container(
-                  width: scaledSize.width,
-                  height: scaledSize.height,
-                  color: Colors.grey[300],
-                  child: Icon(Icons.play_circle_fill, color: Colors.white, size: 44),
-                ),
-    );
+      )
+    ]);
   }
 
   void _showVideoPlayer() {

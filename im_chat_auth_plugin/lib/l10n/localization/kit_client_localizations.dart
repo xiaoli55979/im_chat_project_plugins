@@ -232,13 +232,13 @@ abstract class KitClientLocalizations {
   /// No description provided for @auth_login_with_password.
   ///
   /// In zh, this message translates to:
-  /// **'密码登录'**
+  /// **'手机密码登录'**
   String get auth_login_with_password;
 
   /// No description provided for @auth_login_with_phone.
   ///
   /// In zh, this message translates to:
-  /// **'手机登录'**
+  /// **'手机验证码登录'**
   String get auth_login_with_phone;
 
   /// No description provided for @auth_forget_username.
@@ -250,14 +250,14 @@ abstract class KitClientLocalizations {
   /// No description provided for @auth_forget_password.
   ///
   /// In zh, this message translates to:
-  /// **'忘记密码'**
+  /// **'忘记登陆密码'**
   String get auth_forget_password;
 
-  /// No description provided for @auth_regist_now.
+  /// No description provided for @auth_regist_new.
   ///
   /// In zh, this message translates to:
-  /// **'没有账号？立即注册 >'**
-  String get auth_regist_now;
+  /// **'注册新用户'**
+  String get auth_regist_new;
 
   /// No description provided for @auth_connect_server.
   ///
@@ -283,10 +283,16 @@ abstract class KitClientLocalizations {
   /// **'密码长度不正确'**
   String get auth_passworld_length;
 
+  /// No description provided for @auth_verification_length.
+  ///
+  /// In zh, this message translates to:
+  /// **'验证码长度不正确'**
+  String get auth_verification_length;
+
   /// No description provided for @auth_phone.
   ///
   /// In zh, this message translates to:
-  /// **'手机号码'**
+  /// **'手机号'**
   String get auth_phone;
 
   /// No description provided for @auth_phone_hint.
@@ -358,7 +364,7 @@ abstract class KitClientLocalizations {
   /// No description provided for @auth_reset_password.
   ///
   /// In zh, this message translates to:
-  /// **'重置登录密码'**
+  /// **'重置密码'**
   String get auth_reset_password;
 
   /// No description provided for @auth_reset_password_apply.
@@ -480,6 +486,138 @@ abstract class KitClientLocalizations {
   /// In zh, this message translates to:
   /// **'分享收款二维码'**
   String get auth_share_qrcode_adress;
+
+  /// No description provided for @help_and_set.
+  ///
+  /// In zh, this message translates to:
+  /// **'帮助与设置'**
+  String get help_and_set;
+
+  /// No description provided for @send.
+  ///
+  /// In zh, this message translates to:
+  /// **'发送'**
+  String get send;
+
+  /// No description provided for @checkProtocolTips.
+  ///
+  /// In zh, this message translates to:
+  /// **'请阅读并勾选用户协议与隐私协议'**
+  String get checkProtocolTips;
+
+  /// No description provided for @passwordFormatTips.
+  ///
+  /// In zh, this message translates to:
+  /// **'密码必须包含英文大小写字母和数字'**
+  String get passwordFormatTips;
+
+  /// No description provided for @sms_code_verify_send_success.
+  ///
+  /// In zh, this message translates to:
+  /// **'短信验证码发送成功'**
+  String get sms_code_verify_send_success;
+
+  /// No description provided for @auth_reset_pwd_success.
+  ///
+  /// In zh, this message translates to:
+  /// **'重置密码成功'**
+  String get auth_reset_pwd_success;
+
+  /// No description provided for @auth_reset_pwd_failed.
+  ///
+  /// In zh, this message translates to:
+  /// **'重置密码失败'**
+  String get auth_reset_pwd_failed;
+
+  /// No description provided for @service.
+  ///
+  /// In zh, this message translates to:
+  /// **'服务器'**
+  String get service;
+
+  /// No description provided for @join.
+  ///
+  /// In zh, this message translates to:
+  /// **'加入'**
+  String get join;
+
+  /// No description provided for @scanQRCodeToJoin.
+  ///
+  /// In zh, this message translates to:
+  /// **'扫描二维码加入'**
+  String get scanQRCodeToJoin;
+
+  /// No description provided for @service_hint.
+  ///
+  /// In zh, this message translates to:
+  /// **'请输入服务器ID'**
+  String get service_hint;
+
+  /// No description provided for @unableToReceiveVerifyCode.
+  ///
+  /// In zh, this message translates to:
+  /// **'收不到验证码'**
+  String get unableToReceiveVerifyCode;
+
+  /// No description provided for @general.
+  ///
+  /// In zh, this message translates to:
+  /// **'通用'**
+  String get general;
+
+  /// No description provided for @version.
+  ///
+  /// In zh, this message translates to:
+  /// **'版本'**
+  String get version;
+
+  /// No description provided for @privacyAgreement.
+  ///
+  /// In zh, this message translates to:
+  /// **'隐私协议'**
+  String get privacyAgreement;
+
+  /// No description provided for @userAgreement.
+  ///
+  /// In zh, this message translates to:
+  /// **'用户协议'**
+  String get userAgreement;
+
+  /// No description provided for @uploadMalfunction.
+  ///
+  /// In zh, this message translates to:
+  /// **'上报故障'**
+  String get uploadMalfunction;
+
+  /// No description provided for @malfunctionInfo.
+  ///
+  /// In zh, this message translates to:
+  /// **'故障信息'**
+  String get malfunctionInfo;
+
+  /// No description provided for @clearLocalCache.
+  ///
+  /// In zh, this message translates to:
+  /// **'清除本地缓存'**
+  String get clearLocalCache;
+
+  /// No description provided for @fontSize.
+  ///
+  /// In zh, this message translates to:
+  /// **'字体大小'**
+  String get fontSize;
+
+  /// No description provided for @multilingual.
+  ///
+  /// In zh, this message translates to:
+  /// **'多语言'**
+  String get multilingual;
+
+  /// No description provided for @malfunctionDesTips.
+  ///
+  /// In zh, this message translates to:
+  /// **'请输入故障详情'**
+  String get malfunctionDesTips;
 }
 
 class _KitClientLocalizationsDelegate extends LocalizationsDelegate<KitClientLocalizations> {

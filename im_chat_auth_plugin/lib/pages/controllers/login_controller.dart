@@ -3,7 +3,10 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_auth_plugin/l10n/slocal_auth.dart';
+import 'package:im_chat_auth_plugin/routes/app_routes_auth.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/util/string_ex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../api/api_provider_auth.dart';
@@ -13,6 +16,8 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormBuilderState>();
   final passwordFocusNode = FocusNode();
   bool hidePasswordTextField = true;
+  RxBool isSmsPage = false.obs;
+  RxBool isChecked = false.obs;
   final ApiProviderAuth api;
   final loginType = ''.obs;
   TextEditingController phoneController = TextEditingController();
@@ -20,7 +25,8 @@ class LoginController extends GetxController {
   /// 用户信息存入数据库
   final userManager = UserManager();
   TimerUtil? _timerUtil;
-  int leftCount = 0;
+  RxInt leftCount = 0.obs;
+  RxBool shouldShowError = true.obs;
   String version = "";
   String? historyLoginAccount = "";
   var selectList = [true, false]; // 按钮选中
@@ -120,15 +126,29 @@ class LoginController extends GetxController {
 
   /// 发送验证码
   void onSendSms() {
-    if (leftCount > 0) {
+    if (phoneNum.isGlobalPhoneNumber() == false) {
+      DialogUtils.showError(SlocalAuth.getLocalizaContent(SlocalAuth.of(Get.context).auth_phone_hint_error));
       return;
     }
+    if (leftCount.value > 0) {
+      return;
+    } else {
+      leftCount.value = 60;
+    }
+
     HideKeybUtils.hideKeyShowUnfocus();
+
+    if (phoneNum.isNotEmpty) {
+        _countdown();
+        print("来了");
+    }
+
     var phoneFields = formKey.currentState?.fields["phone"];
     var ok = phoneFields?.validate(focusOnInvalid: true);
     if (ok != null && ok) {
-      // var phone = phoneFields!.value;
-      // phone = TextFieldUtils.removeSpace(phone);
+
+      var phone = phoneFields!.value;
+      phone = TextFieldUtils.removeSpace(phone);
       // CaptchaUtils.show(
       //     businessTag: "Login",
       //     onSuccess: (captchaId) {
@@ -142,16 +162,30 @@ class LoginController extends GetxController {
       //         _timerUtil?.startCountDown();
       //       });
       //     });
+
+    }
+  }
+
+  void _countdown() {
+    if (leftCount.value > 0) {
+      leftCount.value--;
+      Future.delayed(Duration(seconds: 1), _countdown);
     }
   }
 
   /// 滑动验证完成，开始登录
   Future<void> onLogin() async {
+    phoneNumCheck();
     // print("object");
     try {
       var ok = formKey.currentState?.saveAndValidate(focusOnInvalid: false, autoScrollWhenFocusOnInvalid: false);
       // print("object_ok:$ok");
       if (ok != null && ok) {
+        if (!isChecked.value) {
+          DialogUtils.toast(SlocalAuth.getLocalizaContent(SlocalAuth.of(Get.context!).checkProtocolTips));
+          return;
+        }
+        shouldShowError.value = false;
         HideKeybUtils.hideKeyShowUnfocus();
         var forms = formKey.currentState?.value;
         // print("object_forms:$forms");
@@ -174,11 +208,14 @@ class LoginController extends GetxController {
         UserInfoModelEntity? getModel = await userManager.getCurrentUser();
         GlobalService.to.loginDefault(model.token).then((value){
           if (value) {
-            // print("object_uid:${getModel?.uid}");
+            print("object_uid:${getModel?.uid}去到主页}");
             Get.offAllNamed("/home");
+
             GlobalService.to.isLoggedIn.value = true;
           }
         });
+      } else {
+        shouldShowError.value = true;
       }
     } catch (e) {
       print("object_e:${e.toString()}");
@@ -189,5 +226,30 @@ class LoginController extends GetxController {
         DialogUtils.showSnackBar(content: e.toString());
       }
     }
+  }
+
+  void phoneNumCheck() {
+    if (phoneNum.isGlobalPhoneNumber() == false) {
+      print("手机号验证不通过");
+      DialogUtils.showError(SlocalAuth.getLocalizaContent(SlocalAuth.of(Get.context).auth_phone_hint_error));
+      return;
+    }
+    print("手机号验证通过: $phoneNum");
+  }
+
+  void switchPage() {
+    shouldShowError.value = false;
+    isSmsPage.value = !isSmsPage.value;
+    formKey.currentState?.reset();
+    update();
+  }
+
+  void toServiceLogin() {
+    Get.toNamed(AppRoutesAuth.service);
+
+  }
+
+  void toHelpSet() {
+    Get.toNamed(AppRoutesAuth.helpSet);
   }
 }
