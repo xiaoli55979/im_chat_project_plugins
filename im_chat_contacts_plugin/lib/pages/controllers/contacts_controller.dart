@@ -14,7 +14,6 @@ import 'package:im_chat_common_plugin/util/storage.dart';
 import '../../api/api_provider_contact.dart';
 import 'package:im_chat_resource_plugin/generated/assets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 enum ContactsHeader {
   manageGroup,
@@ -55,8 +54,6 @@ class ContactsController extends BaseController {
   int pageSize = 20;
   int totalPages = 0;
   int totalRecords = 0;
-  late final RefreshController refreshController =
-      RefreshController(initialRefresh: true);
 
   @override
   void handRegister() {
@@ -70,12 +67,12 @@ class ContactsController extends BaseController {
   @override
   void fetchData() {
     ///未同步过通讯录数据
-    // if (!Storage.getFriendSync()) {
-    //   // 加载通讯录数据
+    if (!Storage.getFriendSync()) {
+      // 加载通讯录数据
     _loadContactDataFromServer();
-    // } else {
+    } else {
     _loadContactDataFromIM();
-    // }
+    }
   }
 
   void listenerMembers() {
@@ -270,25 +267,4 @@ class ContactsController extends BaseController {
     Get.toNamed(AppRoutesContacts.selectContacts);
   }
 
-  void onRefresh() {
-    print("下拉");
-
-    Future.delayed(Duration(seconds: 3), () {
-      refreshController.refreshCompleted();
-    });
-  }
-
-  void onLoading() {}
-
-  void loadData() async {
-    currentPage = 1;
-    if (!refreshController.isRefresh) refreshController.requestRefresh();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    refreshController.dispose();
-    super.dispose();
-  }
 }
