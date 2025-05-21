@@ -23,7 +23,7 @@ class ToolsUtils {
   static ToolsUtils get instance => _instance;
 
   /// 基础连接
-  String baseUrl = "";
+  String baseUrl = "http://192.168.10.223:8081";
 
   /// 是否是jtp 否则是 lianfu
   bool isJtp = true;
@@ -44,7 +44,7 @@ class ToolsUtils {
   DeviceInfo? deviceInfo;
 
   /// 是否是debug模式
-  bool isDebugModel = false;
+  bool isDebugModel = true;
 
   // 在这里可以添加其他方法和属性
   void setDeviceInfo(DeviceInfo info) {

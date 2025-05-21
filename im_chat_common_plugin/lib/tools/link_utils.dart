@@ -252,14 +252,16 @@ class LinkUtils {
     String baseUrl = "";
     ProjectType type = ProjectUtils.projectType;
     if (type == ProjectType.iChat) {
-      baseUrl = "https://api-test.easy-im.com";
+      // baseUrl = "https://api-test.easy-im.com";
       // baseUrl = "https://api2.105shop.com";
       // baseUrl = "https://edge-api.lianfuspace988.com";
+      baseUrl = "http://192.168.10.223:8081";
     } else {
-      baseUrl = "https://api-test.easy-im.com";
+      // baseUrl = "https://api-test.easy-im.com";
       // baseUrl = "https://api3.cndway.com";
       // baseUrl = "https://onewordninewords.ptmlda.cn";
       // baseUrl = "https://test-api.jtpay.xyz";
+      baseUrl = "http://192.168.10.223:8081";
     }
     return baseUrl;
   }
