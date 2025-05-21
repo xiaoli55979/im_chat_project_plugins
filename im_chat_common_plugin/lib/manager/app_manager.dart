@@ -16,7 +16,7 @@ import 'package:im_chat_common_plugin/util/constant.dart';
 import 'package:im_chat_common_plugin/util/storage.dart';
 import 'package:im_chat_common_plugin/widget/bottom_sheet/option_sheet.dart';
 import 'package:line_detection_plugin/line_detection.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 enum AppLanguageType implements OptionItem {
   system(null),
@@ -147,11 +147,11 @@ class AppManager {
 
   /// 检查是否有权限，用于安卓
   Future<void> getPermission() async {
-    if (GetPlatform.isAndroid) {
-      final storage = await Permission.storage.isGranted;
-      if (storage) {
-        await [Permission.storage].request();
-      }
-    }
+    // if (GetPlatform.isAndroid) {
+    //   final storage = await Permission.storage.isGranted;
+    //   if (storage) {
+    //     await [Permission.storage].request();
+    //   }
+    // }
   }
 }
