@@ -1,4 +1,4 @@
-import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:wukongimfluttersdk/entity/conversation.dart';
 import 'package:wukongimfluttersdk/entity/msg.dart';
 

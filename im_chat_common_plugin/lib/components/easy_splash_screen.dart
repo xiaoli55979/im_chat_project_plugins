@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
+import 'package:im_chat_common_plugin/widget/base_view.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 
 class EasySplashScreen extends StatefulWidget {
@@ -105,8 +106,9 @@ class _EasySplashScreenState extends State<EasySplashScreen> {
 
     return SafeArea(
       bottom: false,
-      child: Scaffold(
-        body: Stack(
+      child: BaseView(
+        hasAppBar: false,
+        child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Container(

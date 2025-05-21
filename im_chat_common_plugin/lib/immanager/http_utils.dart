@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/immanager/user_info.dart';
 import 'package:im_chat_common_plugin/tools/link_utils.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';

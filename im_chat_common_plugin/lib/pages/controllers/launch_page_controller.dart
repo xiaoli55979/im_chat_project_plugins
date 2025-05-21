@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 
 class LaunchPageController extends GetxController {

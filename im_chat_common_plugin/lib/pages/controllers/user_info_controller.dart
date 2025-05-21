@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 
 class UserInfoController extends GetxController {
   UserInfoController({required this.api});

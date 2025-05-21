@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/generated/locales.g.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/widget/base_view.dart';
 
 class LaunchPageView extends GetView<LaunchPageController> {
   const LaunchPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return BaseView(
+      hasAppBar: false,
+      child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [controller.jtpInit.commonConfig.themeColor, controller.jtpInit.commonConfig.themeColor.withValues(alpha: 0.2)],
@@ -25,13 +27,13 @@ class LaunchPageView extends GetView<LaunchPageController> {
               const SizedBox(height: 100),
               Center(
                 child: Obx(() => Text(
-                      '${kLaunchWelcomeDes.tr}${controller.jtpInit.commonConfig.appName.value}',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    )),
+                  '${kLaunchWelcomeDes.tr}${controller.jtpInit.commonConfig.appName.value}',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                )),
               ),
               const SizedBox(height: 50), // 间距
               Text(

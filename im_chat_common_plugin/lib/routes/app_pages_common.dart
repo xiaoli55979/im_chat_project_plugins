@@ -14,8 +14,11 @@ class AppPagesCommon {
 
   /// 路由管理
   static final routes = [
-    /// 公告类路由
-    GetPage(name: "/splash", page: () => SplashScreenView()),
+    /// 引导页
+    GetPage(
+      name: AppRoutesCommon.splash,
+      page: () => SplashScreenView(),
+    ),
 
     /// 启动页
     GetPage(

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/base_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/base_provider.dart';
 import 'package:im_chat_common_plugin/api/lines_config.dart';
-import 'package:im_chat_common_plugin/api/user_provider.dart';
+import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:line_detection_plugin/line_detection.dart';
