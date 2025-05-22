@@ -8,6 +8,7 @@ export 'api/provider/im_provider.dart';
 export 'api/lines_config.dart';
 export 'api/provider/user_provider.dart';
 export 'api/result.dart';
+export 'api/results.dart';
 export 'api/retry_evaluator.dart';
 /// components
 export 'components/basic_view.dart';
