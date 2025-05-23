@@ -12,7 +12,7 @@ abstract class DatabaseManager {
   /// 获取数据库实例
   Future<Database> get database async {
     if (_database == null) {
-      _database = await _initDB();
+      _database = await initDB();
     }
     return _database!;
   }
@@ -23,7 +23,7 @@ abstract class DatabaseManager {
   }
 
   /// 初始化数据库（首次打开时创建表）
-  Future<Database> _initDB() async {
+  static Future<Database> initDB() async {
     final documentsDir = await getApplicationDocumentsDirectory();
     final path = join(documentsDir.path, 'app_database.db');
 

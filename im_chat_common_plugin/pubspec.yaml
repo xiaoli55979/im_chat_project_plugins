@@ -58,7 +58,6 @@ dependencies:
   lpinyin: ^2.0.2
   get_storage: ^2.1.1
   cached_network_image: ^3.4.1
-  pull_to_refresh: ^2.0.0 # 上拉加载，下拉刷新
   image_picker:
     git:
       url: https://github.com/xiaoli55979/tools_plugins.git

@@ -25,12 +25,12 @@ class TimeToolsUtils {
   }
 
   /// 时间戳返回指定时间格式
-  static String getFormatTime(int timestamp) {
+  static String getFormatTime(int timestamp, {String format = "yyyy-MM-dd HH:mm:ss"}) {
     // 将Unix时间戳转换为DateTime对象
     DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
 
     // 格式化日期和时间
-    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
+    String formattedDate = DateFormat(format).format(date);
 
     print('Formatted Date: $formattedDate');
     return formattedDate;
