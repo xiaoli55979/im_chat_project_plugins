@@ -1,22 +1,27 @@
 import 'package:im_chat_common_plugin/generated/json/base/json_convert_content.dart';
 import 'package:im_chat_common_plugin/models/conversatin_sync_model_entity.dart';
 
-ConversatinSyncModelEntity $ConversatinSyncModelEntityFromJson(Map<String, dynamic> json) {
+ConversatinSyncModelEntity $ConversatinSyncModelEntityFromJson(
+    Map<String, dynamic> json) {
   final ConversatinSyncModelEntity conversatinSyncModelEntity = ConversatinSyncModelEntity();
   final String? uid = jsonConvert.convert<String>(json['uid']);
   if (uid != null) {
     conversatinSyncModelEntity.uid = uid;
   }
-  final List<ConversatinSyncModelConversations>? conversations = (json['conversations'] as List<dynamic>?)
-      ?.map((e) => jsonConvert.convert<ConversatinSyncModelConversations>(e) as ConversatinSyncModelConversations)
-      .toList();
+  final List<
+      ConversatinSyncModelConversations>? conversations = (json['conversations'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<ConversatinSyncModelConversations>(
+          e) as ConversatinSyncModelConversations).toList();
   if (conversations != null) {
     conversatinSyncModelEntity.conversations = conversations;
   }
   return conversatinSyncModelEntity;
 }
 
-Map<String, dynamic> $ConversatinSyncModelEntityToJson(ConversatinSyncModelEntity entity) {
+Map<String, dynamic> $ConversatinSyncModelEntityToJson(
+    ConversatinSyncModelEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['uid'] = entity.uid;
   data['conversations'] = entity.conversations.map((v) => v.toJson()).toList();
@@ -34,7 +39,8 @@ extension ConversatinSyncModelEntityExtension on ConversatinSyncModelEntity {
   }
 }
 
-ConversatinSyncModelConversations $ConversatinSyncModelConversationsFromJson(Map<String, dynamic> json) {
+ConversatinSyncModelConversations $ConversatinSyncModelConversationsFromJson(
+    Map<String, dynamic> json) {
   final ConversatinSyncModelConversations conversatinSyncModelConversations = ConversatinSyncModelConversations();
   final String? channelId = jsonConvert.convert<String>(json['channel_id']);
   if (channelId != null) {
@@ -60,7 +66,8 @@ ConversatinSyncModelConversations $ConversatinSyncModelConversationsFromJson(Map
   if (timestamp != null) {
     conversatinSyncModelConversations.timestamp = timestamp;
   }
-  final String? lastClientMsgNo = jsonConvert.convert<String>(json['last_client_msg_no']);
+  final String? lastClientMsgNo = jsonConvert.convert<String>(
+      json['last_client_msg_no']);
   if (lastClientMsgNo != null) {
     conversatinSyncModelConversations.lastClientMsgNo = lastClientMsgNo;
   }
@@ -72,28 +79,38 @@ ConversatinSyncModelConversations $ConversatinSyncModelConversationsFromJson(Map
   if (version != null) {
     conversatinSyncModelConversations.version = version;
   }
-  final List<ConversatinSyncModelConversationsRecents>? recents = (json['recents'] as List<dynamic>?)
-      ?.map((e) => jsonConvert.convert<ConversatinSyncModelConversationsRecents>(e) as ConversatinSyncModelConversationsRecents)
-      .toList();
+  final List<
+      ConversatinSyncModelConversationsRecents>? recents = (json['recents'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<ConversatinSyncModelConversationsRecents>(
+          e) as ConversatinSyncModelConversationsRecents).toList();
   if (recents != null) {
     conversatinSyncModelConversations.recents = recents;
   }
-  final List<ConversatinSyncModelConversationsUsers>? users = (json['users'] as List<dynamic>?)
-      ?.map((e) => jsonConvert.convert<ConversatinSyncModelConversationsUsers>(e) as ConversatinSyncModelConversationsUsers)
-      .toList();
+  final List<
+      ConversatinSyncModelConversationsUsers>? users = (json['users'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<ConversatinSyncModelConversationsUsers>(
+          e) as ConversatinSyncModelConversationsUsers).toList();
   if (users != null) {
     conversatinSyncModelConversations.users = users;
   }
-  final List<ConversatinSyncModelConversationsGroups>? groups = (json['groups'] as List<dynamic>?)
-      ?.map((e) => jsonConvert.convert<ConversatinSyncModelConversationsGroups>(e) as ConversatinSyncModelConversationsGroups)
-      .toList();
+  final List<
+      ConversatinSyncModelConversationsGroups>? groups = (json['groups'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<ConversatinSyncModelConversationsGroups>(
+          e) as ConversatinSyncModelConversationsGroups).toList();
   if (groups != null) {
     conversatinSyncModelConversations.groups = groups;
   }
   return conversatinSyncModelConversations;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsToJson(ConversatinSyncModelConversations entity) {
+Map<String, dynamic> $ConversatinSyncModelConversationsToJson(
+    ConversatinSyncModelConversations entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['channel_id'] = entity.channelId;
   data['channel_type'] = entity.channelType;
@@ -141,7 +158,8 @@ extension ConversatinSyncModelConversationsExtension on ConversatinSyncModelConv
   }
 }
 
-ConversatinSyncModelConversationsRecents $ConversatinSyncModelConversationsRecentsFromJson(Map<String, dynamic> json) {
+ConversatinSyncModelConversationsRecents $ConversatinSyncModelConversationsRecentsFromJson(
+    Map<String, dynamic> json) {
   final ConversatinSyncModelConversationsRecents conversatinSyncModelConversationsRecents = ConversatinSyncModelConversationsRecents();
   final String? messageId = jsonConvert.convert<String>(json['message_id']);
   if (messageId != null) {
@@ -159,7 +177,8 @@ ConversatinSyncModelConversationsRecents $ConversatinSyncModelConversationsRecen
   if (channelType != null) {
     conversatinSyncModelConversationsRecents.channelType = channelType;
   }
-  final String? clientMsgNo = jsonConvert.convert<String>(json['client_msg_no']);
+  final String? clientMsgNo = jsonConvert.convert<String>(
+      json['client_msg_no']);
   if (clientMsgNo != null) {
     conversatinSyncModelConversationsRecents.clientMsgNo = clientMsgNo;
   }
@@ -211,31 +230,38 @@ ConversatinSyncModelConversationsRecents $ConversatinSyncModelConversationsRecen
   if (setting != null) {
     conversatinSyncModelConversationsRecents.setting = setting;
   }
-  final ConversatinSyncModelConversationsRecentsPayload? payload =
-      jsonConvert.convert<ConversatinSyncModelConversationsRecentsPayload>(json['payload']);
+  final ConversatinSyncModelConversationsRecentsPayload? payload = jsonConvert
+      .convert<ConversatinSyncModelConversationsRecentsPayload>(
+      json['payload']);
   if (payload != null) {
     conversatinSyncModelConversationsRecents.payload = payload;
   }
-  final String? signalPayload = jsonConvert.convert<String>(json['signal_payload']);
+  final String? signalPayload = jsonConvert.convert<String>(
+      json['signal_payload']);
   if (signalPayload != null) {
     conversatinSyncModelConversationsRecents.signalPayload = signalPayload;
   }
-  final ConversatinSyncModelConversationsRecentsMessageExtra? messageExtra =
-      jsonConvert.convert<ConversatinSyncModelConversationsRecentsMessageExtra>(json['message_extra']);
+  final ConversatinSyncModelConversationsRecentsMessageExtra? messageExtra = jsonConvert
+      .convert<ConversatinSyncModelConversationsRecentsMessageExtra>(
+      json['message_extra']);
   if (messageExtra != null) {
     conversatinSyncModelConversationsRecents.messageExtra = messageExtra;
   }
-  final List<ConversatinSyncModelConversationsRecentsReactions>? reactions = (json['reactions'] as List<dynamic>?)
-      ?.map((e) =>
-          jsonConvert.convert<ConversatinSyncModelConversationsRecentsReactions>(e) as ConversatinSyncModelConversationsRecentsReactions)
-      .toList();
+  final List<
+      ConversatinSyncModelConversationsRecentsReactions>? reactions = (json['reactions'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<
+          ConversatinSyncModelConversationsRecentsReactions>(
+          e) as ConversatinSyncModelConversationsRecentsReactions).toList();
   if (reactions != null) {
     conversatinSyncModelConversationsRecents.reactions = reactions;
   }
   return conversatinSyncModelConversationsRecents;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsRecentsToJson(ConversatinSyncModelConversationsRecents entity) {
+Map<String, dynamic> $ConversatinSyncModelConversationsRecentsToJson(
+    ConversatinSyncModelConversationsRecents entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['message_id'] = entity.messageId;
   data['message_seq'] = entity.messageSeq;
@@ -310,30 +336,33 @@ extension ConversatinSyncModelConversationsRecentsExtension on ConversatinSyncMo
   }
 }
 
-ConversatinSyncModelConversationsRecentsPayload $ConversatinSyncModelConversationsRecentsPayloadFromJson(Map<String, dynamic> json) {
-  final ConversatinSyncModelConversationsRecentsPayload conversatinSyncModelConversationsRecentsPayload =
-      ConversatinSyncModelConversationsRecentsPayload();
+ConversatinSyncModelConversationsRecentsPayload $ConversatinSyncModelConversationsRecentsPayloadFromJson(
+    Map<String, dynamic> json) {
+  final ConversatinSyncModelConversationsRecentsPayload conversatinSyncModelConversationsRecentsPayload = ConversatinSyncModelConversationsRecentsPayload();
   return conversatinSyncModelConversationsRecentsPayload;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsRecentsPayloadToJson(ConversatinSyncModelConversationsRecentsPayload entity) {
+Map<String, dynamic> $ConversatinSyncModelConversationsRecentsPayloadToJson(
+    ConversatinSyncModelConversationsRecentsPayload entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   return data;
 }
 
-extension ConversatinSyncModelConversationsRecentsPayloadExtension on ConversatinSyncModelConversationsRecentsPayload {}
+extension ConversatinSyncModelConversationsRecentsPayloadExtension on ConversatinSyncModelConversationsRecentsPayload {
+}
 
 ConversatinSyncModelConversationsRecentsMessageExtra $ConversatinSyncModelConversationsRecentsMessageExtraFromJson(
     Map<String, dynamic> json) {
-  final ConversatinSyncModelConversationsRecentsMessageExtra conversatinSyncModelConversationsRecentsMessageExtra =
-      ConversatinSyncModelConversationsRecentsMessageExtra();
+  final ConversatinSyncModelConversationsRecentsMessageExtra conversatinSyncModelConversationsRecentsMessageExtra = ConversatinSyncModelConversationsRecentsMessageExtra();
   final int? messageId = jsonConvert.convert<int>(json['message_id']);
   if (messageId != null) {
     conversatinSyncModelConversationsRecentsMessageExtra.messageId = messageId;
   }
-  final String? messageIdStr = jsonConvert.convert<String>(json['message_id_str']);
+  final String? messageIdStr = jsonConvert.convert<String>(
+      json['message_id_str']);
   if (messageIdStr != null) {
-    conversatinSyncModelConversationsRecentsMessageExtra.messageIdStr = messageIdStr;
+    conversatinSyncModelConversationsRecentsMessageExtra.messageIdStr =
+        messageIdStr;
   }
   final int? revoke = jsonConvert.convert<int>(json['revoke']);
   if (revoke != null) {
@@ -345,7 +374,8 @@ ConversatinSyncModelConversationsRecentsMessageExtra $ConversatinSyncModelConver
   }
   final int? voiceStatus = jsonConvert.convert<int>(json['voice_status']);
   if (voiceStatus != null) {
-    conversatinSyncModelConversationsRecentsMessageExtra.voiceStatus = voiceStatus;
+    conversatinSyncModelConversationsRecentsMessageExtra.voiceStatus =
+        voiceStatus;
   }
   final int? readed = jsonConvert.convert<int>(json['readed']);
   if (readed != null) {
@@ -353,20 +383,25 @@ ConversatinSyncModelConversationsRecentsMessageExtra $ConversatinSyncModelConver
   }
   final int? readedCount = jsonConvert.convert<int>(json['readed_count']);
   if (readedCount != null) {
-    conversatinSyncModelConversationsRecentsMessageExtra.readedCount = readedCount;
+    conversatinSyncModelConversationsRecentsMessageExtra.readedCount =
+        readedCount;
   }
   final int? readedAt = jsonConvert.convert<int>(json['readed_at']);
   if (readedAt != null) {
     conversatinSyncModelConversationsRecentsMessageExtra.readedAt = readedAt;
   }
-  final int? isMutualDeleted = jsonConvert.convert<int>(json['is_mutual_deleted']);
+  final int? isMutualDeleted = jsonConvert.convert<int>(
+      json['is_mutual_deleted']);
   if (isMutualDeleted != null) {
-    conversatinSyncModelConversationsRecentsMessageExtra.isMutualDeleted = isMutualDeleted;
+    conversatinSyncModelConversationsRecentsMessageExtra.isMutualDeleted =
+        isMutualDeleted;
   }
-  final ConversatinSyncModelConversationsRecentsMessageExtraContentEdit? contentEdit =
-      jsonConvert.convert<ConversatinSyncModelConversationsRecentsMessageExtraContentEdit>(json['content_edit']);
+  final ConversatinSyncModelConversationsRecentsMessageExtraContentEdit? contentEdit = jsonConvert
+      .convert<ConversatinSyncModelConversationsRecentsMessageExtraContentEdit>(
+      json['content_edit']);
   if (contentEdit != null) {
-    conversatinSyncModelConversationsRecentsMessageExtra.contentEdit = contentEdit;
+    conversatinSyncModelConversationsRecentsMessageExtra.contentEdit =
+        contentEdit;
   }
   final int? editedAt = jsonConvert.convert<int>(json['edited_at']);
   if (editedAt != null) {
@@ -374,12 +409,14 @@ ConversatinSyncModelConversationsRecentsMessageExtra $ConversatinSyncModelConver
   }
   final int? extraVersion = jsonConvert.convert<int>(json['extra_version']);
   if (extraVersion != null) {
-    conversatinSyncModelConversationsRecentsMessageExtra.extraVersion = extraVersion;
+    conversatinSyncModelConversationsRecentsMessageExtra.extraVersion =
+        extraVersion;
   }
   return conversatinSyncModelConversationsRecentsMessageExtra;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsRecentsMessageExtraToJson(
+Map<String,
+    dynamic> $ConversatinSyncModelConversationsRecentsMessageExtraToJson(
     ConversatinSyncModelConversationsRecentsMessageExtra entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['message_id'] = entity.messageId;
@@ -430,23 +467,23 @@ extension ConversatinSyncModelConversationsRecentsMessageExtraExtension on Conve
 
 ConversatinSyncModelConversationsRecentsMessageExtraContentEdit $ConversatinSyncModelConversationsRecentsMessageExtraContentEditFromJson(
     Map<String, dynamic> json) {
-  final ConversatinSyncModelConversationsRecentsMessageExtraContentEdit conversatinSyncModelConversationsRecentsMessageExtraContentEdit =
-      ConversatinSyncModelConversationsRecentsMessageExtraContentEdit();
+  final ConversatinSyncModelConversationsRecentsMessageExtraContentEdit conversatinSyncModelConversationsRecentsMessageExtraContentEdit = ConversatinSyncModelConversationsRecentsMessageExtraContentEdit();
   return conversatinSyncModelConversationsRecentsMessageExtraContentEdit;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsRecentsMessageExtraContentEditToJson(
+Map<String,
+    dynamic> $ConversatinSyncModelConversationsRecentsMessageExtraContentEditToJson(
     ConversatinSyncModelConversationsRecentsMessageExtraContentEdit entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   return data;
 }
 
-extension ConversatinSyncModelConversationsRecentsMessageExtraContentEditExtension
-    on ConversatinSyncModelConversationsRecentsMessageExtraContentEdit {}
+extension ConversatinSyncModelConversationsRecentsMessageExtraContentEditExtension on ConversatinSyncModelConversationsRecentsMessageExtraContentEdit {
+}
 
-ConversatinSyncModelConversationsRecentsReactions $ConversatinSyncModelConversationsRecentsReactionsFromJson(Map<String, dynamic> json) {
-  final ConversatinSyncModelConversationsRecentsReactions conversatinSyncModelConversationsRecentsReactions =
-      ConversatinSyncModelConversationsRecentsReactions();
+ConversatinSyncModelConversationsRecentsReactions $ConversatinSyncModelConversationsRecentsReactionsFromJson(
+    Map<String, dynamic> json) {
+  final ConversatinSyncModelConversationsRecentsReactions conversatinSyncModelConversationsRecentsReactions = ConversatinSyncModelConversationsRecentsReactions();
   final String? messageId = jsonConvert.convert<String>(json['message_id']);
   if (messageId != null) {
     conversatinSyncModelConversationsRecentsReactions.messageId = messageId;
@@ -486,7 +523,8 @@ ConversatinSyncModelConversationsRecentsReactions $ConversatinSyncModelConversat
   return conversatinSyncModelConversationsRecentsReactions;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsRecentsReactionsToJson(ConversatinSyncModelConversationsRecentsReactions entity) {
+Map<String, dynamic> $ConversatinSyncModelConversationsRecentsReactionsToJson(
+    ConversatinSyncModelConversationsRecentsReactions entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['message_id'] = entity.messageId;
   data['uid'] = entity.uid;
@@ -525,7 +563,8 @@ extension ConversatinSyncModelConversationsRecentsReactionsExtension on Conversa
   }
 }
 
-ConversatinSyncModelConversationsUsers $ConversatinSyncModelConversationsUsersFromJson(Map<String, dynamic> json) {
+ConversatinSyncModelConversationsUsers $ConversatinSyncModelConversationsUsersFromJson(
+    Map<String, dynamic> json) {
   final ConversatinSyncModelConversationsUsers conversatinSyncModelConversationsUsers = ConversatinSyncModelConversationsUsers();
   final String? uid = jsonConvert.convert<String>(json['uid']);
   if (uid != null) {
@@ -623,7 +662,8 @@ ConversatinSyncModelConversationsUsers $ConversatinSyncModelConversationsUsersFr
   if (remark != null) {
     conversatinSyncModelConversationsUsers.remark = remark;
   }
-  final int? isUploadAvatar = jsonConvert.convert<int>(json['is_upload_avatar']);
+  final int? isUploadAvatar = jsonConvert.convert<int>(
+      json['is_upload_avatar']);
   if (isUploadAvatar != null) {
     conversatinSyncModelConversationsUsers.isUploadAvatar = isUploadAvatar;
   }
@@ -650,7 +690,8 @@ ConversatinSyncModelConversationsUsers $ConversatinSyncModelConversationsUsersFr
   return conversatinSyncModelConversationsUsers;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsUsersToJson(ConversatinSyncModelConversationsUsers entity) {
+Map<String, dynamic> $ConversatinSyncModelConversationsUsersToJson(
+    ConversatinSyncModelConversationsUsers entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['uid'] = entity.uid;
   data['name'] = entity.name;
@@ -752,7 +793,8 @@ extension ConversatinSyncModelConversationsUsersExtension on ConversatinSyncMode
   }
 }
 
-ConversatinSyncModelConversationsGroups $ConversatinSyncModelConversationsGroupsFromJson(Map<String, dynamic> json) {
+ConversatinSyncModelConversationsGroups $ConversatinSyncModelConversationsGroupsFromJson(
+    Map<String, dynamic> json) {
   final ConversatinSyncModelConversationsGroups conversatinSyncModelConversationsGroups = ConversatinSyncModelConversationsGroups();
   final String? groupNo = jsonConvert.convert<String>(json['group_no']);
   if (groupNo != null) {
@@ -810,13 +852,16 @@ ConversatinSyncModelConversationsGroups $ConversatinSyncModelConversationsGroups
   if (revokeRemind != null) {
     conversatinSyncModelConversationsGroups.revokeRemind = revokeRemind;
   }
-  final int? joinGroupRemind = jsonConvert.convert<int>(json['join_group_remind']);
+  final int? joinGroupRemind = jsonConvert.convert<int>(
+      json['join_group_remind']);
   if (joinGroupRemind != null) {
     conversatinSyncModelConversationsGroups.joinGroupRemind = joinGroupRemind;
   }
-  final int? forbiddenAddFriend = jsonConvert.convert<int>(json['forbidden_add_friend']);
+  final int? forbiddenAddFriend = jsonConvert.convert<int>(
+      json['forbidden_add_friend']);
   if (forbiddenAddFriend != null) {
-    conversatinSyncModelConversationsGroups.forbiddenAddFriend = forbiddenAddFriend;
+    conversatinSyncModelConversationsGroups.forbiddenAddFriend =
+        forbiddenAddFriend;
   }
   final int? status = jsonConvert.convert<int>(json['status']);
   if (status != null) {
@@ -834,9 +879,11 @@ ConversatinSyncModelConversationsGroups $ConversatinSyncModelConversationsGroups
   if (flameSecond != null) {
     conversatinSyncModelConversationsGroups.flameSecond = flameSecond;
   }
-  final int? allowViewHistoryMsg = jsonConvert.convert<int>(json['allow_view_history_msg']);
+  final int? allowViewHistoryMsg = jsonConvert.convert<int>(
+      json['allow_view_history_msg']);
   if (allowViewHistoryMsg != null) {
-    conversatinSyncModelConversationsGroups.allowViewHistoryMsg = allowViewHistoryMsg;
+    conversatinSyncModelConversationsGroups.allowViewHistoryMsg =
+        allowViewHistoryMsg;
   }
   final int? memberCount = jsonConvert.convert<int>(json['member_count']);
   if (memberCount != null) {
@@ -854,9 +901,11 @@ ConversatinSyncModelConversationsGroups $ConversatinSyncModelConversationsGroups
   if (role != null) {
     conversatinSyncModelConversationsGroups.role = role;
   }
-  final int? forbiddenExpirTime = jsonConvert.convert<int>(json['forbidden_expir_time']);
+  final int? forbiddenExpirTime = jsonConvert.convert<int>(
+      json['forbidden_expir_time']);
   if (forbiddenExpirTime != null) {
-    conversatinSyncModelConversationsGroups.forbiddenExpirTime = forbiddenExpirTime;
+    conversatinSyncModelConversationsGroups.forbiddenExpirTime =
+        forbiddenExpirTime;
   }
   final int? version = jsonConvert.convert<int>(json['version']);
   if (version != null) {
@@ -865,7 +914,8 @@ ConversatinSyncModelConversationsGroups $ConversatinSyncModelConversationsGroups
   return conversatinSyncModelConversationsGroups;
 }
 
-Map<String, dynamic> $ConversatinSyncModelConversationsGroupsToJson(ConversatinSyncModelConversationsGroups entity) {
+Map<String, dynamic> $ConversatinSyncModelConversationsGroupsToJson(
+    ConversatinSyncModelConversationsGroups entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['group_no'] = entity.groupNo;
   data['group_type'] = entity.groupType;

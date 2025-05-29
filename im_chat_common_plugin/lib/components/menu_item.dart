@@ -26,6 +26,8 @@ class MenuItem extends StatelessWidget {
   final Color? noticeColor;
   final double? noticeSize;
   final Color? noticeBagroundColors;
+  final String? subTitle;
+  final Color? subTitleColor;
   final bool? showBadges;
   final dynamic object;
   final dynamic tingObject;
@@ -49,6 +51,8 @@ class MenuItem extends StatelessWidget {
     this.noticeSize,
     this.noticeColor,
     this.noticeBagroundColors,
+    this.subTitle,
+    this.subTitleColor,
     this.showBadges,
     this.onPressed,
     this.object,
@@ -102,14 +106,22 @@ class MenuItem extends StatelessWidget {
                   if (object != null) object,
                   if (object != null) 10.horizontalSpace,
                   Expanded(
-                    child: Text(
-                      title,
-                      style: TextStyle(color: Colors.black87, fontSize: FontUtils.contentTitleFontSize),
+                    child: Row(
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(color: Colors.black87, fontSize: FontUtils.contentTitleFontSize),
+                        ),
+                        if (subTitle != null)
+                          10.horizontalSpace,
+                        Expanded(child: Text(subTitle ?? "", style: TextStyle(color: subTitleColor),)),
+                      ],
                     ),
                   ),
+
                   if (notice != null)
                     Container(
-                      width: noticeSize ?? 65.rl,
+                      width: noticeSize ?? 75.rl,
                       height: noticeSize ?? 20.rl,
                       decoration: BoxDecoration(
                         color: noticeBagroundColors ?? Colors.red, // 背景色

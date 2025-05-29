@@ -17,6 +17,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_compress/video_compress.dart';
 
+import '../tools/permissions_utils.dart';
 import 'bottom_sheet_view.dart';
 import 'main_button.dart';
 
@@ -393,13 +394,13 @@ class FormBuilderImagePickerState extends FormBuilderFieldDecorationState<FormBu
             text: "相机",
             onPressed: () {
               Navigator.pop(context);
-              // PermissionsUtils.requestCameraPermission((status) {
-              //   if (status) {
-              //     onPickImage(ImageSource.camera, remainingImages);
-              //   } else {
-              //     DialogUtils.showError("相机未授权");
-              //   }
-              // });
+              PermissionsUtils.requestCameraPermission((status) {
+                if (status) {
+                  onPickImage(ImageSource.camera, remainingImages);
+                } else {
+                  DialogUtils.showError("相机未授权");
+                }
+              });
             }),
       );
     }
@@ -411,13 +412,13 @@ class FormBuilderImagePickerState extends FormBuilderFieldDecorationState<FormBu
               // DialogUtils.dismiss();
               Navigator.pop(context);
               // 获取相机相册权限
-              // PermissionsUtils.requestAlbumPermission((status) {
-              //   if (status) {
-              //     onPickImage(ImageSource.gallery, remainingImages);
-              //   } else {
-              //     DialogUtils.showError("相册未授权");
-              //   }
-              // });
+              PermissionsUtils.requestAlbumPermission((status) {
+                if (status) {
+                  onPickImage(ImageSource.gallery, remainingImages);
+                } else {
+                  DialogUtils.showError("相册未授权");
+                }
+              });
             }),
       );
     }

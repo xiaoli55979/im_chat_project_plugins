@@ -6,7 +6,7 @@ class Result<T> {
   late int code;
   late String? msg;
   late T? data;
-
+  late Map<String, dynamic> dataMap;
   Result();
 
   bool get isSuccess => code != null && code == 0;
@@ -29,7 +29,14 @@ class Result<T> {
     /// data
     final T? data = JsonConvert.fromJsonAsT<T>(json['data']);
     if (code != null) {
-      r.data = data;
+      if (data != null) {
+        r.data = data;
+      } else {
+        r.data = null;
+        if (json['data'] != null) {
+          r.dataMap = json['data'];
+        }
+      }
     }
     return r;
   }

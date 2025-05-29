@@ -18,7 +18,6 @@ JsonConvert jsonConvert = JsonConvert();
 typedef JsonConvertFunction<T> = T Function(Map<String, dynamic> json);
 typedef EnumConvertFunction<T> = T Function(String value);
 typedef ConvertExceptionHandler = void Function(Object error, StackTrace stackTrace);
-
 extension MapSafeExt<K, V> on Map<K, V> {
   T? getOrNull<T>(K? key) {
     if (!containsKey(key) || key == null) {
@@ -70,12 +69,14 @@ class JsonConvert {
     }
   }
 
-  List<T?>? convertList<T>(List<dynamic>? value, {EnumConvertFunction? enumConvert}) {
+  List<T?>? convertList<T>(List<dynamic>? value,
+      {EnumConvertFunction? enumConvert}) {
     if (value == null) {
       return null;
     }
     try {
-      return value.map((dynamic e) => _asT<T>(e, enumConvert: enumConvert)).toList();
+      return value.map((dynamic e) => _asT<T>(e, enumConvert: enumConvert))
+          .toList();
     } catch (e, stackTrace) {
       debugPrint('asT<$T> $e $stackTrace');
       if (onError != null) {
@@ -85,12 +86,14 @@ class JsonConvert {
     }
   }
 
-  List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}) {
+  List<T>? convertListNotNull<T>(dynamic value,
+      {EnumConvertFunction? enumConvert}) {
     if (value == null) {
       return null;
     }
     try {
-      return (value as List<dynamic>).map((dynamic e) => _asT<T>(e, enumConvert: enumConvert)!).toList();
+      return (value as List<dynamic>).map((dynamic e) =>
+      _asT<T>(e, enumConvert: enumConvert)!).toList();
     } catch (e, stackTrace) {
       debugPrint('asT<$T> $e $stackTrace');
       if (onError != null) {
@@ -100,7 +103,8 @@ class JsonConvert {
     }
   }
 
-  T? _asT<T extends Object?>(dynamic value, {EnumConvertFunction? enumConvert}) {
+  T? _asT<T extends Object?>(dynamic value,
+      {EnumConvertFunction? enumConvert}) {
     final String type = T.toString();
     final String valueS = value.toString();
     if (enumConvert != null) {
@@ -137,7 +141,8 @@ class JsonConvert {
           return covertFunc(Map<String, dynamic>.from(value)) as T;
         }
       } else {
-        throw UnimplementedError('$type unimplemented,you can try running the app again');
+        throw UnimplementedError(
+            '$type unimplemented,you can try running the app again');
       }
     }
   }
@@ -145,74 +150,86 @@ class JsonConvert {
   //list is returned by type
   static M? _getListChildType<M>(List<Map<String, dynamic>> data) {
     if (<AppConfigModelEntity>[] is M) {
-      return data.map<AppConfigModelEntity>((Map<String, dynamic> e) => AppConfigModelEntity.fromJson(e)).toList() as M;
+      return data.map<AppConfigModelEntity>((Map<String, dynamic> e) =>
+          AppConfigModelEntity.fromJson(e)).toList() as M;
     }
     if (<AppModelEntity>[] is M) {
-      return data.map<AppModelEntity>((Map<String, dynamic> e) => AppModelEntity.fromJson(e)).toList() as M;
+      return data.map<AppModelEntity>((Map<String, dynamic> e) =>
+          AppModelEntity.fromJson(e)).toList() as M;
     }
     if (<ConversatinSyncModelEntity>[] is M) {
-      return data.map<ConversatinSyncModelEntity>((Map<String, dynamic> e) => ConversatinSyncModelEntity.fromJson(e)).toList() as M;
+      return data.map<ConversatinSyncModelEntity>((Map<String, dynamic> e) =>
+          ConversatinSyncModelEntity.fromJson(e)).toList() as M;
     }
     if (<ConversatinSyncModelConversations>[] is M) {
-      return data.map<ConversatinSyncModelConversations>((Map<String, dynamic> e) => ConversatinSyncModelConversations.fromJson(e)).toList()
-          as M;
+      return data.map<ConversatinSyncModelConversations>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversations.fromJson(e)).toList() as M;
     }
     if (<ConversatinSyncModelConversationsRecents>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsRecents>((Map<String, dynamic> e) => ConversatinSyncModelConversationsRecents.fromJson(e))
-          .toList() as M;
+      return data.map<ConversatinSyncModelConversationsRecents>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsRecents.fromJson(e)).toList() as M;
     }
     if (<ConversatinSyncModelConversationsRecentsPayload>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsRecentsPayload>(
-              (Map<String, dynamic> e) => ConversatinSyncModelConversationsRecentsPayload.fromJson(e))
+      return data.map<ConversatinSyncModelConversationsRecentsPayload>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsRecentsPayload.fromJson(e))
           .toList() as M;
     }
     if (<ConversatinSyncModelConversationsRecentsMessageExtra>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsRecentsMessageExtra>(
-              (Map<String, dynamic> e) => ConversatinSyncModelConversationsRecentsMessageExtra.fromJson(e))
+      return data.map<ConversatinSyncModelConversationsRecentsMessageExtra>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsRecentsMessageExtra.fromJson(e))
           .toList() as M;
     }
-    if (<ConversatinSyncModelConversationsRecentsMessageExtraContentEdit>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsRecentsMessageExtraContentEdit>(
-              (Map<String, dynamic> e) => ConversatinSyncModelConversationsRecentsMessageExtraContentEdit.fromJson(e))
-          .toList() as M;
+    if (<ConversatinSyncModelConversationsRecentsMessageExtraContentEdit>[
+    ] is M) {
+      return data.map<
+          ConversatinSyncModelConversationsRecentsMessageExtraContentEdit>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsRecentsMessageExtraContentEdit
+              .fromJson(e)).toList() as M;
     }
     if (<ConversatinSyncModelConversationsRecentsReactions>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsRecentsReactions>(
-              (Map<String, dynamic> e) => ConversatinSyncModelConversationsRecentsReactions.fromJson(e))
+      return data.map<ConversatinSyncModelConversationsRecentsReactions>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsRecentsReactions.fromJson(e))
           .toList() as M;
     }
     if (<ConversatinSyncModelConversationsUsers>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsUsers>((Map<String, dynamic> e) => ConversatinSyncModelConversationsUsers.fromJson(e))
-          .toList() as M;
+      return data.map<ConversatinSyncModelConversationsUsers>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsUsers.fromJson(e)).toList() as M;
     }
     if (<ConversatinSyncModelConversationsGroups>[] is M) {
-      return data
-          .map<ConversatinSyncModelConversationsGroups>((Map<String, dynamic> e) => ConversatinSyncModelConversationsGroups.fromJson(e))
-          .toList() as M;
+      return data.map<ConversatinSyncModelConversationsGroups>((
+          Map<String, dynamic> e) =>
+          ConversatinSyncModelConversationsGroups.fromJson(e)).toList() as M;
     }
     if (<FriendModelEntity>[] is M) {
-      return data.map<FriendModelEntity>((Map<String, dynamic> e) => FriendModelEntity.fromJson(e)).toList() as M;
+      return data.map<FriendModelEntity>((Map<String, dynamic> e) =>
+          FriendModelEntity.fromJson(e)).toList() as M;
     }
     if (<GroupModelEntity>[] is M) {
-      return data.map<GroupModelEntity>((Map<String, dynamic> e) => GroupModelEntity.fromJson(e)).toList() as M;
+      return data.map<GroupModelEntity>((Map<String, dynamic> e) =>
+          GroupModelEntity.fromJson(e)).toList() as M;
     }
     if (<HttpDnsLinesModelEntity>[] is M) {
-      return data.map<HttpDnsLinesModelEntity>((Map<String, dynamic> e) => HttpDnsLinesModelEntity.fromJson(e)).toList() as M;
+      return data.map<HttpDnsLinesModelEntity>((Map<String, dynamic> e) =>
+          HttpDnsLinesModelEntity.fromJson(e)).toList() as M;
     }
     if (<ImNodeModelEntity>[] is M) {
-      return data.map<ImNodeModelEntity>((Map<String, dynamic> e) => ImNodeModelEntity.fromJson(e)).toList() as M;
+      return data.map<ImNodeModelEntity>((Map<String, dynamic> e) =>
+          ImNodeModelEntity.fromJson(e)).toList() as M;
     }
     if (<UserInfoModelEntity>[] is M) {
-      return data.map<UserInfoModelEntity>((Map<String, dynamic> e) => UserInfoModelEntity.fromJson(e)).toList() as M;
+      return data.map<UserInfoModelEntity>((Map<String, dynamic> e) =>
+          UserInfoModelEntity.fromJson(e)).toList() as M;
     }
     if (<UserInfoModelSetting>[] is M) {
-      return data.map<UserInfoModelSetting>((Map<String, dynamic> e) => UserInfoModelSetting.fromJson(e)).toList() as M;
+      return data.map<UserInfoModelSetting>((Map<String, dynamic> e) =>
+          UserInfoModelSetting.fromJson(e)).toList() as M;
     }
 
     debugPrint("$M not found");
@@ -225,7 +242,8 @@ class JsonConvert {
       return json;
     }
     if (json is List) {
-      return _getListChildType<M>(json.map((dynamic e) => e as Map<String, dynamic>).toList());
+      return _getListChildType<M>(
+          json.map((dynamic e) => e as Map<String, dynamic>).toList());
     } else {
       return jsonConvert.convert<M>(json);
     }
@@ -236,16 +254,26 @@ class JsonConvertClassCollection {
   Map<String, JsonConvertFunction> convertFuncMap = {
     (AppConfigModelEntity).toString(): AppConfigModelEntity.fromJson,
     (AppModelEntity).toString(): AppModelEntity.fromJson,
-    (ConversatinSyncModelEntity).toString(): ConversatinSyncModelEntity.fromJson,
-    (ConversatinSyncModelConversations).toString(): ConversatinSyncModelConversations.fromJson,
-    (ConversatinSyncModelConversationsRecents).toString(): ConversatinSyncModelConversationsRecents.fromJson,
-    (ConversatinSyncModelConversationsRecentsPayload).toString(): ConversatinSyncModelConversationsRecentsPayload.fromJson,
-    (ConversatinSyncModelConversationsRecentsMessageExtra).toString(): ConversatinSyncModelConversationsRecentsMessageExtra.fromJson,
-    (ConversatinSyncModelConversationsRecentsMessageExtraContentEdit).toString():
-        ConversatinSyncModelConversationsRecentsMessageExtraContentEdit.fromJson,
-    (ConversatinSyncModelConversationsRecentsReactions).toString(): ConversatinSyncModelConversationsRecentsReactions.fromJson,
-    (ConversatinSyncModelConversationsUsers).toString(): ConversatinSyncModelConversationsUsers.fromJson,
-    (ConversatinSyncModelConversationsGroups).toString(): ConversatinSyncModelConversationsGroups.fromJson,
+    (ConversatinSyncModelEntity).toString(): ConversatinSyncModelEntity
+        .fromJson,
+    (ConversatinSyncModelConversations)
+        .toString(): ConversatinSyncModelConversations.fromJson,
+    (ConversatinSyncModelConversationsRecents)
+        .toString(): ConversatinSyncModelConversationsRecents.fromJson,
+    (ConversatinSyncModelConversationsRecentsPayload)
+        .toString(): ConversatinSyncModelConversationsRecentsPayload.fromJson,
+    (ConversatinSyncModelConversationsRecentsMessageExtra)
+        .toString(): ConversatinSyncModelConversationsRecentsMessageExtra
+        .fromJson,
+    (ConversatinSyncModelConversationsRecentsMessageExtraContentEdit)
+        .toString(): ConversatinSyncModelConversationsRecentsMessageExtraContentEdit
+        .fromJson,
+    (ConversatinSyncModelConversationsRecentsReactions)
+        .toString(): ConversatinSyncModelConversationsRecentsReactions.fromJson,
+    (ConversatinSyncModelConversationsUsers)
+        .toString(): ConversatinSyncModelConversationsUsers.fromJson,
+    (ConversatinSyncModelConversationsGroups)
+        .toString(): ConversatinSyncModelConversationsGroups.fromJson,
     (FriendModelEntity).toString(): FriendModelEntity.fromJson,
     (GroupModelEntity).toString(): GroupModelEntity.fromJson,
     (HttpDnsLinesModelEntity).toString(): HttpDnsLinesModelEntity.fromJson,

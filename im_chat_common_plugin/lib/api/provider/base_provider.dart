@@ -80,6 +80,8 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
           // if (GlobalService.to.token != null && fileUpload) {
           // options.headers['Authorization'] = 'Bearer ${GlobalService.to.token}';
           // }
+          options.headers['X-App-Version'] = ToolsUtils.getVersion();
+          options.headers['X-Device-Type'] = ToolsUtils.getPlatform(); // 1:PC 2:IOS 3:Android
           options.headers['bundle_id'] = ToolsUtils.instance.deviceInfo?.package.packageName ?? "";
           if (GlobalService.to.token != null) {
             // options.headers['token'] = '${GlobalService.to.token}';
@@ -283,14 +285,18 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
     /// 创建 FormData
     FormData formData = FormData.fromMap({
       'file': retryableFile,
+      'path': key
     });
 
     /// 添加配置
-    String namePath = "";
-    if (isImFile != null && isImFile) {
-      namePath = "&&name=publicim";
-    }
-    String url = '/api/v1/mms/front/upload/file?obj=$key$namePath';
+    // String namePath = "";
+    // if (isImFile != null && isImFile) {
+    //   namePath = "&&name=publicim";
+    // }
+    // String url = '/api/v1/mms/front/upload/file?obj=$key$namePath';
+    print("来了老弟");
+    String url = '/v1/file/upload';
+    print("file: $file path: $key");
     try {
       await dio.post(
         url, // 上传接口
@@ -298,10 +304,10 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
         options: Options(
           receiveTimeout: const Duration(seconds: 180),
           sendTimeout: const Duration(seconds: 90),
-          extra: {
-            'file': file,
-            'filename': key,
-          },
+          // extra: {
+          //   'file': file,
+          //   'path': key,
+          // },
         ),
         onSendProgress: onSendProgress, // 上传进度回调
       );

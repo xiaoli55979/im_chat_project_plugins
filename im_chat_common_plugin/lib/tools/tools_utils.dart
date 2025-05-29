@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -68,6 +70,19 @@ class ToolsUtils {
       'device_name': ToolsUtils.instance.deviceInfo!.device,
       'device_model': ToolsUtils.instance.deviceInfo!.model,
     };
+  }
+
+  /// 获取平台 1:PC 2:iOS 3:Android
+  static int getPlatform() {
+    if (Platform.isIOS) {
+      print("当前设备是 iOS");
+      return 2;
+    } else if (Platform.isAndroid) {
+      print("当前设备是 Android");
+      return 3;
+    } else {
+      return 1;
+    }
   }
 
   /// 获取是否是平板

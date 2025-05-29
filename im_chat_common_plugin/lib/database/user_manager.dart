@@ -11,14 +11,14 @@ class UserManager extends DatabaseManager {
   factory UserManager() => _instance;
 
   UserManager._internal() {
-    DatabaseManager.registerTableCreator(_createTable);
+    DatabaseManager.registerTableCreator(createTable);
   }
 
   String _currentUserUid = ""; // 当前用户 UID（内存缓存）
   String _currentToken = ""; // 当前 token
 
   /// 创建用户表
-  Future<void> _createTable(Database db) async {
+  Future<void> createTable(Database db) async {
     await db.execute('''
     CREATE TABLE IF NOT EXISTS user_info (
       uid TEXT PRIMARY KEY,
@@ -39,7 +39,10 @@ class UserManager extends DatabaseManager {
       setting TEXT,
       rsa_public_key TEXT,
       short_status INTEGER,
-      msg_expire_second INTEGER
+      msg_expire_second INTEGER,
+      server_id TEXT,
+      avatar TEXT,
+      sign TEXT
     )
   ''');
   }

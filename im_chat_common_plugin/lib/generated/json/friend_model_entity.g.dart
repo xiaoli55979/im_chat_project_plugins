@@ -99,7 +99,8 @@ FriendModelEntity $FriendModelEntityFromJson(Map<String, dynamic> json) {
   if (remark != null) {
     friendModelEntity.remark = remark;
   }
-  final int? isUploadAvatar = jsonConvert.convert<int>(json['is_upload_avatar']);
+  final int? isUploadAvatar = jsonConvert.convert<int>(
+      json['is_upload_avatar']);
   if (isUploadAvatar != null) {
     friendModelEntity.isUploadAvatar = isUploadAvatar;
   }

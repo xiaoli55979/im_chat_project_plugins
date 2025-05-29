@@ -15,7 +15,8 @@ GroupModelEntity $GroupModelEntityFromJson(Map<String, dynamic> json) {
   if (channelName != null) {
     groupModelEntity.channelName = channelName;
   }
-  final String? channelRemark = jsonConvert.convert<String>(json['channelRemark']);
+  final String? channelRemark = jsonConvert.convert<String>(
+      json['channelRemark']);
   if (channelRemark != null) {
     groupModelEntity.channelRemark = channelRemark;
   }
@@ -103,7 +104,8 @@ GroupModelEntity $GroupModelEntityFromJson(Map<String, dynamic> json) {
   if (username != null) {
     groupModelEntity.username = username;
   }
-  final String? avatarCacheKey = jsonConvert.convert<String>(json['avatarCacheKey']);
+  final String? avatarCacheKey = jsonConvert.convert<String>(
+      json['avatarCacheKey']);
   if (avatarCacheKey != null) {
     groupModelEntity.avatarCacheKey = avatarCacheKey;
   }
@@ -111,11 +113,13 @@ GroupModelEntity $GroupModelEntityFromJson(Map<String, dynamic> json) {
   if (remoteExtraMap != null) {
     groupModelEntity.remoteExtraMap = remoteExtraMap;
   }
-  final String? parentChannelID = jsonConvert.convert<String>(json['parentChannelID']);
+  final String? parentChannelID = jsonConvert.convert<String>(
+      json['parentChannelID']);
   if (parentChannelID != null) {
     groupModelEntity.parentChannelID = parentChannelID;
   }
-  final int? parentChannelType = jsonConvert.convert<int>(json['parentChannelType']);
+  final int? parentChannelType = jsonConvert.convert<int>(
+      json['parentChannelType']);
   if (parentChannelType != null) {
     groupModelEntity.parentChannelType = parentChannelType;
   }

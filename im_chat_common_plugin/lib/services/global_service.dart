@@ -203,8 +203,8 @@ class GlobalService extends GetxService {
         /// 获取用户节点
         var res = await api.usersIm(uid: uid);
         imUtils.imNode = res.data!;
-        String ip = imUtils.imNode.wssAddr;
-        print('ip_Adder2:$ip  imUtils.imNode:${imUtils.imNode.wssAddr}');
+        String ip = imUtils.imNode.wsAddr;
+        print('ip_Adder2:$ip  imUtils.imNode:${imUtils.imNode.wsAddr}');
         // /// 获取APP模块信息
         // appConfigModel = await api.appModule();
         // await api.appModule();
