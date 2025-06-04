@@ -80,7 +80,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
           // if (GlobalService.to.token != null && fileUpload) {
           // options.headers['Authorization'] = 'Bearer ${GlobalService.to.token}';
           // }
-          options.headers['X-App-Version'] = ToolsUtils.getVersion();
+          options.headers['X-App-Version'] = await ToolsUtils.getVersion();
           options.headers['X-Device-Type'] = ToolsUtils.getPlatform(); // 1:PC 2:IOS 3:Android
           options.headers['bundle_id'] = ToolsUtils.instance.deviceInfo?.package.packageName ?? "";
           if (GlobalService.to.token != null) {
