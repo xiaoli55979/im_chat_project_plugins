@@ -18,7 +18,7 @@ class LightThemeColors {
   static const Color cardColor = Color(0xfffafafa);
 
   /// app_bar
-  static const Color appBarColor = Color(0xFFF3F3F7);
+  static const Color appBarColor = white;
   static const Color appBarIconsColor = black;
   static const Color appBarTextColor = Color(0xFF172735);
 
