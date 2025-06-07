@@ -65,15 +65,12 @@ export 'models/multiple_item_enum.dart';
 /// pages
   /// bingings
 export 'pages/bingings/launch_bindings.dart';
-export 'pages/bingings/search_bindings.dart';
 export 'pages/bingings/user_info_bindings.dart';
   /// controllers
 export 'pages/controllers/launch_page_controller.dart';
-export 'pages/controllers/search_bar_controller.dart';
 export 'pages/controllers/user_info_controller.dart';
   /// views
 export 'pages/views/launch_page_view.dart';
-export 'pages/views/search_view.dart';
 export 'pages/views/user_info_view.dart';
 export 'components/bubble_item_view.dart';
 /// routes

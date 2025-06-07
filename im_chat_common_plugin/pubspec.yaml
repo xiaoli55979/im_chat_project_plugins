@@ -58,6 +58,7 @@ dependencies:
   lpinyin: ^2.0.2
   get_storage: ^2.1.1
   cached_network_image: ^3.4.1
+  bot_toast: ^4.1.3 #提示
   image_picker:
     git:
       url: https://github.com/xiaoli55979/tools_plugins.git
@@ -167,3 +168,5 @@ flutter:
   # https://flutter.dev/to/font-from-package
 
   generate: true
+  assets:
+    - assets/
