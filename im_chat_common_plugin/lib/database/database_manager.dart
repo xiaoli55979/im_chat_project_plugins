@@ -19,6 +19,7 @@ abstract class DatabaseManager {
 
   /// 注册表创建函数（在数据库初始化时调用）
   static void registerTableCreator(Future<void> Function(Database) creator) {
+    print("friend_info表建立");
     _tableCreators.add(creator);
   }
 

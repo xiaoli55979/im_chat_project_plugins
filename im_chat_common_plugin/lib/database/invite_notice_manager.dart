@@ -4,7 +4,7 @@ import 'database_manager.dart';
 class InviteNoticeManager extends DatabaseManager {
   static final InviteNoticeManager _instance = InviteNoticeManager._internal();
   factory InviteNoticeManager() => _instance;
-
+  // static InviteNoticeManager get shared => _instance;
   InviteNoticeManager._internal() {
     DatabaseManager.registerTableCreator(_createTable);
   }

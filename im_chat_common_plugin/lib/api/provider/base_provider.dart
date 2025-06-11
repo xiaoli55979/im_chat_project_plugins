@@ -367,6 +367,9 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
       transaction.status = SpanStatus.fromHttpStatusCode(response.statusCode ?? -1);
 
       try {
+        if (response.data['code'] == 401) { // 登录失效
+          getx.Get.offAllNamed("/login");
+        }
         return decoder != null ? decoder.call(response.data) : Result.fromJson(response.data) as T;
       } catch (e, stackTrace) {
         transaction.throwable = e;
