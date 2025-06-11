@@ -128,7 +128,7 @@ class UserProvider extends BaseProvider {
     required String uid,
   }) =>
       get(
-        '/v1/users/$uid',
+        '/v1/user/$uid',
         decoder: (obj) => obj as Map<String, dynamic>,
       );
 

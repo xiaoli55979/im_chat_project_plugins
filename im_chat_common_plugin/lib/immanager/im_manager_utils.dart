@@ -41,8 +41,8 @@ class ImManagerUtils {
         var channelType = wkcmd.param['channel_type'];
         if (channelID != '') {
           // 同步消息扩展
-          // var maxVersion = await WKIM.shared.messageManager.getMaxExtraVersionWithChannel(channelID, channelType);
-          // HttpUtils.syncMsgExtra(channelID, channelType, maxVersion);
+          var maxVersion = await WKIM.shared.messageManager.getMaxExtraVersionWithChannel(channelID, channelType);
+          HttpUtils.syncMsgExtra(channelID, channelType, maxVersion);
         }
       } else if (wkcmd.cmd == 'channelUpdate') {
         var channelID = wkcmd.param['channel_id'];
