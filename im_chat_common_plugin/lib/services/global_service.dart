@@ -204,6 +204,7 @@ class GlobalService extends GetxService {
         var res = await api.usersIm(uid: uid);
         imUtils.imNode = res.data!;
         String ip = imUtils.imNode.wsAddr;
+        ImOptionsUtils().imNode.wsAddr = ip;
         print('ip_Adder2:$ip  imUtils.imNode:${imUtils.imNode.wsAddr}');
         // /// 获取APP模块信息
         // appConfigModel = await api.appModule();
