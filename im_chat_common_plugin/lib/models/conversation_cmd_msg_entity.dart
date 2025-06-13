@@ -13,8 +13,8 @@ class ConversationCmdMsgEntity {
 	late String toUid;
 	late String token;
 	late String channelId;
-	late String channelType;
-	late int redCount;
+	late int channelType;
+	late int redCount = 0;
 	late String content;
 	late int timeStamp;
 

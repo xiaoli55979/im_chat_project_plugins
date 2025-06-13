@@ -60,9 +60,9 @@ class CmdMsgDBHelper {
       where: 'toUid = ?',
       whereArgs: [toUid],
     );
-
+    print("查询到的cmd消息结果result$result");
     // 将查询结果映射为实体列表
-    return result.map((json) => ConversationCmdMsgEntity.fromJson(json)).toList();
+    return result.map((json) {  print("查询到的cmd消息结果json$json"); return ConversationCmdMsgEntity.fromJson(json);}).toList();
   }
 
 
@@ -109,6 +109,7 @@ class CmdMsgDBHelper {
       whereArgs: [cmdMsg.cmdType, cmdMsg.toUid],
     );
 
+    print("将要插入的cmdmodel：${cmdMsg.toJson()}");
     // 如果没有匹配到数据，则插入新记录
     if (affectedRows == 0) {
       return await db.insert('cmd_msg_table', cmdMsg.toJson());

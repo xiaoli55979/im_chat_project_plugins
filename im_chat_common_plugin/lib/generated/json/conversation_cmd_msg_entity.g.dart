@@ -36,7 +36,7 @@ ConversationCmdMsgEntity $ConversationCmdMsgEntityFromJson(
   if (channelId != null) {
     conversationCmdMsgEntity.channelId = channelId;
   }
-  final String? channelType = jsonConvert.convert<String>(json['channelType']);
+  final int? channelType = jsonConvert.convert<int>(json['channelType']);
   if (channelType != null) {
     conversationCmdMsgEntity.channelType = channelType;
   }
@@ -83,7 +83,7 @@ extension ConversationCmdMsgEntityExtension on ConversationCmdMsgEntity {
     String? toUid,
     String? token,
     String? channelId,
-    String? channelType,
+    int? channelType,
     int? redCount,
     String? content,
     int? timeStamp,
