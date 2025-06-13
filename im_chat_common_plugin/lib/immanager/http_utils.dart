@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -13,6 +14,9 @@ import 'package:wukongimfluttersdk/entity/conversation.dart';
 import 'package:wukongimfluttersdk/entity/msg.dart';
 import 'package:wukongimfluttersdk/type/const.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
+
+import '../api/provider/im_provider.dart';
+import '../services/global_service.dart';
 
 
 class HttpUtils {
@@ -37,9 +41,8 @@ class HttpUtils {
 
   /// 同步会话列表
   static syncConversation(String lastSsgSeqs, int msgCount, int version, Function(WKSyncConversation) back) async {
-    WKSyncConversation conversation = WKSyncConversation();
-    conversation.conversations = [];
-    try {
+
+      print("tongbujinlaile");
       final response = await api.conversationSync(
         version: version,
         lastMsgSeqs: lastSsgSeqs,
@@ -47,14 +50,16 @@ class HttpUtils {
         deviceUuid: ToolsUtils.instance.deviceInfo!.deviceId,
       );
 // print(response.data);
-
-// if (response.statusCode == HttpStatus.ok) {
-//   try {
-      var list = response['conversations'];
+      WKSyncConversation conversation = WKSyncConversation();
+      conversation.conversations = [];
+if (response['code'] == 0) {
+  try {
+      var list = response['data']['conversations'];
       // var list = jsonDecode(response.data);
       for (int i = 0; i < list.length; i++) {
         var json = list[i];
         WKSyncConvMsg convMsg = WKSyncConvMsg();
+        print("同步全部会话列表循环第$i次${json['channel_id']}");
         convMsg.channelID = json['channel_id'];
         convMsg.channelType = json['channel_type'];
         convMsg.unread = json['unread'] ?? 0;
@@ -74,12 +79,16 @@ class HttpUtils {
         convMsg.recents = msgList;
         conversation.conversations!.add(convMsg);
       }
-//   } catch (e) {
-//     print('同步最近会话错误');
-//   }
-// }
-    } catch (e) {}
-    back(conversation);
+      print("tongbuchenggong, uid:${GlobalService.to.uid}");
+      // conversation.uid = GlobalService.to.uid;
+
+  } catch (e) {
+    print('同步最近会话错误');
+  }
+  back(conversation);
+}
+
+
   }
 
   static syncChannelMsg(
@@ -134,10 +143,10 @@ class HttpUtils {
 
     // String payload = json['payload'];
     try {
-      msg.payload = json['payload'];
-      // msg.payload = jsonDecode(utf8.decode(base64Decode(payload)));
+      // msg.payload = json['payload'];
+      msg.payload = jsonDecode(utf8.decode(base64Decode(json['payload'])));
     } catch (e) {
-      // print('异常了');
+      print('payload异常了');
     }
     // 解析扩展
     var extraJson = json['message_extra'];

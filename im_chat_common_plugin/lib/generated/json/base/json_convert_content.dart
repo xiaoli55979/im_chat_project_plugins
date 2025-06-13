@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:im_chat_common_plugin/models/app_config_model_entity.dart';
 import 'package:im_chat_common_plugin/models/app_model_entity.dart';
 import 'package:im_chat_common_plugin/models/conversatin_sync_model_entity.dart';
+import 'package:im_chat_common_plugin/models/conversation_cmd_msg_entity.dart';
 import 'package:im_chat_common_plugin/models/friend_model_entity.dart';
 import 'package:im_chat_common_plugin/models/group_model_entity.dart';
 import 'package:im_chat_common_plugin/models/http_dns_lines_model_entity.dart';
@@ -207,6 +208,10 @@ class JsonConvert {
           Map<String, dynamic> e) =>
           ConversatinSyncModelConversationsGroups.fromJson(e)).toList() as M;
     }
+    if (<ConversationCmdMsgEntity>[] is M) {
+      return data.map<ConversationCmdMsgEntity>((Map<String, dynamic> e) =>
+          ConversationCmdMsgEntity.fromJson(e)).toList() as M;
+    }
     if (<FriendModelEntity>[] is M) {
       return data.map<FriendModelEntity>((Map<String, dynamic> e) =>
           FriendModelEntity.fromJson(e)).toList() as M;
@@ -274,6 +279,7 @@ class JsonConvertClassCollection {
         .toString(): ConversatinSyncModelConversationsUsers.fromJson,
     (ConversatinSyncModelConversationsGroups)
         .toString(): ConversatinSyncModelConversationsGroups.fromJson,
+    (ConversationCmdMsgEntity).toString(): ConversationCmdMsgEntity.fromJson,
     (FriendModelEntity).toString(): FriendModelEntity.fromJson,
     (GroupModelEntity).toString(): GroupModelEntity.fromJson,
     (HttpDnsLinesModelEntity).toString(): HttpDnsLinesModelEntity.fromJson,

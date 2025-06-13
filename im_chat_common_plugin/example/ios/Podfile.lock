@@ -116,6 +116,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - permission_handler_apple (9.3.0):
+    - Flutter
   - permission_utils (0.0.2):
     - Flutter
   - Reachability (3.7.6)
@@ -167,6 +169,7 @@ DEPENDENCIES:
   - just_audio (from `.symlinks/plugins/just_audio/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - permission_utils (from `.symlinks/plugins/permission_utils/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -235,6 +238,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   permission_utils:
     :path: ".symlinks/plugins/permission_utils/ios"
   sentry_flutter:
@@ -277,6 +282,7 @@ SPEC CHECKSUMS:
   MSDKDns_C11: e32cd3e7115dfeffefff26e16dc354ad2ca9e025
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   permission_utils: 12b89fb1195fa3fc8f702aed80ed019626f6eee7
   Reachability: fd0ecd23705e2599e4cceeb943222ae02296cbc6
   ScanKitFrameWork: 25a6ba4adae30de08c358c27152d7a8ed4ca80ab

@@ -110,14 +110,14 @@ class JtpComponentsInit {
 
   // /// 添加系统消息监听器
   // void addSystemMsgListener(Function(ImNewChatSystemMessageModelEntity) listener) {
-  //   // if (!_systemMsgListeners.contains(listener)) {
-  //   //   _systemMsgListeners.add(listener);
-  //   // }
+  //   if (!_systemMsgListeners.contains(listener)) {
+  //     _systemMsgListeners.add(listener);
+  //   }
   // }
-
-  /// 移除系统消息监听器
+  //
+  // /// 移除系统消息监听器
   // void removeSystemMsgListener(Function(ImNewChatSystemMessageModelEntity) listener) {
-  //   // _systemMsgListeners.remove(listener);
+  //   _systemMsgListeners.remove(listener);
   // }
 
   /// 通知系统消息监听

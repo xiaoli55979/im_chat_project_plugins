@@ -3,6 +3,7 @@ import 'package:wukongimfluttersdk/common/options.dart';
 import 'package:wukongimfluttersdk/type/const.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
 
+import '../models/conversation_cmd_msg_entity.dart';
 import 'http_utils.dart';
 
 class ImManagerUtils {
@@ -69,14 +70,33 @@ class ImManagerUtils {
         HttpUtils.getGroupInfo(wkcmd.param["group_no"]);
       } else if (wkcmd.cmd == "userAvatarUpdate") {
         HttpUtils.getUserInfo(wkcmd.param["uid"]);
+      } else if (wkcmd.cmd == 'friendRequest') {
+        final msg = ConversationCmdMsgEntity();
+        msg.cmdType = wkcmd.cmd;
+        print(wkcmd.param['messageTime']);
+        msg.applyName = wkcmd.param['apply_name'];
+        msg.applyUid = wkcmd.param['apply_uid'];
+        msg.remark = wkcmd.param['remark'];
+        msg.toUid = wkcmd.param["to_uid"];
+        msg.token = wkcmd.param['token'];
+        msg.channelId = wkcmd.param['channel_id'];
+        msg.channelType = wkcmd.param['channel_type'];
+        msg.redCount += 1;
+        msg.content = wkcmd.param['content'];
+        msg.timeStamp = wkcmd.param['timeStamp'];
+        CmdMsgDBHelper.instance.updateOrInsertByCmdTypeAndToUid(msg);
+        print("cmd${wkcmd.cmd}");
       }
     });
     // 监听同步某个频道的消息
     WKIM.shared.messageManager.addOnSyncChannelMsgListener((channelID, channelType, startMessageSeq, endMessageSeq, limit, pullMode, back) {
       HttpUtils.syncChannelMsg(channelID, channelType, startMessageSeq, endMessageSeq, limit, pullMode, (p0) => back(p0));
 
-      print("object_addOnSyncChannelMsgListener:$channelID");
+      print("object_addOnSyncChannelMsgListener:${(back)=>back(back)}");
     });
+    // WKIM.shared.reminderManager.addOnNewReminderListener("sys_reminder", (msgs) {
+    //   print("xitongxiaoxi: $msgs");
+    // });
     // 监听获取channel资料（群/个人信息）
     WKIM.shared.channelManager.addOnGetChannelListener((channelId, channelType, back) {
       print("object_addOnGetChannelListener:$channelId");
@@ -87,7 +107,7 @@ class ImManagerUtils {
       } else if (channelType == WKChannelType.group) {
         print('获取群组资料:$channelId');
         // 获取群资料
-        HttpUtils.getGroupInfo(channelId);
+        // HttpUtils.getGroupInfo(channelId);
       }
     });
     // 监听同步最近会话

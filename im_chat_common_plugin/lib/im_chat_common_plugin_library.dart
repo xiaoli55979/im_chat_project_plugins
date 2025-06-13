@@ -47,6 +47,7 @@ export 'database/database_manager.dart';
 export 'database/user_manager.dart';
 export 'im_chat_common_plugin_library.dart';
 export 'database/invite_notice_manager.dart';
+export 'tools/msg_cmd_manager.dart';
 /// immanager
 export 'immanager/http_utils.dart';
 export 'immanager/im_manager_utils.dart';
