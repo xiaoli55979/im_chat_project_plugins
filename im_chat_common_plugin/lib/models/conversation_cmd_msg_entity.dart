@@ -5,18 +5,18 @@ export 'package:im_chat_common_plugin/generated/json/conversation_cmd_msg_entity
 
 @JsonSerializable()
 class ConversationCmdMsgEntity {
-	late int id;
-	late String cmdType;
-	late String applyName;
-	late String applyUid;
-	late String remark;
-	late String toUid;
-	late String token;
-	late String channelId;
-	late int channelType;
+	late int id = 0;
+	late String cmdType = "";
+	late String applyName = "";
+	late String applyUid = "";
+	late String remark = "";
+	late String toUid = "";
+	late String token = "";
+	late String channelId = "";
+	late int channelType = 0;
 	late int redCount = 0;
-	late String content;
-	late int timeStamp;
+	late String content = "";
+	late int timeStamp = 0;
 
 	ConversationCmdMsgEntity();
 

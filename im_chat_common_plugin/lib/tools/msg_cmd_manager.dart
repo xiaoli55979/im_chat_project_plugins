@@ -44,6 +44,24 @@ class CmdMsgDBHelper {
     ''');
   }
 
+  // 获取 redCount 值
+  Future<int?> getRedCount(String toUid, String cmdType) async {
+    final db = await instance.database;
+    final result = await db.query(
+      'cmd_msg_table',
+      columns: ['redCount'],
+      where: 'toUid = ? AND cmdType = ?',
+      whereArgs: [toUid, cmdType],
+    );
+
+    // 如果查询有结果，返回 redCount 值，否则返回 null
+    if (result.isNotEmpty) {
+      print("查询到红点的值，并传给外面更新${result.first['redCount']}");
+      return result.first['redCount'] as int?;
+    }
+    return null;
+  }
+
   // Insert record
   Future<int> insert(ConversationCmdMsgEntity cmdMsg) async {
     final db = await instance.database;
