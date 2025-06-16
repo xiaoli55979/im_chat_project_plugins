@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wukongimfluttersdk/wkim.dart';
 
 class AppLifecycleManager with WidgetsBindingObserver {
   // 私有构造函数
@@ -36,16 +37,20 @@ class AppLifecycleManager with WidgetsBindingObserver {
   // 应用进入后台时的处理
   void _onAppEnterBackground() {
     print("应用进入后台");
+
   }
 
   // 应用恢复到前台时的处理
   void _onAppEnterForeground() {
     print("应用从后台恢复到前台");
+    WKIM.shared.connectionManager.connect();
   }
 
   // 应用挂起
   void _onAppInactive() {
     print("应用挂起");
+    // isLogout true：退出并不再重连 false：退出保持重连
+    WKIM.shared.connectionManager.disconnect(false);
   }
 
   // 注册生命周期观察

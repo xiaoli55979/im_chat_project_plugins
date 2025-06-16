@@ -44,7 +44,7 @@ class CmdMsgDBHelper {
     ''');
   }
 
-  // 获取 redCount 值
+  // 获取 对应uid和cmdType 的redCount 值
   Future<int?> getRedCount(String toUid, String cmdType) async {
     final db = await instance.database;
     final result = await db.query(
@@ -60,6 +60,24 @@ class CmdMsgDBHelper {
       return result.first['redCount'] as int?;
     }
     return null;
+  }
+
+  // 获取 redCount 的累加值
+  Future<int> getTotalRedCount(String toUid) async {
+    final db = await instance.database;
+
+    // 使用 SUM 函数计算 redCount 的总和
+    final result = await db.rawQuery(
+      'SELECT SUM(redCount) as totalRedCount FROM cmd_msg_table WHERE toUid = ?',
+      [toUid],
+    );
+
+    // 返回累加值，如果查询结果为空或为 null，则返回 0
+    if (result.isNotEmpty && result.first['totalRedCount'] != null) {
+      print("查询到红点的累加值，并传给外面更新${result.first['totalRedCount']}");
+      return result.first['totalRedCount'] as int;
+    }
+    return 0;
   }
 
   // Insert record
