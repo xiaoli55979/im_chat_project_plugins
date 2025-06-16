@@ -18,7 +18,6 @@ import 'package:wukongimfluttersdk/wkim.dart';
 import '../api/provider/im_provider.dart';
 import '../services/global_service.dart';
 
-
 class HttpUtils {
   static UserProvider get api => Get.find<UserProvider>();
 
@@ -189,13 +188,15 @@ class HttpUtils {
     }
   }
 
-  static syncChannelMsg(String channelID,
-      int channelType,
-      int startMsgSeq,
-      int endMsgSeq,
-      int limit,
-      int pullMode,
-      Function(WKSyncChannelMsg) back,) async {
+  static syncChannelMsg(
+    String channelID,
+    int channelType,
+    int startMsgSeq,
+    int endMsgSeq,
+    int limit,
+    int pullMode,
+    Function(WKSyncChannelMsg) back,
+  ) async {
     WKSyncChannelMsg msg = WKSyncChannelMsg();
     try {
       final data = await api.channelSync(
@@ -270,9 +271,8 @@ class HttpUtils {
       final response = await api.getGroupInfo(groupId: groupId);
       var channel = WKChannel(groupId, WKChannelType.group);
       channel.channelName = response['name'] ?? "";
-      channel.avatar = "${getGroupAvatarUrl(groupId)}?t=${DateTime
-          .now()
-          .millisecondsSinceEpoch}";
+      channel.avatar =
+          "${getGroupAvatarUrl(groupId)}?t=${DateTime.now().millisecondsSinceEpoch}";
 
       /// 清空缓存
       // ToolsUtils.clearSpecificImageCache("${HttpUtils.getBaseUrl()}/${channel.avatar}");
@@ -290,9 +290,8 @@ class HttpUtils {
       var channel = WKChannel(uid, WKChannelType.personal);
       channel.channelName = response['name'] ?? "";
       // channel.avatar = getAvatarUrl(uid);
-      channel.avatar = "${getAvatarUrl(uid)}?t=${DateTime
-          .now()
-          .millisecondsSinceEpoch}";
+      channel.avatar =
+          "${getAvatarUrl(uid)}?t=${DateTime.now().millisecondsSinceEpoch}";
 
       /// 清空缓存
       // ToolsUtils.clearSpecificImageCache("${HttpUtils.getBaseUrl()}/${channel.avatar}");
@@ -377,17 +376,15 @@ class HttpUtils {
         return httpClient;
       };
     try {
-      // final response = await dio.post('$apiURL/message/extra/sync', data: {
-      //   'login_uid': UserInfo.uid,
-      //   'channel_id': channelId,
-      //   'channel_type': channelType,
-      //   'source': UserInfo.uid,
-      //   'limit': 100,
-      //   'extra_version': version,
-      // });
-      final response = null;
-      if (response.statusCode == HttpStatus.ok) {
-        var arrJson = response.data;
+      final result = await api.msgExtraSync(
+        channelID: channelId,
+        channelType: channelType,
+        extraVersion: version,
+        limit: 100,
+        source: GlobalService.to.userModel!.uid,
+      );
+      if (result.code == 0) {
+        var arrJson = result.data;
         if (arrJson != null && arrJson.length > 0) {
           List<WKMsgExtra> list = [];
           for (int i = 0; i < arrJson.length; i++) {
@@ -453,8 +450,8 @@ class HttpUtils {
         return httpClient;
       };
     try {
-      int maxSeq = await WKIM.shared.messageManager.getMaxMessageSeq(
-          channelId, channelType);
+      int maxSeq = await WKIM.shared.messageManager
+          .getMaxMessageSeq(channelId, channelType);
       // final response = await dio.post('$apiURL/message/offset', data: {
       //   'login_uid': UserInfo.uid,
       //   'channel_id': channelId,

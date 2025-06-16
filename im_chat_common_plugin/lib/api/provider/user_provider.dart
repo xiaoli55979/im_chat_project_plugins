@@ -182,6 +182,26 @@ class UserProvider extends BaseProvider {
         decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
       );
 
+  /// 同步消息扩展
+  Future<Result> msgExtraSync({
+    required String channelID,
+    required int channelType,
+    required int extraVersion,
+    required int limit,
+    required String source,
+  }) =>
+      post(
+        '/v1/message/extra/sync',
+        {
+          "channel_id": channelID, //  频道ID
+          "channel_type": channelType, // 频道类型
+          "extra_version": extraVersion, // 开始消息列号（结果包含start_message_seq的消息）
+          "limit": limit, // 结束消息列号（结果不包含end_message_seq的消息）
+          "source": source, // 消息数量限制
+        },
+        decoder: (obj) => Result.fromJson(obj), // 直接返回 JSON
+      );
+
   ///同步敏感词,如银行卡,微信,提示注意交易问题
   Future<Result> sensitiveWords() => get(
         '/v1/message/sync/sensitivewords',
