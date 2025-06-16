@@ -62,7 +62,6 @@ export 'models/friend_model_entity.dart';
 export 'models/http_dns_lines_model_entity.dart';
 export 'models/im_node_model_entity.dart';
 export 'models/user_info_model_entity.dart';
-export 'models/multiple_item_enum.dart';
 /// pages
   /// bingings
 export 'pages/bingings/launch_bindings.dart';
@@ -73,7 +72,7 @@ export 'pages/controllers/user_info_controller.dart';
   /// views
 export 'pages/views/launch_page_view.dart';
 export 'pages/views/user_info_view.dart';
-export 'components/bubble_item_view.dart';
+export 'widget/bubble_view.dart';
 /// routes
 export 'routes/app_pages_common.dart';
 export 'routes/app_routes_common.dart';

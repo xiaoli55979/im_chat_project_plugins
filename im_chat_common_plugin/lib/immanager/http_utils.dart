@@ -203,86 +203,17 @@ if (response['code'] == 0) {
     }
   }
 
-  static revokeMsg(String clientMsgNo, String channelId, int channelType, int msgSeq, String msgId) async {
-    final httpClient = HttpClient();
-    httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) {
-      // 信任所有证书
-      return true;
-    };
-    final dio = Dio();
-    dio.httpClientAdapter = DefaultHttpClientAdapter()
-      ..onHttpClientCreate = (client) {
-        return httpClient;
-      };
-    try {
-      // final response = await dio.post('$apiURL/message/revoke', data: {
-      //   'login_uid': UserInfo.uid,
-      //   'channel_id': channelId,
-      //   'channel_type': channelType,
-      //   'client_msg_no': clientMsgNo,
-      //   'message_seq': msgSeq,
-      //   'message_id': msgId,
-      // });
-      final response = null;
-      if (response.statusCode == HttpStatus.ok) {
-        print('撤回消息成功');
-      }
-    } catch (e) {
-      print('获取用户信息失败$e');
-    }
-  }
-
-  static deleteMsg(String clientMsgNo, String channelId, int channelType, int msgSeq, String msgId) async {
-    final httpClient = HttpClient();
-    httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) {
-      // 信任所有证书
-      return true;
-    };
-    final dio = Dio();
-    dio.httpClientAdapter = DefaultHttpClientAdapter()
-      ..onHttpClientCreate = (client) {
-        return httpClient;
-      };
-    try {
-      // final response = await dio.post('$apiURL/message/delete', data: {
-      //   'login_uid': UserInfo.uid,
-      //   'channel_id': channelId,
-      //   'channel_type': channelType,
-      //   'message_seq': msgSeq,
-      //   'message_id': msgId,
-      // });
-      final response = null;
-      if (response.statusCode == HttpStatus.ok) {
-        WKIM.shared.messageManager.deleteWithClientMsgNo(clientMsgNo);
-      }
-    } catch (e) {
-      print('删除消息失败$e');
-    }
-  }
-
   static syncMsgExtra(String channelId, int channelType, int version) async {
-    final httpClient = HttpClient();
-    httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) {
-      // 信任所有证书
-      return true;
-    };
-    final dio = Dio();
-    dio.httpClientAdapter = DefaultHttpClientAdapter()
-      ..onHttpClientCreate = (client) {
-        return httpClient;
-      };
     try {
-      // final response = await dio.post('$apiURL/message/extra/sync', data: {
-      //   'login_uid': UserInfo.uid,
-      //   'channel_id': channelId,
-      //   'channel_type': channelType,
-      //   'source': UserInfo.uid,
-      //   'limit': 100,
-      //   'extra_version': version,
-      // });
-      final response = null;
-      if (response.statusCode == HttpStatus.ok) {
-        var arrJson = response.data;
+      final result = await api.msgExtraSync(
+        channelID: channelId,
+        channelType: channelType,
+        extraVersion: version,
+        limit: 100,
+        source: GlobalService.to.userModel!.uid,
+      );
+      if(result.code == 0) {
+        var arrJson = result.data;
         if (arrJson != null && arrJson.length > 0) {
           List<WKMsgExtra> list = [];
           for (int i = 0; i < arrJson.length; i++) {

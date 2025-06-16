@@ -252,11 +252,12 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
   /// delete
   Future<T> delete<T>(
     String url, {
+    Map<String, dynamic>? queryParameters,
     getx.Decoder<T>? decoder,
     Duration? sendTimeout,
     Duration? receiveTimeout,
   }) async {
-    return _request(url, method: "DELETE", decoder: decoder, sendTimeout: sendTimeout, receiveTimeout: receiveTimeout);
+    return _request(url, method: "DELETE", queryParameters: queryParameters, decoder: decoder, sendTimeout: sendTimeout, receiveTimeout: receiveTimeout);
   }
 
   /// 创建 MultipartFileRecreatable 对象时使用流
