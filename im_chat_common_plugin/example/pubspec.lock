@@ -19,7 +19,7 @@ packages:
     description:
       path: adaptive_action_sheet
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "2.0.2"
@@ -252,7 +252,7 @@ packages:
     description:
       path: device_info
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "0.0.1"
@@ -285,7 +285,7 @@ packages:
     description:
       path: dio_smart_retry
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "6.0.0"
@@ -424,7 +424,7 @@ packages:
     description:
       path: flutter_httpdns
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "0.0.4"
@@ -550,7 +550,7 @@ packages:
     description:
       path: flutter-scankit
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "2.0.3"
@@ -567,7 +567,7 @@ packages:
     description:
       path: flutter_screen_lock_plug
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "0.0.1"
@@ -638,10 +638,10 @@ packages:
     dependency: transitive
     description:
       name: get
-      sha256: b3294002946e99314c341bff0b4f3094e631a1f8cf37785e93aa7c2f04b0768e
+      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.0.0-release-candidate-9.3.2"
+    version: "4.6.6"
   get_storage:
     dependency: transitive
     description:
@@ -765,7 +765,7 @@ packages:
     description:
       path: "image_picker/image_picker"
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "1.0.7"
@@ -782,7 +782,7 @@ packages:
     description:
       path: "image_picker/image_picker_ios"
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "0.8.9+1"
@@ -852,7 +852,7 @@ packages:
     description:
       path: line_detection_plugin
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "0.0.4"
@@ -1093,7 +1093,7 @@ packages:
     description:
       path: permission_utils
       ref: main
-      resolved-ref: f789d898ec2748609c242646e14862dc8d2c8059
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "0.0.1"
@@ -1603,7 +1603,7 @@ packages:
     description:
       path: WuKongIMFlutterSDK
       ref: main
-      resolved-ref: "71cd792417bde53ae12ae29b0deefeabe0f2297e"
+      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "1.6.2"

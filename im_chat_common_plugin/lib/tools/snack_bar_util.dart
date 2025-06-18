@@ -8,7 +8,7 @@ class SnackBarUtil {
     required String message,
     Color textColor = Colors.white,
     Color backgroundColor = Colors.black,
-    SnackPosition position = SnackPosition.bottom,
+    SnackPosition position = SnackPosition.BOTTOM,
     Duration duration = const Duration(seconds: 1),
     Duration animationDuration = const Duration(milliseconds: 300),
   }) {

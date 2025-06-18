@@ -28,7 +28,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 // bool debugModel = kDebugMode;
 
 /// 基类封装Dio
-abstract class BaseProvider with getx.GetLifeCycleMixin {
+abstract class BaseProvider extends getx.GetConnect {
   // String? _userAgent;
 
   int index = 0;
@@ -207,7 +207,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
   }
 
   /// post
-  Future<T> post<T>(
+  Future<T> postRequest<T>(
     String url,
     dynamic body, {
     getx.Decoder<T>? decoder,
@@ -227,7 +227,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
   }
 
   /// pust
-  Future<T> put<T>(
+  Future<T> putRequest<T>(
     String url,
     dynamic body, {
     getx.Decoder<T>? decoder,
@@ -238,7 +238,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
   }
 
   /// get
-  Future<T> get<T>(
+  Future<T> getRequest<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     getx.Decoder<T>? decoder,
@@ -250,7 +250,7 @@ abstract class BaseProvider with getx.GetLifeCycleMixin {
   }
 
   /// delete
-  Future<T> delete<T>(
+  Future<T> deleteRequest<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     getx.Decoder<T>? decoder,
