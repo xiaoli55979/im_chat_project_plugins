@@ -23,11 +23,11 @@ class App extends StatefulWidget {
   const App({
     super.key,
     required this.routes,
-    this.additionalBinds,
+    this.initialBinding,
   });
 
   final List<GetPage> routes;
-  final List<Bind>? additionalBinds;
+  final Bindings? initialBinding;
 
   @override
   State<App> createState() => _AppState();
@@ -51,11 +51,7 @@ class _AppState extends State<App> {
           theme: AppTheme.getThemeData(isLight: Storage.getIsLightTheme()),
           title: kAppName.tr,
           initialRoute: RouterUtil.initialRoute(),
-          binds: [
-            Bind.put(UserProvider(), permanent: true),
-            Bind.put(GlobalService(api: Get.find())),
-            ...?this.widget.additionalBinds,
-          ],
+          initialBinding: this.widget.initialBinding ?? CommonBinding(),
           getPages: this.widget.routes,
           unknownRoute: null,
           useInheritedMediaQuery: true,
@@ -100,5 +96,16 @@ class _AppState extends State<App> {
   void dispose() {
     super.dispose();
     AppLifecycleManager.instance.dispose();
+  }
+}
+
+class CommonBinding extends Bindings {
+
+  CommonBinding();
+
+  @override
+  void dependencies() {
+    Get.put(UserProvider(), permanent: true);
+    Get.put(GlobalService(api: Get.find()));
   }
 }

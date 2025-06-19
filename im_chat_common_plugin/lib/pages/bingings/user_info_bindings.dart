@@ -4,9 +4,7 @@ import 'package:im_chat_common_plugin/pages/controllers/user_info_controller.dar
 
 class UserInfoBindings extends Bindings {
   @override
-  List<Bind> dependencies() {
-    return [
-      Bind.lazyPut(() => UserInfoController(api: Get.find())),
-    ];
+  void dependencies() {
+    Get.lazyPut(() => UserInfoController(api: Get.find()));
   }
 }

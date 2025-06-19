@@ -67,14 +67,14 @@ class UserProvider extends BaseProvider {
   }
 
   /// 获取公共配置
-  Future<Result<AppConfigModelEntity>> appConfig() => get(
+  Future<Result<AppConfigModelEntity>> appConfig() => getRequest(
         "/v1/common/appconfig",
         decoder: (obj) => Result<AppConfigModelEntity>.fromJson(obj),
       );
 
   /// 获取APP模块信息
   Future<dynamic> appModule() async {
-    return get(
+    return getRequest(
       "/v1/common/appmodule",
       decoder: (obj) {
         print("API 返回数据");
@@ -94,7 +94,7 @@ class UserProvider extends BaseProvider {
   }
 
   /// 获取用户所在的im节点信息
-  Future<Result<ImNodeModelEntity>> usersIm({required String uid}) => get(
+  Future<Result<ImNodeModelEntity>> usersIm({required String uid}) => getRequest(
         "/v1/users/$uid/im",
         decoder: (obj) => Result<ImNodeModelEntity>.fromJson(obj),
       );
@@ -112,7 +112,7 @@ class UserProvider extends BaseProvider {
     int msgCount = 100,
     required String deviceUuid,
   }) =>
-      post(
+      postRequest(
         '/v1/conversation/sync',
         {
           'version': version,
@@ -127,7 +127,7 @@ class UserProvider extends BaseProvider {
   Future<Map<String, dynamic>> getUserInfo({
     required String uid,
   }) =>
-      get(
+      getRequest(
         '/v1/user/?uid=$uid',
         decoder: (obj) => obj as Map<String, dynamic>,
       );
@@ -136,7 +136,7 @@ class UserProvider extends BaseProvider {
   Future<Map<String, dynamic>> getUserAvatar({
     required String uid,
   }) =>
-      get(
+      getRequest(
         '/v1/users/$uid/avatar',
         decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
       );
@@ -145,7 +145,7 @@ class UserProvider extends BaseProvider {
   Future<Map<String, dynamic>> getGroupInfo({
     required String groupId,
   }) =>
-      get(
+      getRequest(
         '/v1/groups/$groupId',
         decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
       );
@@ -154,7 +154,7 @@ class UserProvider extends BaseProvider {
   Future<Map<String, dynamic>> getGroupAvatar({
     required String groupId,
   }) =>
-      get(
+      getRequest(
         '/v1/groups/$groupId/avatar',
         decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
       );
@@ -168,7 +168,7 @@ class UserProvider extends BaseProvider {
     required int limit,
     required int pullMode,
   }) =>
-      post(
+      postRequest(
         '/v1/message/channel/sync',
         {
           "login_uid": uid, // 当前登录用户uid
@@ -190,7 +190,7 @@ class UserProvider extends BaseProvider {
     required int limit,
     required String source,
   }) =>
-      post(
+      postRequest(
         '/v1/message/extra/sync',
         {
           "channel_id": channelID, //  频道ID
@@ -203,13 +203,13 @@ class UserProvider extends BaseProvider {
       );
 
   ///同步敏感词,如银行卡,微信,提示注意交易问题
-  Future<Result> sensitiveWords() => get(
+  Future<Result> sensitiveWords() => getRequest(
         '/v1/message/sync/sensitivewords',
         decoder: (obj) => Result.fromJson(obj),
       );
 
   ///同步敏感词
-  Future<Result> prohibitWords() => get(
+  Future<Result> prohibitWords() => getRequest(
         '/v1/message/prohibit_words/sync',
         decoder: (obj) => Result.fromJson(obj),
       );

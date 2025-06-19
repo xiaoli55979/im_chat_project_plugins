@@ -176,7 +176,7 @@ class JtpComponentsInit {
   /// 初始化
   Future<void> initMain({
     required List<GetPage> routes,
-    List<Bind>? additionalBinds,
+    Bindings? initialBinding,
   }) async {
     // 合并路由列表
     final combinedRoutes = [...AppPagesCommon.routes, ...routes];
@@ -192,7 +192,7 @@ class JtpComponentsInit {
         options.debug = false;
         options.enablePrintBreadcrumbs = false;
       },
-      appRunner: () => runApp(App(routes: combinedRoutes, additionalBinds: additionalBinds)),
+      appRunner: () => runApp(App(routes: combinedRoutes, initialBinding: initialBinding)),
     );
   }
 
