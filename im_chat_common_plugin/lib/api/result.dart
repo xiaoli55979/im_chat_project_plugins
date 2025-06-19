@@ -6,10 +6,11 @@ class Result<T> {
   late int code;
   late String? msg;
   late T? data;
+  late int total;
   late Map<String, dynamic> dataMap;
   Result();
 
-  bool get isSuccess => code != null && code == 0;
+  bool get isSuccess => code == 0;
 
   factory Result.fromJson(Map<String, dynamic> json) {
     Result<T> r = Result();
@@ -24,6 +25,12 @@ class Result<T> {
     final String? msg = JsonConvert.fromJsonAsT<String>(json['msg']);
     if (code != null) {
       r.msg = msg;
+    }
+
+    /// total
+    final int? total = JsonConvert.fromJsonAsT<int>(json['total']);
+    if (total != null) {
+      r.total = total;
     }
 
     /// data

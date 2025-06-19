@@ -102,7 +102,7 @@ class HttpUtils {
           channel.status = e['status'];
           channel.createdAt = e['created_at'];
           channel.updatedAt = e['updated_at'];
-          // channel.avatar = e['name'];
+          channel.avatar = e['avatar'];
           channel.version = e['version'];
           channel.remoteExtraMap = {
             'allow_view_member_info': e['allow_view_member_info'],
@@ -157,7 +157,7 @@ class HttpUtils {
           channel.status = e['status'];
           channel.createdAt = e['created_at'];
           channel.updatedAt = e['updated_at'];
-          // channel.avatar = e['name'];
+          channel.avatar = e['avatar'];
           channel.version = e['version'];
           channel.remoteExtraMap = {
             'flame': e['flame'],

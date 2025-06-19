@@ -3,6 +3,7 @@ import 'package:im_chat_common_plugin/generated/json/base/json_convert_content.d
 /// 结果返回封装
 class Results<T> {
   late int code;
+  late int total;
   late String? msg;
   late List<T>? dataList;
 
@@ -11,6 +12,7 @@ class Results<T> {
   factory Results.fromJson(Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJsonT) {
     final Results<T> r = Results();
     r.code = JsonConvert.fromJsonAsT<int>(json['code']) ?? -1;
+    r.total = JsonConvert.fromJsonAsT<int>(json['total']) ?? 0;
     r.msg = JsonConvert.fromJsonAsT<String>(json['msg']);
     var dataList = json['data'] as List?;
     List<T> data = [];

@@ -111,6 +111,7 @@ class FriendRequestManager extends DatabaseManager {
           sanitizedData,
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
+        print("插入数据库成功");
       }
     });
   }

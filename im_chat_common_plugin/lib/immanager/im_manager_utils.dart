@@ -115,7 +115,7 @@ class ImManagerUtils {
       }
     });
     // 监听同步最近会话
-    WKIM.shared.conversationManager.addOnSyncConversationListener((lastSsgSeqs, msgCount, version, back) {
+    WKIM.shared.conversationManager.addOnSyncConversationListener((lastSsgSeqs, msgCount, version, back) {//lastSsgSeqs最后一条消息序号
       print("addOnSyncConversationListener");
       HttpUtils.syncConversation(lastSsgSeqs, msgCount, version, back);
     });
