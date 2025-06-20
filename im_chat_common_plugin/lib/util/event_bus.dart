@@ -63,8 +63,11 @@ var bus = EventBus();
  */
 
 class EventNames {
-  /// 刷新通讯录
+  /// 通过接口刷新通讯录
   static const String refreshMaillist = "refreshMaillist";
+
+  /// 本地刷新通讯录
+  static const String refreshMaillistLocal = "refreshMaillistLocal";
 
   /// 刷新用户信息
   static const String refreshUserInfo = 'refreshUserInfo';

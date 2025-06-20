@@ -54,8 +54,8 @@ class HttpUtils {
       Function(WKSyncConversation) back) async {
     print("tongbujinlaile");
     final response = await api.conversationSync(
-      version: version,
-      lastMsgSeqs: lastSsgSeqs,
+      version: 0,
+      lastMsgSeqs: "0",
       msgCount: msgCount,
       deviceUuid: ToolsUtils.instance.deviceInfo!.deviceId,
     );
@@ -149,21 +149,15 @@ class HttpUtils {
           channel.category = e['category'];
           channel.username = e['username'];
           channel.top = e['top'];
-          channel.save = e['save'];
           channel.mute = e['mute'];
-          channel.forbidden = e['forbidden'];
           channel.follow = e['follow'];
           channel.isDeleted = e['be_deleted'];
           channel.online = e['online'];
           channel.lastOffline = e['last_offline'];
           channel.deviceFlag = e['device_flag'];
           channel.robot = e['robot'];
-          channel.invite = e['invite'];
           channel.status = e['status'];
-          channel.createdAt = e['created_at'];
-          channel.updatedAt = e['updated_at'];
           channel.avatar = e['avatar'];
-          channel.version = e['version'];
           channel.remoteExtraMap = {
             'flame': e['flame'],
             'flame_second': e['flame_second'],

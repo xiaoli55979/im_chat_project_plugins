@@ -24,6 +24,10 @@ ConversationCmdMsgEntity $ConversationCmdMsgEntityFromJson(
   if (remark != null) {
     conversationCmdMsgEntity.remark = remark;
   }
+  final String? to_uid = jsonConvert.convert<String>(json['to_uid']);
+  if (to_uid != null) {
+    conversationCmdMsgEntity.to_uid = to_uid;
+  }
   final String? toUid = jsonConvert.convert<String>(json['toUid']);
   if (toUid != null) {
     conversationCmdMsgEntity.toUid = toUid;
@@ -52,6 +56,10 @@ ConversationCmdMsgEntity $ConversationCmdMsgEntityFromJson(
   if (timeStamp != null) {
     conversationCmdMsgEntity.timeStamp = timeStamp;
   }
+  final String? title = jsonConvert.convert<String>(json['title']);
+  if (title != null) {
+    conversationCmdMsgEntity.title = title;
+  }
   return conversationCmdMsgEntity;
 }
 
@@ -63,6 +71,7 @@ Map<String, dynamic> $ConversationCmdMsgEntityToJson(
   data['applyName'] = entity.applyName;
   data['applyUid'] = entity.applyUid;
   data['remark'] = entity.remark;
+  data['to_uid'] = entity.to_uid;
   data['toUid'] = entity.toUid;
   data['token'] = entity.token;
   data['channelId'] = entity.channelId;
@@ -70,6 +79,7 @@ Map<String, dynamic> $ConversationCmdMsgEntityToJson(
   data['redCount'] = entity.redCount;
   data['content'] = entity.content;
   data['timeStamp'] = entity.timeStamp;
+  data['title'] = entity.title;
   return data;
 }
 
@@ -80,6 +90,7 @@ extension ConversationCmdMsgEntityExtension on ConversationCmdMsgEntity {
     String? applyName,
     String? applyUid,
     String? remark,
+    String? to_uid,
     String? toUid,
     String? token,
     String? channelId,
@@ -87,6 +98,7 @@ extension ConversationCmdMsgEntityExtension on ConversationCmdMsgEntity {
     int? redCount,
     String? content,
     int? timeStamp,
+    String? title,
   }) {
     return ConversationCmdMsgEntity()
       ..id = id ?? this.id
@@ -94,12 +106,14 @@ extension ConversationCmdMsgEntityExtension on ConversationCmdMsgEntity {
       ..applyName = applyName ?? this.applyName
       ..applyUid = applyUid ?? this.applyUid
       ..remark = remark ?? this.remark
+      ..to_uid = to_uid ?? this.to_uid
       ..toUid = toUid ?? this.toUid
       ..token = token ?? this.token
       ..channelId = channelId ?? this.channelId
       ..channelType = channelType ?? this.channelType
       ..redCount = redCount ?? this.redCount
       ..content = content ?? this.content
-      ..timeStamp = timeStamp ?? this.timeStamp;
+      ..timeStamp = timeStamp ?? this.timeStamp
+      ..title = title ?? this.title;
   }
 }

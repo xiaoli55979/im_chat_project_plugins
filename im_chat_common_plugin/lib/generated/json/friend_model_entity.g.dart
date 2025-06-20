@@ -140,6 +140,22 @@ FriendModelEntity $FriendModelEntityFromJson(Map<String, dynamic> json) {
   if (updatedAt != null) {
     friendModelEntity.updatedAt = updatedAt;
   }
+  final String? nickName = jsonConvert.convert<String>(json['nick_name']);
+  if (nickName != null) {
+    friendModelEntity.nickName = nickName;
+  }
+  final String? avatar = jsonConvert.convert<String>(json['avatar']);
+  if (avatar != null) {
+    friendModelEntity.avatar = avatar;
+  }
+  final String? serviceId = jsonConvert.convert<String>(json['service_id']);
+  if (serviceId != null) {
+    friendModelEntity.serviceId = serviceId;
+  }
+  final int? isFriend = jsonConvert.convert<int>(json['is_friend']);
+  if (isFriend != null) {
+    friendModelEntity.isFriend = isFriend;
+  }
   return friendModelEntity;
 }
 
@@ -179,6 +195,10 @@ Map<String, dynamic> $FriendModelEntityToJson(FriendModelEntity entity) {
   data['is_deleted'] = entity.isDeleted;
   data['created_at'] = entity.createdAt;
   data['updated_at'] = entity.updatedAt;
+  data['nick_name'] = entity.nickName;
+  data['avatar'] = entity.avatar;
+  data['service_id'] = entity.serviceId;
+  data['is_friend'] = entity.isFriend;
   return data;
 }
 
@@ -218,6 +238,10 @@ extension FriendModelEntityExtension on FriendModelEntity {
     int? isDeleted,
     String? createdAt,
     String? updatedAt,
+    String? nickName,
+    String? avatar,
+    String? serviceId,
+    int? isFriend,
   }) {
     return FriendModelEntity()
       ..uid = uid ?? this.uid
@@ -253,6 +277,10 @@ extension FriendModelEntityExtension on FriendModelEntity {
       ..version = version ?? this.version
       ..isDeleted = isDeleted ?? this.isDeleted
       ..createdAt = createdAt ?? this.createdAt
-      ..updatedAt = updatedAt ?? this.updatedAt;
+      ..updatedAt = updatedAt ?? this.updatedAt
+      ..nickName = nickName ?? this.nickName
+      ..avatar = avatar ?? this.avatar
+      ..serviceId = serviceId ?? this.serviceId
+      ..isFriend = isFriend ?? this.isFriend;
   }
 }
