@@ -1,5 +1,13 @@
+import 'dart:io';
+
+import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/models/response/result.dart' as HttpResult;
 import 'package:wukongimfluttersdk/common/options.dart';
+import 'package:wukongimfluttersdk/model/wk_file_content.dart';
+import 'package:wukongimfluttersdk/model/wk_image_content.dart';
+import 'package:wukongimfluttersdk/model/wk_media_message_content.dart';
+import 'package:wukongimfluttersdk/model/wk_voice_content.dart';
 import 'package:wukongimfluttersdk/type/const.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
 
@@ -120,20 +128,48 @@ class ImManagerUtils {
       HttpUtils.syncConversation(lastSsgSeqs, msgCount, version, back);
     });
     // 监听上传消息附件
-    WKIM.shared.messageManager.addOnUploadAttachmentListener((wkMsg, back) {
+    WKIM.shared.messageManager.addOnUploadAttachmentListener((wkMsg, back) async {
       if (wkMsg.contentType == WkMessageContentType.image) {
-        // // todo 上传附件
-        // WKImageContent imageContent = wkMsg.messageContent! as WKImageContent;
-        // imageContent.url = 'xxxxxx';
-        // wkMsg.messageContent = imageContent;
-        back(true, wkMsg);
+        final wkImageContent = wkMsg.messageContent as WKImageContent;
+        final uploadResult = await _uploadFile(wkImageContent.localPath);
+        if (uploadResult.isSuccess) {
+          final url = uploadResult.responseData;
+          if (url != null) {
+            wkImageContent.url = url;
+            wkMsg.messageContent = wkImageContent;
+            back(true, wkMsg);
+          }
+        } else {
+          back(false, wkMsg);
+        }
+      }
+      if (wkMsg.contentType == WkMessageContentType.file) {
+        final wkFileContent = wkMsg.messageContent as WKFileContent;
+        final uploadResult = await _uploadFile(wkFileContent.localPath);
+        if (uploadResult.isSuccess) {
+          final url = uploadResult.responseData;
+          if (url != null) {
+            wkFileContent.url = url;
+            wkMsg.messageContent = wkFileContent;
+            back(true, wkMsg);
+          }
+        } else {
+          back(false, wkMsg);
+        }
       }
       if (wkMsg.contentType == WkMessageContentType.voice) {
-        // todo 上传语音
-        // WKVoiceContent voiceContent = wkMsg.messageContent! as WKVoiceContent;
-        // voiceContent.url = 'xxxxxx';
-        // wkMsg.messageContent = voiceContent;
-        back(true, wkMsg);
+        final wkVoiceContent = wkMsg.messageContent as WKVoiceContent;
+        final uploadResult = await _uploadFile(wkVoiceContent.localPath);
+        if (uploadResult.isSuccess) {
+          final url = uploadResult.responseData;
+          if (url != null) {
+            wkVoiceContent.url = url;
+            wkMsg.messageContent = wkVoiceContent;
+            back(true, wkMsg);
+          }
+        } else {
+          back(false, wkMsg);
+        }
       } else if (wkMsg.contentType == WkMessageContentType.video) {
         // WKVideoContent videoContent = wkMsg.messageContent! as WKVideoContent;
         // // todo 上传封面及视频
@@ -142,6 +178,22 @@ class ImManagerUtils {
         // wkMsg.messageContent = videoContent;
         back(true, wkMsg);
       }
+    });
+  }
+
+  static UserProvider get _userProvider => Get.find<UserProvider>();
+
+  /// 上传文件
+  static Future<HttpResult.Result<String?, Error>> _uploadFile(String path) async {
+    var objectKey = TextFieldUtils.objectKeyNew(path, headPath: ImageCategory.none);
+    if (objectKey.startsWith("/")) {
+      objectKey = objectKey.substring(1);
+    }
+    return _userProvider.uploadFileNew(File(path), key: objectKey, onSendProgress: (count, total) {
+    }).then((_) {
+      return HttpResult.Result.succss('${LinkUtils.getFileBaseUrl}$objectKey');
+    }).catchError((e, stackTrace) {
+      return HttpResult.Result.failure((e is Error) ? e : Error());
     });
   }
 }

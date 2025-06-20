@@ -265,4 +265,8 @@ class LinkUtils {
     }
     return baseUrl;
   }
+
+  static String get getFileBaseUrl {
+    return "https://testim-buk.oss-cn-shenzhen.aliyuncs.com/";
+  }
 }
