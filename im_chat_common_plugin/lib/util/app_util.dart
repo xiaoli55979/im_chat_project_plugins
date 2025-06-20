@@ -31,7 +31,6 @@ extension CommonDialog on GetInterface {
         child: Center(
             child: Container(
               width: width ?? 320,
-              margin: EdgeInsets.only(top: 30),
               decoration: BoxDecoration(
                 color: IMColors.white,
                 borderRadius: BorderRadius.circular(radius ?? 18),
