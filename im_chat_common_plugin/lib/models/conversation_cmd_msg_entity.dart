@@ -10,6 +10,7 @@ class ConversationCmdMsgEntity {
 	late String applyName = "";
 	late String applyUid = "";
 	late String remark = "";
+	late String to_uid = "";
 	late String toUid = "";
 	late String token = "";
 	late String channelId = "";
@@ -17,6 +18,7 @@ class ConversationCmdMsgEntity {
 	late int redCount = 0;
 	late String content = "";
 	late int timeStamp = 0;
+	late String title = "";
 
 	ConversationCmdMsgEntity();
 

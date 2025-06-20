@@ -105,3 +105,5 @@ export 'tools/text_field_utils.dart';
 export 'tools/time_tools_utils.dart';
 export 'tools/tools_utils.dart';
 export 'tools/user_info_manager.dart';
+/// utils
+export 'util/event_bus.dart';

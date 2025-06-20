@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -16,7 +17,11 @@ import 'package:wukongimfluttersdk/type/const.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
 
 import '../api/provider/im_provider.dart';
+import '../models/conversation_cmd_msg_entity.dart';
 import '../services/global_service.dart';
+import '../tools/msg_cmd_manager.dart';
+import '../tools/user_info_manager.dart';
+import '../util/event_bus.dart';
 
 class HttpUtils {
   static UserProvider get api => Get.find<UserProvider>();
@@ -181,6 +186,73 @@ class HttpUtils {
           channel.receipt = e['receipt'];
           WKIM.shared.channelManager.addOrUpdateChannel(channel);
         }
+
+        final notificationUser = response['data']['notificationUsers'];
+        final listNotificationUsers = notificationUser['msg'];
+        final redCount = notificationUser['redCount'];
+        for (var user in listNotificationUsers) {
+          final msgType = jsonDecode(utf8.decode(base64Decode(user)));
+          if (msgType['cmd'] == 'userDeviceChange') {
+            UserInfoManager().cmdMySystemInfo = ConversationCmdMsgEntity.fromJson(msgType['param']);
+            UserInfoManager().cmdMySystemInfo?.redCount = redCount;
+            final msg = ConversationCmdMsgEntity();
+            msg.cmdType = 'userDeviceChange';
+            msg.applyName = UserInfoManager().cmdMySystemInfo?.applyName ?? "";
+            msg.applyUid = UserInfoManager().cmdMySystemInfo?.toUid ?? "";
+            msg.remark = UserInfoManager().cmdMySystemInfo?.remark ?? "";
+            msg.toUid = UserInfoManager().cmdMySystemInfo?.to_uid ?? "";
+            msg.token = UserInfoManager().cmdMySystemInfo?.token ?? "";;
+            msg.channelId = UserInfoManager().cmdMySystemInfo?.channelId ?? "";
+            msg.channelType = UserInfoManager().cmdMySystemInfo?.channelType ?? 1;
+            msg.redCount = UserInfoManager().cmdMySystemInfo?.redCount ?? 0 + 1;
+            msg.content = UserInfoManager().cmdMySystemInfo?.content ?? "";
+            msg.timeStamp = UserInfoManager().cmdMySystemInfo?.timeStamp ?? 0;
+            msg.id += 2;
+            print("cmduid${msg.toUid}");
+
+            CmdMsgDBHelper.instance.updateOrInsertByCmdTypeAndToUid(msg);
+            print('UserInfoManager().cmdMySystemInfo?.content：${UserInfoManager().cmdMySystemInfo?.content}');
+          }
+        }
+
+        final friendRequests = response['data']['systemUsers'];
+        final listFriendRequests = notificationUser['msg'];
+        final redCountFriendRequests = friendRequests['redCount'];
+        for (var user in listFriendRequests) {
+          final msgType = jsonDecode(utf8.decode(base64Decode(user)));
+          if (msgType['cmd'] == 'friendRequest') {
+            UserInfoManager().cmdMyNotifyInfo = ConversationCmdMsgEntity.fromJson(msgType['param']);
+            UserInfoManager().cmdMyNotifyInfo?.redCount = redCountFriendRequests;
+            final msg = ConversationCmdMsgEntity();
+            msg.cmdType = 'friendRequest';
+            msg.applyName = UserInfoManager().cmdMySystemInfo?.applyName ?? "";
+            msg.applyUid = UserInfoManager().cmdMySystemInfo?.toUid ?? "";
+            msg.remark = UserInfoManager().cmdMySystemInfo?.remark ?? "";
+            msg.toUid = UserInfoManager().cmdMySystemInfo?.to_uid ?? "";
+            msg.token = UserInfoManager().cmdMySystemInfo?.token ?? "";;
+            msg.channelId = UserInfoManager().cmdMySystemInfo?.channelId ?? "";
+            msg.channelType = UserInfoManager().cmdMySystemInfo?.channelType ?? 1;
+            msg.redCount = UserInfoManager().cmdMySystemInfo?.redCount ?? 0 + 1;
+            msg.content = UserInfoManager().cmdMySystemInfo?.content ?? "";
+            msg.timeStamp = UserInfoManager().cmdMySystemInfo?.timeStamp ?? 0;
+            msg.id += 1;
+            print("cmduid${msg.toUid}");
+
+            CmdMsgDBHelper.instance.updateOrInsertByCmdTypeAndToUid(msg);
+            print('UserInfoManager().cmdMySystemInfo?.content：${UserInfoManager().cmdMySystemInfo?.content}');
+            print('UserInfoManager().cmdMyNotifyInfo?.content：${UserInfoManager().cmdMyNotifyInfo?.content}');
+          }
+        }
+        // final listFriendRequests = response['data']['systemUsers'];
+        // for (var user in listFriendRequests) {
+        //   final msgType = jsonDecode(utf8.decode(base64Decode(user)));
+        //   if (msgType['cmd'] == 'friendRequest') {
+        //     UserInfoManager().cmdMySystemInfo = ConversationCmdMsgEntity.fromJson(msgType['param']);
+        //     print('UserInfoManager().cmdMyNotifyInfo?.content：${UserInfoManager().cmdMyNotifyInfo?.content}');
+        //   }
+        // }
+        print("系统消息准备刷新");
+        bus.emit(EventNames.refreshRecentList);
       } catch (e) {
         print('同步最近会话错误');
       }

@@ -50,7 +50,7 @@ class AppLifecycleManager with WidgetsBindingObserver {
   void _onAppInactive() {
     print("应用挂起");
     // isLogout true：退出并不再重连 false：退出保持重连
-    WKIM.shared.connectionManager.disconnect(false);
+    // WKIM.shared.connectionManager.disconnect(false);
   }
 
   // 注册生命周期观察
