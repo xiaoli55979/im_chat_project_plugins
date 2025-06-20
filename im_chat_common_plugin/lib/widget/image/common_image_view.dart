@@ -16,6 +16,8 @@ class CommonImageView extends StatelessWidget {
     this.needFadeIn = true,
     this.placeholderName = Assets.commonPlaceholder,
     this.onPress,
+    this.placeholder,
+    this.errorWidget,
   });
 
   CommonImageView.avatar({
@@ -27,6 +29,8 @@ class CommonImageView extends StatelessWidget {
     this.alignment,
     this.needFadeIn = true,
     this.onPress,
+    this.placeholder,
+    this.errorWidget,
   }) {
     placeholderName = Assets.commonDefaultAvatar;
   }
@@ -40,6 +44,8 @@ class CommonImageView extends StatelessWidget {
     this.alignment,
     this.needFadeIn = true,
     this.onPress,
+    this.placeholder,
+    this.errorWidget,
   }) {
     placeholderName = Assets.commonPlaceholder;
   }
@@ -50,6 +56,8 @@ class CommonImageView extends StatelessWidget {
   final BoxFit fit;
   final Alignment? alignment;
   late String placeholderName;
+  final PlaceholderWidgetBuilder? placeholder;
+  final LoadingErrorWidgetBuilder? errorWidget;
 
   final bool needFadeIn;
 
@@ -74,8 +82,8 @@ class CommonImageView extends StatelessWidget {
         height: height,
         fit: fit,
         imageUrl: imageUrl!,
-        placeholder: (context, url) => placeholder,
-        errorWidget: (context,url,error)=> placeholder,
+        placeholder: this.placeholder ?? (context, url) => placeholder,
+        errorWidget: errorWidget ?? (context,url,error)=> placeholder,
       );
     } else {
       content = placeholder;
