@@ -34,12 +34,14 @@ class CmdMsgDBHelper {
         applyUid TEXT,
         remark TEXT,
         toUid TEXT NOT NULL,
+        to_uid TEXT NOT NULL,
         token TEXT,
         channelId TEXT,
         channelType TEXT,
         redCount INTEGER,
         content TEXT,
-        timeStamp INTEGER
+        timeStamp INTEGER,
+        title TEXT
       );
     ''');
   }
