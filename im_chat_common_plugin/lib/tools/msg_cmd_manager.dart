@@ -28,7 +28,7 @@ class CmdMsgDBHelper {
   Future _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE cmd_msg_table (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER,
         cmdType TEXT NOT NULL,
         applyName TEXT,
         applyUid TEXT,
