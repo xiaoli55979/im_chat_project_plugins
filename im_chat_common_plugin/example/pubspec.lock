@@ -1611,7 +1611,7 @@ packages:
     description:
       path: WuKongIMFlutterSDK
       ref: main
-      resolved-ref: bb3824e34c96494e8248a531d9fd7d720b588e91
+      resolved-ref: bfd0eb8b9112992b7efaebf1b998de5d3e1e63a0
       url: "https://github.com/xiaoli55979/tools_plugins.git"
     source: git
     version: "1.6.2"

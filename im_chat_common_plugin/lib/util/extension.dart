@@ -71,4 +71,8 @@ extension StringExtension on String? {
     return text.isNotEmpty;
   }
 
+  String withRemark(String? text) {
+    if (text.isEmptyString()) return isEmptyString() ? "" : this ?? '';
+    return '${this ?? ""}($text)';
+  }
 }
