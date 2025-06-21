@@ -124,12 +124,12 @@ class UserProvider extends BaseProvider {
       );
 
   /// 获取用户信息详情
-  Future<Map<String, dynamic>> getUserInfo({
+  Future<Result<Map<String, dynamic>>> getUserInfo({
     required String uid,
   }) =>
       getRequest(
         '/v1/user/?uid=$uid',
-        decoder: (obj) => obj as Map<String, dynamic>,
+        decoder: (obj) => Result<Map<String, dynamic>>.fromJson(obj)
       );
 
   /// 获取用户头像

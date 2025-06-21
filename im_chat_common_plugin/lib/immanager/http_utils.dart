@@ -375,12 +375,10 @@ class HttpUtils {
   static getUserInfo(String uid) async {
     try {
       final response = await api.getUserInfo(uid: uid);
-      // var json = response.data;
+      var data = response.data!;
       var channel = WKChannel(uid, WKChannelType.personal);
-      channel.channelName = response['name'] ?? "";
-      // channel.avatar = getAvatarUrl(uid);
-      channel.avatar =
-          "${getAvatarUrl(uid)}?t=${DateTime.now().millisecondsSinceEpoch}";
+      channel.channelName = data['name'] ?? "";
+      channel.avatar = data['avatar'];
 
       /// 清空缓存
       // ToolsUtils.clearSpecificImageCache("${HttpUtils.getBaseUrl()}/${channel.avatar}");
