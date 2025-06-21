@@ -109,32 +109,32 @@ class HttpUtils {
           channel.updatedAt = e['updated_at'];
           channel.avatar = e['avatar'];
           channel.version = e['version'];
-          channel.remoteExtraMap = {
-            'allow_view_member_info': e['allow_view_member_info'],
-            'allow_members_visible': e['allow_members_visible'],
-            'allow_member_quit_remind': e['allow_member_quit_remind'],
-            'allow_send_member_card': e['allow_send_member_card'],
-            'allow_revoke_message': e['allow_revoke_message'],
-            'allow_show_nick': e['allow_show_nick'],
-            'allow_view_history_msg': e['allow_view_history_msg'],
-            'allow_member_pinned_message': e['allow_member_pinned_message'],
-            'flame': e['flame'],
-            'flame_second': e['flame_second'],
-            'member_count': e['member_count'],
-            'online_count': e['online_count'],
-            'quit': e['quit'],
-            'role': e['role'],
-            'forbidden_expir_time': e['forbidden_expir_time'],
-            'chat_pwd_on': e['chat_pwd_on'],
-            'screenshot': e['screenshot'],
-            'revoke_remind': e['revoke_remind'],
-            'join_group_remind': e['join_group_remind'],
-            'forbidden_add_friend': e['forbidden_add_friend'],
-            'open_sign_in': e['open_sign_in'],
-            'sign_in_name': e['sign_in_name'],
-            'auto_sign_in': e['auto_sign_in'],
-            'public_sign_in': e['public_sign_in']
-          };
+          // channel.remoteExtraMap = {
+          //   'allow_view_member_info': e['allow_view_member_info'],
+          //   'allow_members_visible': e['allow_members_visible'],
+          //   'allow_member_quit_remind': e['allow_member_quit_remind'],
+          //   'allow_send_member_card': e['allow_send_member_card'],
+          //   'allow_revoke_message': e['allow_revoke_message'],
+          //   'allow_show_nick': e['allow_show_nick'],
+          //   'allow_view_history_msg': e['allow_view_history_msg'],
+          //   'allow_member_pinned_message': e['allow_member_pinned_message'],
+          //   'flame': e['flame'],
+          //   'flame_second': e['flame_second'],
+          //   'member_count': e['member_count'],
+          //   'online_count': e['online_count'],
+          //   'quit': e['quit'],
+          //   'role': e['role'],
+          //   'forbidden_expir_time': e['forbidden_expir_time'],
+          //   'chat_pwd_on': e['chat_pwd_on'],
+          //   'screenshot': e['screenshot'],
+          //   'revoke_remind': e['revoke_remind'],
+          //   'join_group_remind': e['join_group_remind'],
+          //   'forbidden_add_friend': e['forbidden_add_friend'],
+          //   'open_sign_in': e['open_sign_in'],
+          //   'sign_in_name': e['sign_in_name'],
+          //   'auto_sign_in': e['auto_sign_in'],
+          //   'public_sign_in': e['public_sign_in']
+          // };
           channel.category = e['category'];
           channel.receipt = e['receipt'];
           WKIM.shared.channelManager.addOrUpdateChannel(channel);
@@ -159,22 +159,22 @@ class HttpUtils {
           channel.status = e['status'];
           channel.avatar = e['avatar'];
           channel.remoteExtraMap = {
-            'flame': e['flame'],
-            'flame_second': e['flame_second'],
-            'screenshot': e['screenshot'],
-            'revoke_remind': e['revoke_remind'],
+            // 'flame': e['flame'],
+            // 'flame_second': e['flame_second'],
+            // 'screenshot': e['screenshot'],
+            // 'revoke_remind': e['revoke_remind'],
             'email': e['email'],
-            'zone': e['zone'],
-            'phone': e['phone'],
+            // 'zone': e['zone'],
+            // 'phone': e['phone'],
             'sex': e['sex'],
-            'category': e['category'],
-            'avatarCacheKey': e['avatarCacheKey'],
-            'is_destroy': e['is_destroy'],
-            'is_upload_avatar': e['is_upload_avatar'],
-            'source_desc': e['source_desc'],
-            'vercode': e['vercode'],
-            'be_blacklist': e['be_blacklist'],
-            'chat_pwd_on': e['chat_pwd_on'],
+            // 'category': e['category'],
+            // 'avatarCacheKey': e['avatarCacheKey'],
+            // 'is_destroy': e['is_destroy'],
+            // 'is_upload_avatar': e['is_upload_avatar'],
+            // 'source_desc': e['source_desc'],
+            // 'vercode': e['vercode'],
+            // 'be_blacklist': e['be_blacklist'],
+            // 'chat_pwd_on': e['chat_pwd_on'],
             'short_no': e['short_no']
           };
           channel.receipt = e['receipt'];
