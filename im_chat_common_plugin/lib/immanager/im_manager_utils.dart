@@ -115,11 +115,11 @@ class ImManagerUtils {
       if (channelType == WKChannelType.personal) {
         // 获取个人资料
         print('获取个人资料$channelId');
-        // HttpUtils.getUserInfo(channelId);
+        HttpUtils.getUserInfo(channelId);
       } else if (channelType == WKChannelType.group) {
         print('获取群组资料:$channelId');
         // 获取群资料
-        // HttpUtils.getGroupInfo(channelId);
+        HttpUtils.getGroupInfo(channelId);
       }
     });
     // 监听同步最近会话
