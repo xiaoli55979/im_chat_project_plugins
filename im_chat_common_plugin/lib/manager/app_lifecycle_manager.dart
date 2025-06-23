@@ -37,13 +37,13 @@ class AppLifecycleManager with WidgetsBindingObserver {
   // 应用进入后台时的处理
   void _onAppEnterBackground() {
     print("应用进入后台");
-
+    WKIM.shared.connectionManager.disconnect(false);
   }
 
   // 应用恢复到前台时的处理
   void _onAppEnterForeground() {
     print("应用从后台恢复到前台");
-    // WKIM.shared.connectionManager.connect();
+    WKIM.shared.connectionManager.connect();
   }
 
   // 应用挂起

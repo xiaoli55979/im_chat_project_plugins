@@ -75,4 +75,12 @@ extension StringExtension on String? {
     if (text.isEmptyString()) return isEmptyString() ? "" : this ?? '';
     return '${this ?? ""}($text)';
   }
+
+  // String withRemark(String? text) {
+  //   final current = this ?? '';
+  //   if (text == null || text.isEmpty) {
+  //     return current;
+  //   }
+  //   return '$current($text)';
+  // }
 }

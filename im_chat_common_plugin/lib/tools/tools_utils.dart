@@ -25,7 +25,8 @@ class ToolsUtils {
   static ToolsUtils get instance => _instance;
 
   /// 基础连接
-  String baseUrl = "http://192.168.10.152:8081";
+  // String baseUrl = "http://192.168.10.152:8081";
+  String baseUrl = "http://18.166.73.174:10005";
 
   /// 是否是jtp 否则是 lianfu
   bool isJtp = true;
