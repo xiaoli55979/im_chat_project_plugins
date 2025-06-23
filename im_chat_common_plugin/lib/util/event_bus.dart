@@ -80,4 +80,7 @@ class EventNames {
 
   /// 刷新最近会话列表
   static const String refreshRecentList = 'refreshRecentList';
+
+  /// 刷新会话列表
+  static const String refreshConversatonList = 'refreshConversatonList';
 }
