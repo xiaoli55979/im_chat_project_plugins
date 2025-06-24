@@ -358,9 +358,8 @@ class HttpUtils {
   static getGroupInfo(String groupId) async {
     try {
       final response = await api.getGroupInfo(groupId: groupId);
-      // var channel = WKChannel(groupId, WKChannelType.group);
-      var channel = await WKIM.shared.channelManager.getChannel(groupId, 2);
-      if (channel == null) channel = WKChannel(groupId, WKChannelType.group);
+      var channel = await WKIM.shared.channelManager.getChannel(groupId, WKChannelType.group);
+      channel ??= WKChannel(groupId, WKChannelType.group);
       channel.channelName = response['name'] ?? "";
       channel.channelRemark = response['remark'];
       channel.avatar =
@@ -379,13 +378,11 @@ class HttpUtils {
     try {
       final response = await api.getUserInfo(uid: uid);
       var data = response.data!;
-      var channel = await WKIM.shared.channelManager.getChannel(uid, 1);
-      if (channel == null) channel = WKChannel(uid, WKChannelType.group);
+      var channel = await WKIM.shared.channelManager.getChannel(uid, WKChannelType.personal);
+      channel ??= WKChannel(uid, WKChannelType.personal);
       channel.channelName = data['name'] ?? "";
       channel.avatar = data['avatar'];
       channel.channelRemark = data['remark'];
-      channel.channelID = data['uid'];
-      channel.channelType = 1;
       /// 清空缓存
       // ToolsUtils.clearSpecificImageCache("${HttpUtils.getBaseUrl()}/${channel.avatar}");
       // AvatarManager.saveAvatar(channel.avatar);
