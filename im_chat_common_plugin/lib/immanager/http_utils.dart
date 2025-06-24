@@ -164,8 +164,9 @@ class HttpUtils {
             // 'revoke_remind': e['revoke_remind'],
             'email': e['email'],
             // 'zone': e['zone'],
-            // 'phone': e['phone'],
+            'phone': e['phone'],
             'sex': e['sex'],
+            'sign': e['sign'],
             // 'category': e['category'],
             // 'avatarCacheKey': e['avatarCacheKey'],
             // 'is_destroy': e['is_destroy'],
@@ -382,6 +383,11 @@ class HttpUtils {
       channel.channelName = data['name'] ?? "";
       channel.avatar = data['avatar'];
       channel.channelRemark = data['remark'];
+      channel.remoteExtraMap['phone'] = data['phone'] ?? "暂无";
+      channel.remoteExtraMap['sign'] = data['sign'] ?? "暂无";
+      channel.remoteExtraMap['short_no'] = data['short_no'] ?? "暂无";
+      channel.remoteExtraMap['email'] = data['email'] ?? '暂无';
+      channel.remoteExtraMap['sex'] = data['sex'] ?? 0;
       /// 清空缓存
       // ToolsUtils.clearSpecificImageCache("${HttpUtils.getBaseUrl()}/${channel.avatar}");
       // AvatarManager.saveAvatar(channel.avatar);

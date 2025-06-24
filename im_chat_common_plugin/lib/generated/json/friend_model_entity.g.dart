@@ -156,6 +156,10 @@ FriendModelEntity $FriendModelEntityFromJson(Map<String, dynamic> json) {
   if (isFriend != null) {
     friendModelEntity.isFriend = isFriend;
   }
+  final String? sign = jsonConvert.convert<String>(json['sign']);
+  if (sign != null) {
+    friendModelEntity.sign = sign;
+  }
   return friendModelEntity;
 }
 
@@ -199,6 +203,7 @@ Map<String, dynamic> $FriendModelEntityToJson(FriendModelEntity entity) {
   data['avatar'] = entity.avatar;
   data['service_id'] = entity.serviceId;
   data['is_friend'] = entity.isFriend;
+  data['sign'] = entity.sign;
   return data;
 }
 
@@ -242,6 +247,7 @@ extension FriendModelEntityExtension on FriendModelEntity {
     String? avatar,
     String? serviceId,
     int? isFriend,
+    String? sign,
   }) {
     return FriendModelEntity()
       ..uid = uid ?? this.uid
@@ -281,6 +287,7 @@ extension FriendModelEntityExtension on FriendModelEntity {
       ..nickName = nickName ?? this.nickName
       ..avatar = avatar ?? this.avatar
       ..serviceId = serviceId ?? this.serviceId
-      ..isFriend = isFriend ?? this.isFriend;
+      ..isFriend = isFriend ?? this.isFriend
+      ..sign = sign ?? this.sign;
   }
 }
