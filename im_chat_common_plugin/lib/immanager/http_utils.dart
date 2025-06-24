@@ -380,7 +380,7 @@ class HttpUtils {
       final response = await api.getUserInfo(uid: uid);
       var data = response.data!;
       var channel = await WKIM.shared.channelManager.getChannel(uid, 1);
-      if (channel == null) channel = WKChannel(uid, WKChannelType.group);
+      if (channel == null) channel = WKChannel(uid, WKChannelType.personal);
       channel.channelName = data['name'] ?? "";
       channel.avatar = data['avatar'];
       channel.channelRemark = data['remark'];
