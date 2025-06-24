@@ -71,7 +71,6 @@ export 'pages/controllers/launch_page_controller.dart';
 export 'pages/controllers/user_info_controller.dart';
   /// views
 export 'pages/views/launch_page_view.dart';
-export 'pages/views/user_info_view.dart';
 export 'widget/bubble_view.dart';
 /// routes
 export 'routes/app_pages_common.dart';
