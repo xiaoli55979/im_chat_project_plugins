@@ -11,7 +11,6 @@ export 'api/result.dart';
 export 'api/results.dart';
 export 'api/retry_evaluator.dart';
 /// components
-export 'components/basic_view.dart';
 export 'components/bottom_sheet_view.dart';
 export 'components/custom_qrcode_scanview.dart';
 export 'components/divider_view.dart';
@@ -22,15 +21,11 @@ export 'components/form_builder_image_picker.dart';
 export 'components/form_builder_select.dart';
 export 'components/main_button.dart';
 export 'components/menu_item.dart';
-export 'components/my_app_bar.dart';
-export 'components/nav_text.dart';
 export 'components/password_check_view.dart';
 export 'components/password_notice_view.dart';
-export 'components/search_bar_view.dart';
-export 'components/splash_screen_view.dart';
+export 'pages/views/splash_screen_view.dart';
 export 'components/subtitle_text.dart';
 export 'components/title_text.dart';
-export 'components/user_account_notice_view.dart';
 /// config
   /// icon
     /// icon_font
@@ -52,7 +47,6 @@ export 'tools/msg_cmd_manager.dart';
 export 'immanager/http_utils.dart';
 export 'immanager/im_manager_utils.dart';
 export 'immanager/im_options_utils.dart';
-export 'immanager/user_info.dart';
 export 'jtp_common_init.dart';
 /// models
 export 'models/app_config_model_entity.dart';
@@ -65,13 +59,10 @@ export 'models/user_info_model_entity.dart';
 /// pages
   /// bingings
 export 'pages/bingings/launch_bindings.dart';
-export 'pages/bingings/user_info_bindings.dart';
   /// controllers
 export 'pages/controllers/launch_page_controller.dart';
-export 'pages/controllers/user_info_controller.dart';
   /// views
 export 'pages/views/launch_page_view.dart';
-export 'pages/views/user_info_view.dart';
 export 'widget/bubble_view.dart';
 /// routes
 export 'routes/app_pages_common.dart';

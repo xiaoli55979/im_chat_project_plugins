@@ -7,6 +7,4 @@ class AppRoutesCommon {
   /// 启动页
   static const launch = '/launch';
 
-  /// 用户信息
-  static const userInfo = '/userInfo';
 }

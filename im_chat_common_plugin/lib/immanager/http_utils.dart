@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
-import 'package:im_chat_common_plugin/immanager/user_info.dart';
 import 'package:im_chat_common_plugin/tools/link_utils.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
@@ -289,7 +288,7 @@ class HttpUtils {
     WKSyncChannelMsg msg = WKSyncChannelMsg();
     try {
       final data = await api.channelSync(
-        uid: UserInfo.uid,
+        uid: '',
         channelID: channelID,
         channelType: channelType,
         startMsgSeq: startMsgSeq,
