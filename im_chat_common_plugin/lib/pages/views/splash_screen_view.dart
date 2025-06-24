@@ -46,49 +46,49 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   /// 成功进入系统
   void _onSuccess() async {
-    String path = GlobalService.to.isLoggedIn.value ? '/home' : '/login';
+    // String path = GlobalService.to.isLoggedIn.value ? '/home' : '/login';
     // ToolsUtils.instance.loadSuccess = true;
-    _completer.complete(path);
-    // if (_completer.isCompleted) return;
-    // try {
-    //   // String pwd = MySharedPref.getAppLockScreenPwd();
-    //   // if (pwd.isNotEmpty) {
-    //   //   ToolsUtils.showLockScreen();
-    //   // }
-    //   // int loadErrorCount = MySharedPref.getLoadStatus();
-    //   // if (loadErrorCount > 0) {
-    //   //   String? baeUrl = MySharedPref.getBaseUrl();
-    //   //   String msg = "成功进入系统,失败(${loadErrorCount + 1})次,avable:${LinkUtils.endpoints.length} baseUrl:$baeUrl";
-    //   //   await MySharedPref.setLoadStatus(0);
-    //   //   LoggerUtils.error(Exception(msg), error: "APP启动成功", scopeCallback: (Scope scope) {
-    //   //     scope.setTag(LogType.RELOGIN.label, msg);
-    //   //   }, level: LogLevel.ERROR, type: LogType.RELOGIN);
-    //   // }
-    //   //
-    //   // /// 获取秘钥
-    //   // await ToolsUtils.prKey;
-    //   //
-    //   // /// 获取配置开关
-    //   // await ApiProvider.onLoadAppConfig();
-    //   //
-    //   // /// 开始获取App配置信息
-    //   // await ApiProvider.onLoadAppMessages();
-    //   //
-    //
-    //   /// 获取配置
-    //   await GlobalService.to.getAppConfig();
-    //
-    //   /// 尝试登录
-    //   // String path = await GlobalService.to.checkLogin();
-    //   String path = GlobalService.to.isLoggedIn.value ? '/home' : '/login';
-    //   // ToolsUtils.instance.loadSuccess = true;
-    //   _completer.complete(path);
-    // } catch (e) {
-    //   setState(() {
-    //     lineStatus = e.toString();
-    //     lineTest = 3;
-    //   });
-    // }
+    // _completer.complete(path);
+    if (_completer.isCompleted) return;
+    try {
+      String pwd = MySharedPref.getAppLockScreenPwd();
+      if (pwd.isNotEmpty) {
+        ToolsUtils.showLockScreen();
+      }
+      // int loadErrorCount = MySharedPref.getLoadStatus();
+      // if (loadErrorCount > 0) {
+      //   String? baeUrl = MySharedPref.getBaseUrl();
+      //   String msg = "成功进入系统,失败(${loadErrorCount + 1})次,avable:${LinkUtils.endpoints.length} baseUrl:$baeUrl";
+      //   await MySharedPref.setLoadStatus(0);
+      //   LoggerUtils.error(Exception(msg), error: "APP启动成功", scopeCallback: (Scope scope) {
+      //     scope.setTag(LogType.RELOGIN.label, msg);
+      //   }, level: LogLevel.ERROR, type: LogType.RELOGIN);
+      // }
+      //
+      // /// 获取秘钥
+      // await ToolsUtils.prKey;
+      //
+      // /// 获取配置开关
+      // await ApiProvider.onLoadAppConfig();
+      //
+      // /// 开始获取App配置信息
+      // await ApiProvider.onLoadAppMessages();
+
+
+      /// 获取配置
+      await GlobalService.to.getAppConfig();
+
+      /// 尝试登录
+      String path = await GlobalService.to.checkLogin();
+      // String path = GlobalService.to.isLoggedIn.value ? '/home' : '/login';
+      // ToolsUtils.instance.loadSuccess = true;
+      _completer.complete(path);
+    } catch (e) {
+      setState(() {
+        lineStatus = e.toString();
+        lineTest = 3;
+      });
+    }
   }
 
   /// 线路检查失败
@@ -117,11 +117,11 @@ class _SplashScreenViewState extends State<SplashScreenView> {
       LineChecker(onComplete: (isSuccess) async {
         /// 完成后移除监听
         NetworkManager.instance.removeListener(_onNetworkChange);
-        // if (isSuccess) {
-        //   _onSuccess();
-        // } else {
-        //   _onError();
-        // }
+        if (isSuccess) {
+          _onSuccess();
+        } else {
+          _onError();
+        }
       }, onCheck: (info) {
         if (!mounted) return;
         setState(() {
@@ -142,9 +142,9 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     /// 获取设备信息
     DeviceInfo deviceInfo = await getDeviceInfo();
     ToolsUtils.instance.setDeviceInfo(deviceInfo);
-    _onSuccess();
+    // _onSuccess();
     /// 监听网络状态
-    // NetworkManager.instance.addListener(_onNetworkChange);
+    NetworkManager.instance.addListener(_onNetworkChange);
     return _completer.future;
   }
 
