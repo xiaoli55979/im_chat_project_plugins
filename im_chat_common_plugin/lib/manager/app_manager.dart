@@ -4,20 +4,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
 import 'package:im_chat_common_plugin/generated/locales.g.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
 import 'package:im_chat_common_plugin/manager/app_lifecycle_manager.dart';
 import 'package:im_chat_common_plugin/tools/common_config_option.dart';
-import 'package:im_chat_common_plugin/tools/hide_keyboard_utils.dart';
 import 'package:im_chat_common_plugin/tools/log_manager.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
 import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:im_chat_common_plugin/util/constant.dart';
+import 'package:im_chat_common_plugin/util/fonts.dart';
 import 'package:im_chat_common_plugin/util/storage.dart';
 import 'package:im_chat_common_plugin/widget/bottom_sheet/option_sheet.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 enum AppLanguageType implements OptionItem {
   system(null),
@@ -89,7 +91,8 @@ class AppManager {
     ///init shared preference
     await MySharedPref.init();
 
-    HideKeybUtils.hideKeyShowfocus();
+    /// 关闭键盘并保留焦点
+    await SystemChannels.textInput.invokeMethod('TextInput.hide');
 
     ////初始化日志管理
     LogManager.initialize();
@@ -130,6 +133,9 @@ class AppManager {
     ///打开状态
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
 
+    /// 配置EasyLoading提示框
+    _configLoading();
+
     ///获取权限
     getPermission();
 
@@ -168,6 +174,25 @@ class AppManager {
         changeLocale(option.locale);
       },
     );
+  }
+
+  void _configLoading() {
+    EasyLoading.instance
+    // ..displayDuration = const Duration(milliseconds: 2000)
+      ..animationDuration = Duration.zero
+      ..indicatorType = EasyLoadingIndicatorType.ring
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorSize = 45.0
+      ..radius = 10.0
+      ..textStyle = CommonTextStyle.instance(14, color: IMColors.white)
+      ..textColor = IMColors.white
+      ..indicatorColor = IMColors.white
+      ..progressColor = IMColors.white
+      ..backgroundColor = IMColors.black
+      ..maskColor = IMColors.black
+      ..userInteractions = false
+      ..dismissOnTap = false
+      ..animationStyle = EasyLoadingAnimationStyle.scale;
   }
 
   ///检查是否有权限，用于安卓

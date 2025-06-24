@@ -6,16 +6,18 @@ import 'package:im_chat_common_plugin/models/response/result.dart' as HttpResult
 import 'package:wukongimfluttersdk/common/options.dart';
 import 'package:wukongimfluttersdk/model/wk_file_content.dart';
 import 'package:wukongimfluttersdk/model/wk_image_content.dart';
-import 'package:wukongimfluttersdk/model/wk_media_message_content.dart';
 import 'package:wukongimfluttersdk/model/wk_voice_content.dart';
 import 'package:wukongimfluttersdk/type/const.dart';
 import 'package:wukongimfluttersdk/wkim.dart';
+import '../immanager/http_utils.dart';
 
-import '../models/conversation_cmd_msg_entity.dart';
-import 'http_utils.dart';
+class ImManager {
 
-class ImManagerUtils {
-  static Future<bool> initIM() async {
+  static final shared = ImManager._();
+
+  ImManager._();
+
+  Future<bool> initIM() async {
     if (GlobalService.to.userModel == null) {
       return Future.value(false);
     }
@@ -41,7 +43,7 @@ class ImManagerUtils {
 
   // 监听sdk事件
   // 以下事件必须得实现
-  static initListener() {
+  initListener() {
     // 监听同步消息扩展
     WKIM.shared.cmdManager.addOnCmdListener('sys_im', (wkcmd) async {
       print("object_sys_im:${wkcmd.cmd}");
@@ -181,10 +183,10 @@ class ImManagerUtils {
     });
   }
 
-  static UserProvider get _userProvider => Get.find<UserProvider>();
+  UserProvider get _userProvider => Get.find<UserProvider>();
 
   /// 上传文件
-  static Future<HttpResult.Result<String?, Error>> _uploadFile(String path) async {
+  Future<HttpResult.Result<String?, Error>> _uploadFile(String path) async {
     var objectKey = TextFieldUtils.objectKeyNew(path, headPath: ImageCategory.none);
     if (objectKey.startsWith("/")) {
       objectKey = objectKey.substring(1);

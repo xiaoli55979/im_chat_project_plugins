@@ -5,11 +5,12 @@ import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
-import 'package:im_chat_common_plugin/tools/dialog_utils.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
 import 'package:im_chat_common_plugin/tools/font_utils.dart';
 import 'package:im_chat_common_plugin/tools/image_compress_utils.dart';
 import 'package:im_chat_common_plugin/tools/text_field_utils.dart';
@@ -398,7 +399,7 @@ class FormBuilderImagePickerState extends FormBuilderFieldDecorationState<FormBu
                 if (status) {
                   onPickImage(ImageSource.camera, remainingImages);
                 } else {
-                  DialogUtils.showError("相机未授权");
+                  EasyLoading.showError("相机未授权");
                 }
               });
             }),
@@ -409,26 +410,25 @@ class FormBuilderImagePickerState extends FormBuilderFieldDecorationState<FormBu
         MainButton(
             text: "相册",
             onPressed: () {
-              // DialogUtils.dismiss();
               Navigator.pop(context);
               // 获取相机相册权限
               PermissionsUtils.requestAlbumPermission((status) {
                 if (status) {
                   onPickImage(ImageSource.gallery, remainingImages);
                 } else {
-                  DialogUtils.showError("相册未授权");
+                  EasyLoading.showError("相机未授权");
                 }
               });
             }),
       );
     }
-    // DialogUtils.showActionSheet(actions: actions);
-    DialogUtils.bottomSheet(
-        isDismissible: true,
-        builder: (c) => BottomSheetView(
-              actions: actions,
-              onCancel: () {},
-            ));
+    Get.bottomSheet(
+        barrierColor: IMColors.black.withOpacity(0.3),
+        BottomSheetView(
+          actions: actions,
+          onCancel: () {},
+        ),
+        ignoreSafeArea: true);
   }
 
   Future<void> _onImageSelected(Iterable<XFile> images) async {
@@ -668,7 +668,7 @@ class _XFileImageState extends State<XFileImage> {
           });
           _uploadFile(value.path!);
         } else {
-          DialogUtils.showError("视频压缩失败");
+          EasyLoading.showError("视频压缩失败");
         }
       });
     } else {

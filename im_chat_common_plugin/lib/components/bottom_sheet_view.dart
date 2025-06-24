@@ -80,7 +80,7 @@ class BottomSheetViewState extends State<BottomSheetView> {
               // 10.verticalSpace,
               MainButton(
                 onPressed: () {
-                  DialogUtils.back();
+                  Get.back();
                   widget.onCancel.call();
                 },
                 backgroundColor: Colors.grey,

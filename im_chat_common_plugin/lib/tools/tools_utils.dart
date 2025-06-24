@@ -4,6 +4,7 @@ import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screen_lock_plug/lock_screen_manager.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
@@ -303,9 +304,9 @@ class ToolsUtils {
   /// 异常提示信息
   static void showErrorMsg({required dynamic e, required String message}) {
     if (e is ApiException) {
-      DialogUtils.showError(e.message);
+      EasyLoading.showError(e.message);
     } else {
-      kDebugMode ? DialogUtils.showError(e.toString()) : DialogUtils.showError(message);
+      kDebugMode ? EasyLoading.showError(e.toString()) : EasyLoading.showError(message);
     }
   }
 

@@ -1,8 +1,10 @@
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/manager/im_manager.dart';
 
 /// 全局认证服务
 class GlobalService extends GetxService {
@@ -138,7 +140,7 @@ class GlobalService extends GetxService {
         }
       } catch (e) {
         print("checkLogin 发生错误: $e");
-        DialogUtils.dismissLoading();
+        SmartDialog.dismiss(status: SmartStatus.loading);
       }
     }
 
@@ -219,7 +221,7 @@ class GlobalService extends GetxService {
         // /// 同步敏感词
         // await api.prohibitWords();
 
-        return ImManagerUtils.initIM();
+        return ImManager.shared.initIM();
       } else {
         return Future.value(false);
       }
