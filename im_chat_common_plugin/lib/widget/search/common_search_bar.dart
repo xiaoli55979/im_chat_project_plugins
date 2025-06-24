@@ -26,11 +26,11 @@ class CommonSearchBar extends StatefulWidget {
     this.decoration,
     this.padding,
     this.textFieldPadding,
+    this.enabled = true,
+    this.onTap,
   });
 
   final TextEditingController? controller;
-
-  final EdgeInsetsGeometry? padding;
 
   /// 搜索框文字
   String? text;
@@ -40,12 +40,21 @@ class CommonSearchBar extends StatefulWidget {
   final String? hintText;
   final TextStyle? hintTextStyle;
 
+  /// 外部内间距
+  final EdgeInsetsGeometry? padding;
+  /// 外部样式
   final Decoration? decoration;
+  /// 输入框内间距
   final EdgeInsetsGeometry? textFieldPadding;
+  /// 输入框样式
   final Decoration? textFieldDecoration;
+  /// 是否显示清除按钮 默认true
   final bool showCleanButton;
+  /// 是否显示搜索按钮
   final bool showSearchIcon;
+  /// 前置布局
   final Widget? prefixWidget;
+  /// 后置布局
   final Widget? suffixWidget;
 
   /// 内容变化
@@ -57,12 +66,20 @@ class CommonSearchBar extends StatefulWidget {
   /// 点击搜索按钮或者点击键盘（搜索）
   final ValueChanged<String>? onSearch;
 
+  final bool enabled;
+
+  final GestureTapCallback? onTap;
+
   @override
   State<CommonSearchBar> createState() => _CommonSearchBarState();
 }
 
 class _CommonSearchBarState extends State<CommonSearchBar> {
+
+  final double _fontSize = 16.sp;
+
   bool _showCleanButton = false;
+
   late final TextEditingController _controller = TextEditingController();
 
   TextEditingController get _getController => widget.controller ?? _controller;
@@ -97,12 +114,76 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
     super.dispose();
   }
 
-  final double _fontSize = 16.sp;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: widget.decoration,
+      padding: widget.padding ?? EdgeInsets.all(16.0.w),
+      child: Row(
+        children: [
+          widget.prefixWidget ?? Container(),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                if (!widget.enabled && widget.onTap != null) {
+                  widget.onTap!();
+                }
+              },
+              child: Container(
+                padding: widget.textFieldPadding ?? EdgeInsets.all(12.w),
+                decoration: widget.textFieldDecoration ??
+                    BoxDecoration(
+                      color: Colors.grey.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8.h),
+                    ),
+                child: Row(
+                  children: [
+                    if(widget.showSearchIcon)
+                      ...[
+                        GestureDetector(
+                          onTap: () {
+                            _onSearch(_getController.text);
+                          },
+                          child: AssetUtil.asset(Assets.commonIconSearch, width: 16.w, height: 16.w),
+                        ),
+                        SizedBox(width: 8.w),
+                      ],
+                    Expanded(
+                      child: _getTextFormField(),
+                    ),
+                    SizedBox(width: 10.w),
+                    if(_showCleanButton & widget.showCleanButton)
+                      CommonButton(
+                        padding: EdgeInsets.zero,
+                        minSize: 16.w,
+                        child: Icon(Icons.cancel, color: Colors.grey, size: 16.w),
+                        onPressed: () {
+                          setState(() {
+                            _getController.clear();
+                            _showCleanButton = false;
+                          });
+                          if (widget.onCancel != null) {
+                            widget.onCancel!();
+                          }
+                        },
+                      ),
+                    widget.suffixWidget ?? Container(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   TextFormField _getTextFormField() {
     _showCleanButton = _getController.text.isNotEmpty;
 
     return TextFormField(
+      enabled: widget.enabled,
       selectionControls: MaterialTextSelectionControls(),
       maxLines: 1,
       style: _getTextStyle(),
@@ -133,62 +214,5 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
 
   _getHintTextStyle() {
     return widget.hintTextStyle ?? CommonTextStyle.instance(_fontSize, color: IMColors.hintTextColor);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: widget.decoration,
-      padding: widget.padding ?? EdgeInsets.all(16.0.w),
-      child: Row(
-        children: [
-          widget.prefixWidget ?? Container(),
-          Expanded(
-            child: Container(
-              padding: widget.textFieldPadding ?? EdgeInsets.all(12.w),
-              decoration: widget.textFieldDecoration ??
-                  BoxDecoration(
-                    color: Colors.grey.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8.h),
-                  ),
-              child: Row(
-                children: [
-                  if(widget.showSearchIcon)
-                    ...[
-                      GestureDetector(
-                        onTap: () {
-                          _onSearch(_getController.text);
-                        },
-                        child: AssetUtil.asset(Assets.commonIconSearch, width: 16.w, height: 16.w),
-                      ),
-                      SizedBox(width: 8.w),
-                    ],
-                  Expanded(
-                    child: _getTextFormField(),
-                  ),
-                  SizedBox(width: 10.w),
-                  if(_showCleanButton & widget.showCleanButton)
-                    CommonButton(
-                      padding: EdgeInsets.zero,
-                      minSize: 16.w,
-                      child: Icon(Icons.cancel, color: Colors.grey, size: 16.w),
-                      onPressed: () {
-                        setState(() {
-                          _getController.clear();
-                          _showCleanButton = false;
-                        });
-                        if (widget.onCancel != null) {
-                          widget.onCancel!();
-                        }
-                      },
-                    ),
-                  widget.suffixWidget ?? Container(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

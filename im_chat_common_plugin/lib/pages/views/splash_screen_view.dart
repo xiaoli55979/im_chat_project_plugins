@@ -4,14 +4,14 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 
-import '../jtp_common_init.dart';
-import '../services/global_service.dart';
-import '../tools/dialog_utils.dart';
-import '../tools/font_utils.dart';
-import '../tools/image_tools.dart';
-import '../tools/my_shared_pref.dart';
-import '../tools/tools_utils.dart';
-import 'easy_splash_screen.dart';
+import '../../jtp_common_init.dart';
+import '../../services/global_service.dart';
+import '../../tools/dialog_utils.dart';
+import '../../tools/font_utils.dart';
+import '../../tools/image_tools.dart';
+import '../../tools/my_shared_pref.dart';
+import '../../tools/tools_utils.dart';
+import '../../components/easy_splash_screen.dart';
 
 class SplashScreenView extends StatefulWidget {
   SplashScreenView({Key? key}) : super(key: key);
