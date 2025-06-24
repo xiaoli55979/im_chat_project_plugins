@@ -5,12 +5,12 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:im_chat_common_plugin/tools/permissions_utils.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'dialog_utils.dart';
 import 'my_shared_pref.dart';
 
 typedef CacheClearCallback = void Function(bool success);
@@ -72,24 +72,23 @@ class ApputilHandle {
     // 获取相册权限
     PermissionsUtils.requestAllPermission((status) async {
       if (status) {
-        DialogUtils.loading();
+        SmartDialog.showLoading(msg: "加载中...");
         // 获取带边距的截图字节数据
         Uint8List? screenshotBytes = await takeScreenshotWithMargin(boundaryKey);
-        DialogUtils.dismissLoading();
+        SmartDialog.dismiss(status: SmartStatus.loading);
         if (screenshotBytes != null) {
           try {
             // 保存图片
             final result = await ImageGallerySaverPlus.saveImage(screenshotBytes);
             if (result == null || result == '') throw '图片保存失败';
             // 显示保存成功的提示
-            DialogUtils.toast("二维码保存成功!");
+            SmartDialog.showToast("二维码保存成功!", displayType: SmartToastType.onlyRefresh);
           } catch (e) {
-            print(e.toString());
-            DialogUtils.toast("二维码保存失败!");
+            SmartDialog.showToast("二维码保存失败!", displayType: SmartToastType.onlyRefresh);
           }
         }
       } else {
-        DialogUtils.showError("保存失败,相册未授权");
+        EasyLoading.showError("保存失败,相册未授权");
       }
     });
   }

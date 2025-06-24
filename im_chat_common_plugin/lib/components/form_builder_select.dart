@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:im_chat_common_plugin/tools/dialog_utils.dart';
+import 'package:get/get.dart';
+import 'package:im_chat_common_plugin/config/color/colors.dart';
 import 'package:im_chat_common_plugin/tools/font_utils.dart';
 
 import 'empty_view.dart';
@@ -74,59 +75,61 @@ class FormBuilderSelectState<T> extends FormBuilderFieldDecorationState<FormBuil
       return;
     }
 
-    DialogUtils.bottomSheet(
-        builder: (c) => Container(
-              decoration: const BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20).r,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    widget.title,
-                    style: TextStyle(fontSize: FontUtils.contentTitleFontSize),
-                  ),
-                  Flexible(
-                    child: widget.data.isEmpty
-                        ? EmptyView(text: widget.emptyText)
-                        : ListView.builder(
-                            padding: const EdgeInsets.only(top: 0, bottom: 0),
-                            shrinkWrap: true,
-                            itemCount: widget.data.length,
-                            itemBuilder: (c, i) => Column(
-                              children: [
-                                ListTile(
-                                    onTap: () {
-                                      DialogUtils.back();
-                                      didChange(widget.data[i]);
-                                    },
-                                    title: widget.buildView(c, widget.data[i])),
-                                const Divider(
-                                  height: 1,
-                                ),
-                              ],
-                            ),
-                          ),
-                  ),
-                  Row(
-                    children: [
-                      TextButton.icon(
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            DialogUtils.back();
-                            widget.addTap?.call();
-                          },
-                          label: Text(
-                            widget.addButtonText,
-                            style: TextStyle(
-                              fontSize: FontUtils.contentTitleFontSize,
-                            ),
-                          ))
-                    ],
-                  )
-                ],
+    Get.bottomSheet(
+        barrierColor: IMColors.black.withOpacity(0.3),
+        Container(
+          decoration: const BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20).r,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.title,
+                style: TextStyle(fontSize: FontUtils.contentTitleFontSize),
               ),
-            ));
+              Flexible(
+                child: widget.data.isEmpty
+                    ? EmptyView(text: widget.emptyText)
+                    : ListView.builder(
+                  padding: const EdgeInsets.only(top: 0, bottom: 0),
+                  shrinkWrap: true,
+                  itemCount: widget.data.length,
+                  itemBuilder: (c, i) => Column(
+                    children: [
+                      ListTile(
+                          onTap: () {
+                            Get.back();
+                            didChange(widget.data[i]);
+                          },
+                          title: widget.buildView(c, widget.data[i])),
+                      const Divider(
+                        height: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  TextButton.icon(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        Get.back();
+                        widget.addTap?.call();
+                      },
+                      label: Text(
+                        widget.addButtonText,
+                        style: TextStyle(
+                          fontSize: FontUtils.contentTitleFontSize,
+                        ),
+                      ))
+                ],
+              )
+            ],
+          ),
+        ),
+        ignoreSafeArea: true);
   }
 
   @override

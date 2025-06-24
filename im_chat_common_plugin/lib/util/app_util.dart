@@ -20,9 +20,10 @@ extension CommonDialog on GetInterface {
     VoidCallback? cancelAction,
     String? confirmText,
     VoidCallback? confirmAction,
+    bool? barrierDismissible,
   }) {
     return Get.generalDialog(
-      barrierDismissible: true,
+      barrierDismissible: barrierDismissible ?? true,
       barrierLabel: MaterialLocalizations.of(key.currentContext!)
           .modalBarrierDismissLabel,
       barrierColor: Colors.black.withOpacity(0.4),

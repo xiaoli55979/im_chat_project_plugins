@@ -7,17 +7,19 @@ import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart' as getx;
 import 'package:im_chat_common_plugin/api/exception.dart';
 import 'package:im_chat_common_plugin/api/result.dart';
 import 'package:im_chat_common_plugin/api/retry_evaluator.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
-import 'package:im_chat_common_plugin/tools/dialog_utils.dart';
 import 'package:im_chat_common_plugin/tools/encryption_interceptor.dart';
 import 'package:im_chat_common_plugin/tools/link_utils.dart';
 import 'package:im_chat_common_plugin/tools/logger_utils.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
+import 'package:im_chat_common_plugin/util/app_util.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 import 'package:path/path.dart' as p;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -198,7 +200,6 @@ abstract class BaseProvider extends getx.GetConnect {
     try {
       String header = await getHeader();
       String userAgent = await userAgentHead(header);
-      // DialogUtils.showSuccess("DeviceInfo:$userAgent");
       return userAgent;
     } catch (e) {
       LogUtil.v("UserAgent get error: $e");
@@ -376,7 +377,7 @@ abstract class BaseProvider extends getx.GetConnect {
         transaction.throwable = e;
         transaction.status = const SpanStatus.unknown();
         LoggerUtils.error(e, stackTrace: stackTrace, level: LogLevel.ERROR);
-        DialogUtils.dismissLoading();
+        SmartDialog.dismiss(status: SmartStatus.loading);
         return Future.error(ApiException(-1, '解析响应数据异常:$e'));
       }
     } on DioException catch (e, stackTrace) {
@@ -395,7 +396,7 @@ abstract class BaseProvider extends getx.GetConnect {
       var ex = e.error as ApiException;
 
       if (hideCatch != null && hideCatch) {
-        DialogUtils.dismiss();
+        SmartDialog.dismiss(status: SmartStatus.loading);
         return Future.error(ex);
       }
 
@@ -409,20 +410,24 @@ abstract class BaseProvider extends getx.GetConnect {
           //   return Future.error(ApiException(9999, '系统维护中'));
           // }
           // 业务异常提示
-          DialogUtils.dismissLoading();
+          SmartDialog.dismiss(status: SmartStatus.loading);
           var msg = ex.message.isNotEmpty ? ex.message : ApiException.defaultMessage;
-          DialogUtils.showError(msg);
+          EasyLoading.showError(msg);
         } else if (ex is UnauthorisedException) {
           // 接口未认证处理
           if (GlobalService.to.isLoggedInValue && GlobalService.to.token != null && GlobalService.to.token!.isNotEmpty) {
             // GlobalService.to.logout();
-            DialogUtils.dismiss();
-            DialogUtils.confirm(
+            SmartDialog.dismiss();
+            getx.Get.normalDialog(
+                width: getx.Get.width * 0.85,
+                barrierDismissible: false,
+                showCancelBtn: false,
+                title: '提示',
                 content: '您的账号登录已失效,请重新登录',
-                clickMaskDismiss: false,
-                onOk: () {
+                confirmText: '確定',
+                confirmAction: () {
                   getx.Get.offAllNamed('/login');
-                  DialogUtils.dismissLoading();
+                  SmartDialog.dismiss(status: SmartStatus.loading);
                 });
           } else if (GlobalService.to.token != null) {
             // GlobalService.to.clear();
@@ -439,7 +444,7 @@ abstract class BaseProvider extends getx.GetConnect {
 
       /// 异常上报
       LoggerUtils.apiError(e, stackTrace: stackTrace);
-      DialogUtils.dismissLoading();
+      SmartDialog.dismiss(status: SmartStatus.loading);
       return Future.error(ApiException(-1, ApiException.defaultMessage));
     } finally {
       // 在整个请求完成后再刷新线路

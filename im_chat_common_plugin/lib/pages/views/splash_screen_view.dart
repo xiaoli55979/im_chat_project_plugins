@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 
 import '../../jtp_common_init.dart';
 import '../../services/global_service.dart';
-import '../../tools/dialog_utils.dart';
 import '../../tools/font_utils.dart';
 import '../../tools/image_tools.dart';
 import '../../tools/my_shared_pref.dart';
 import '../../tools/tools_utils.dart';
-import '../../components/easy_splash_screen.dart';
+import '../widget/easy_splash_screen.dart';
 
 class SplashScreenView extends StatefulWidget {
   SplashScreenView({Key? key}) : super(key: key);
@@ -91,7 +91,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   /// 网络状态变化监听
   _onNetworkChange() {
-    DialogUtils.dismiss();
+    SmartDialog.dismiss();
     if (NetworkManager.instance.networkStatus != 2) {
       if (mounted) {
         setState(() {
@@ -99,7 +99,6 @@ class _SplashScreenViewState extends State<SplashScreenView> {
         });
       }
 
-      // DialogUtils.confirm(content: '检测到APP网络异常,请尝试重启App或者设备,如果问题依旧,请检查网络', clickMaskDismiss: false, onCancel: () {}, onOk: () {});
     } else {
       if (mounted) {
         setState(() {
