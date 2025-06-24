@@ -32,7 +32,7 @@ class EasySplashScreen extends StatefulWidget {
     this.loaderColor = Colors.black,
     this.futureNavigator,
     this.navigator,
-    this.durationInSeconds = 3,
+    this.durationInSeconds = 1,
     this.logo,
     required this.onRetry,
     required this.onTestStatus,

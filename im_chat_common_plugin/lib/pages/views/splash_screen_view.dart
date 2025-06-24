@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:im_chat_common_plugin/tools/link_utils.dart';
 import 'package:line_detection_plugin/line_detection.dart';
 
 import '../../jtp_common_init.dart';
@@ -45,45 +46,49 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   /// 成功进入系统
   void _onSuccess() async {
-    if (_completer.isCompleted) return;
-    try {
-      String pwd = MySharedPref.getAppLockScreenPwd();
-      if (pwd.isNotEmpty) {
-        ToolsUtils.showLockScreen();
-      }
-      // int loadErrorCount = MySharedPref.getLoadStatus();
-      // if (loadErrorCount > 0) {
-      //   String? baeUrl = MySharedPref.getBaseUrl();
-      //   String msg = "成功进入系统,失败(${loadErrorCount + 1})次,avable:${LinkUtils.endpoints.length} baseUrl:$baeUrl";
-      //   await MySharedPref.setLoadStatus(0);
-      //   LoggerUtils.error(Exception(msg), error: "APP启动成功", scopeCallback: (Scope scope) {
-      //     scope.setTag(LogType.RELOGIN.label, msg);
-      //   }, level: LogLevel.ERROR, type: LogType.RELOGIN);
-      // }
-      //
-      // /// 获取秘钥
-      // await ToolsUtils.prKey;
-      //
-      // /// 获取配置开关
-      // await ApiProvider.onLoadAppConfig();
-      //
-      // /// 开始获取App配置信息
-      // await ApiProvider.onLoadAppMessages();
-      //
-
-      /// 获取配置
-      await GlobalService.to.getAppConfig();
-
-      /// 尝试登录
-      String path = await GlobalService.to.checkLogin();
-      // ToolsUtils.instance.loadSuccess = true;
-      _completer.complete(path);
-    } catch (e) {
-      setState(() {
-        lineStatus = e.toString();
-        lineTest = 3;
-      });
-    }
+    String path = GlobalService.to.isLoggedIn.value ? '/home' : '/login';
+    // ToolsUtils.instance.loadSuccess = true;
+    _completer.complete(path);
+    // if (_completer.isCompleted) return;
+    // try {
+    //   // String pwd = MySharedPref.getAppLockScreenPwd();
+    //   // if (pwd.isNotEmpty) {
+    //   //   ToolsUtils.showLockScreen();
+    //   // }
+    //   // int loadErrorCount = MySharedPref.getLoadStatus();
+    //   // if (loadErrorCount > 0) {
+    //   //   String? baeUrl = MySharedPref.getBaseUrl();
+    //   //   String msg = "成功进入系统,失败(${loadErrorCount + 1})次,avable:${LinkUtils.endpoints.length} baseUrl:$baeUrl";
+    //   //   await MySharedPref.setLoadStatus(0);
+    //   //   LoggerUtils.error(Exception(msg), error: "APP启动成功", scopeCallback: (Scope scope) {
+    //   //     scope.setTag(LogType.RELOGIN.label, msg);
+    //   //   }, level: LogLevel.ERROR, type: LogType.RELOGIN);
+    //   // }
+    //   //
+    //   // /// 获取秘钥
+    //   // await ToolsUtils.prKey;
+    //   //
+    //   // /// 获取配置开关
+    //   // await ApiProvider.onLoadAppConfig();
+    //   //
+    //   // /// 开始获取App配置信息
+    //   // await ApiProvider.onLoadAppMessages();
+    //   //
+    //
+    //   /// 获取配置
+    //   await GlobalService.to.getAppConfig();
+    //
+    //   /// 尝试登录
+    //   // String path = await GlobalService.to.checkLogin();
+    //   String path = GlobalService.to.isLoggedIn.value ? '/home' : '/login';
+    //   // ToolsUtils.instance.loadSuccess = true;
+    //   _completer.complete(path);
+    // } catch (e) {
+    //   setState(() {
+    //     lineStatus = e.toString();
+    //     lineTest = 3;
+    //   });
+    // }
   }
 
   /// 线路检查失败
@@ -92,6 +97,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   /// 网络状态变化监听
   _onNetworkChange() {
     SmartDialog.dismiss();
+    // _onSuccess();
     if (NetworkManager.instance.networkStatus != 2) {
       if (mounted) {
         setState(() {
@@ -107,27 +113,27 @@ class _SplashScreenViewState extends State<SplashScreenView> {
       }
 
       _onSuccess();
-      // /// 启动检测
-      // LineChecker(onComplete: (isSuccess) async {
-      //   /// 完成后移除监听
-      //   NetworkManager.instance.removeListener(_onNetworkChange);
-      //   if (isSuccess) {
-      //     _onSuccess();
-      //   } else {
-      //     _onError();
-      //   }
-      // }, onCheck: (info) {
-      //   if (!mounted) return;
-      //   setState(() {
-      //     listPath.add(info);
-      //   });
-      // }, onStep: (status, msg) {
-      //   if (!mounted) return;
-      //   setState(() {
-      //     lineTest = status;
-      //     lineStatus = msg;
-      //   });
-      // }).start();
+      /// 启动检测
+      LineChecker(onComplete: (isSuccess) async {
+        /// 完成后移除监听
+        NetworkManager.instance.removeListener(_onNetworkChange);
+        // if (isSuccess) {
+        //   _onSuccess();
+        // } else {
+        //   _onError();
+        // }
+      }, onCheck: (info) {
+        if (!mounted) return;
+        setState(() {
+          listPath.add(info);
+        });
+      }, onStep: (status, msg) {
+        if (!mounted) return;
+        setState(() {
+          lineTest = status;
+          lineStatus = msg;
+        });
+      }).start();
     }
   }
 
@@ -136,9 +142,9 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     /// 获取设备信息
     DeviceInfo deviceInfo = await getDeviceInfo();
     ToolsUtils.instance.setDeviceInfo(deviceInfo);
-
+    _onSuccess();
     /// 监听网络状态
-    NetworkManager.instance.addListener(_onNetworkChange);
+    // NetworkManager.instance.addListener(_onNetworkChange);
     return _completer.future;
   }
 
@@ -168,7 +174,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
           listPath = [];
           lineTest = 0;
         });
-        showLineTest();
+        // showLineTest();
       },
       onTestStatus: (bool success) {},
     );

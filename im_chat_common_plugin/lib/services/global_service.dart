@@ -119,33 +119,34 @@ class GlobalService extends GetxService {
 
   /// 判断登录
   Future<String> checkLogin() async {
-    String projectId = MySharedPref.getProjectIdKey();
-    String rootPath = projectId.isNotEmpty ? "/login" : "/launch";
-    if (projectId.isNotEmpty) {
-      try {
-        userModel = await userManager.getCurrentUser();
-        print("object_userModel:${userModel?.token}");
-
-        if (userModel?.token.isNotEmpty ?? false) {
-          token = userModel!.token;
-          uid = userModel!.uid;
-
-          /// 登录后执行初始化
-          bool result = await loginDefault(userModel!.token);
-          rootPath = result ? "/home" : "/login";
-          isLoggedIn.value = result;
-        } else {
-          rootPath = "/login";
-          isLoggedIn.value = false;
-        }
-      } catch (e) {
-        print("checkLogin 发生错误: $e");
-        SmartDialog.dismiss(status: SmartStatus.loading);
-      }
-    }
-
-    print("rootPath:$rootPath");
-    return rootPath;
+    return GlobalService.to.isLoggedIn.value ? '/home' : '/login';
+    // String projectId = MySharedPref.getProjectIdKey();
+    // String rootPath = projectId.isNotEmpty ? "/login" : "/launch";
+    // if (projectId.isNotEmpty) {
+    //   try {
+    //     userModel = await userManager.getCurrentUser();
+    //     print("object_userModel:${userModel?.token}");
+    //
+    //     if (userModel?.token.isNotEmpty ?? false) {
+    //       token = userModel!.token;
+    //       uid = userModel!.uid;
+    //
+    //       /// 登录后执行初始化
+    //       bool result = await loginDefault(userModel!.token);
+    //       rootPath = result ? "/home" : "/login";
+    //       isLoggedIn.value = result;
+    //     } else {
+    //       rootPath = "/login";
+    //       isLoggedIn.value = false;
+    //     }
+    //   } catch (e) {
+    //     print("checkLogin 发生错误: $e");
+    //     SmartDialog.dismiss(status: SmartStatus.loading);
+    //   }
+    // }
+    //
+    // print("rootPath:$rootPath");
+    // return rootPath;
   }
 
   /// 保存登录信息
