@@ -121,7 +121,7 @@ class GlobalService extends GetxService {
   Future<String> checkLogin() async {
     // return GlobalService.to.isLoggedIn.value ? '/home' : '/login';
     String projectId = MySharedPref.getProjectIdKey();
-    String rootPath = projectId.isNotEmpty ? "/login" : "/launch";
+    String rootPath = projectId.isNotEmpty ? "/login" : "/home";
     if (projectId.isNotEmpty) {
       try {
         userModel = await userManager.getCurrentUser();

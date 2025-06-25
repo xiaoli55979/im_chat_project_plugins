@@ -97,44 +97,44 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   /// 网络状态变化监听
   _onNetworkChange() {
     SmartDialog.dismiss();
-    // _onSuccess();
-    if (NetworkManager.instance.networkStatus != 2) {
-      if (mounted) {
-        setState(() {
-          lineStatus = "等待网络连接";
-        });
-      }
-
-    } else {
-      if (mounted) {
-        setState(() {
-          lineStatus = "网络正常,开始线路检测,请稍候";
-        });
-      }
-
-      _onSuccess();
-      /// 启动检测
-      LineChecker(onComplete: (isSuccess) async {
-        /// 完成后移除监听
-        NetworkManager.instance.removeListener(_onNetworkChange);
-        if (isSuccess) {
-          _onSuccess();
-        } else {
-          _onError();
-        }
-      }, onCheck: (info) {
-        if (!mounted) return;
-        setState(() {
-          listPath.add(info);
-        });
-      }, onStep: (status, msg) {
-        if (!mounted) return;
-        setState(() {
-          lineTest = status;
-          lineStatus = msg;
-        });
-      }).start();
-    }
+    _onSuccess();
+    // if (NetworkManager.instance.networkStatus != 2) {
+    //   if (mounted) {
+    //     setState(() {
+    //       lineStatus = "等待网络连接";
+    //     });
+    //   }
+    //
+    // } else {
+    //   if (mounted) {
+    //     setState(() {
+    //       lineStatus = "网络正常,开始线路检测,请稍候";
+    //     });
+    //   }
+    //
+    //
+    //   /// 启动检测
+    //   LineChecker(onComplete: (isSuccess) async {
+    //     /// 完成后移除监听
+    //     NetworkManager.instance.removeListener(_onNetworkChange);
+    //     if (isSuccess) {
+    //       _onSuccess();
+    //     } else {
+    //       _onError();
+    //     }
+    //   }, onCheck: (info) {
+    //     if (!mounted) return;
+    //     setState(() {
+    //       listPath.add(info);
+    //     });
+    //   }, onStep: (status, msg) {
+    //     if (!mounted) return;
+    //     setState(() {
+    //       lineTest = status;
+    //       lineStatus = msg;
+    //     });
+    //   }).start();
+    // }
   }
 
   /// APP入口
