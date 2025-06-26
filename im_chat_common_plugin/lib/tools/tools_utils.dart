@@ -7,7 +7,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screen_lock_plug/lock_screen_manager.dart';
 import 'package:get/get.dart';
-import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:intl/intl.dart';
 import 'package:line_detection_plugin/line_detection.dart';
@@ -28,6 +27,9 @@ class ToolsUtils {
   /// 基础连接
   // String baseUrl = "http://192.168.10.152:8081";
   String baseUrl = "http://app.wypkmhmc.cn:10005";
+
+  /// 设备令牌
+  String deviceToken = "";
 
   /// 是否是jtp 否则是 lianfu
   bool isJtp = true;
