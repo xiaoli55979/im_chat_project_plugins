@@ -418,6 +418,7 @@ abstract class BaseProvider extends getx.GetConnect {
           if (GlobalService.to.isLoggedInValue && GlobalService.to.token != null && GlobalService.to.token!.isNotEmpty) {
             // GlobalService.to.logout();
             SmartDialog.dismiss();
+            EasyLoading.dismiss();
             getx.Get.normalDialog(
                 width: getx.Get.width * 0.85,
                 barrierDismissible: false,

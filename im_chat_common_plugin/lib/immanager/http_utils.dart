@@ -108,7 +108,8 @@ class HttpUtils {
           channel.updatedAt = e['updated_at'];
           channel.avatar = e['avatar'];
           channel.version = e['version'];
-          // channel.remoteExtraMap = {
+          channel.remoteExtraMap = {
+            'group_no': '',
           //   'allow_view_member_info': e['allow_view_member_info'],
           //   'allow_members_visible': e['allow_members_visible'],
           //   'allow_member_quit_remind': e['allow_member_quit_remind'],
@@ -133,7 +134,7 @@ class HttpUtils {
           //   'sign_in_name': e['sign_in_name'],
           //   'auto_sign_in': e['auto_sign_in'],
           //   'public_sign_in': e['public_sign_in']
-          // };
+          };
           channel.category = e['category'];
           channel.receipt = e['receipt'];
           WKIM.shared.channelManager.addOrUpdateChannel(channel);

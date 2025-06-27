@@ -120,8 +120,8 @@ class GlobalService extends GetxService {
   /// 判断登录
   Future<String> checkLogin() async {
     // return GlobalService.to.isLoggedIn.value ? '/home' : '/login';
-    String projectId = MySharedPref.getProjectIdKey();
-    String rootPath = projectId.isNotEmpty ? "/login" : "/home";
+    String projectId = MySharedPref.getToken() ?? "";
+    String rootPath = projectId.isEmpty ? "/login" : "/home";
     if (projectId.isNotEmpty) {
       try {
         userModel = await userManager.getCurrentUser();
