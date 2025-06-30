@@ -142,12 +142,12 @@ class UserProvider extends BaseProvider {
       );
 
   /// 获取群组信息详情
-  Future<Map<String, dynamic>> getGroupInfo({
+  Future<Result<Map<String, dynamic>>> getGroupInfo({
     required String groupId,
   }) =>
       getRequest(
         '/v1/groups/$groupId',
-        decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
+        decoder: (obj) => Result<Map<String, dynamic>>.fromJson(obj), // 直接返回 JSON
       );
 
   /// 获取群组头像
