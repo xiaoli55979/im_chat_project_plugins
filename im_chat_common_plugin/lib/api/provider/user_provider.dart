@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:im_chat_common_plugin/api/provider/base_provider.dart';
 import 'package:im_chat_common_plugin/api/result.dart';
+import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/models/app_config_model_entity.dart';
 import 'package:im_chat_common_plugin/models/app_model_entity.dart';
+import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/im_node_model_entity.dart';
+import 'package:im_chat_common_plugin/models/person_info_entity.dart';
 import 'package:im_chat_common_plugin/tools/logger_utils.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -212,5 +215,28 @@ class UserProvider extends BaseProvider {
   Future<Result> prohibitWords() => getRequest(
         '/v1/message/prohibit_words/sync',
         decoder: (obj) => Result.fromJson(obj),
+      );
+
+  /// 拉取全局配置信息
+  Future<Result<GlobalInfoEntity>> getGlobalConf() =>
+      getRequest(
+        '/v1/common/getGlobalConf',
+        decoder: (obj) => Result<GlobalInfoEntity>.fromJson(obj),
+      );
+
+  /// 拉取个人配置信息
+  Future<Result<PersonInfoEntity>> getPersonConf() =>
+      getRequest(
+        '/v1/common/getUserRoleConfig',
+        decoder: (obj) => Result<PersonInfoEntity>.fromJson(obj),
+      );
+
+  /// 获取用户信息详情
+  Future<Result<UserInfoModelEntity>> getUserConf({
+    required String uid,
+  }) =>
+      getRequest(
+          '/v1/user/?uid=$uid',
+          decoder: (obj) => Result<UserInfoModelEntity>.fromJson(obj)
       );
 }

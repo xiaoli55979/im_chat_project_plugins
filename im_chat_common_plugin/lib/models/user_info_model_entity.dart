@@ -2,7 +2,6 @@ import 'package:im_chat_common_plugin/generated/json/base/json_field.dart';
 import 'package:im_chat_common_plugin/generated/json/user_info_model_entity.g.dart';
 import 'dart:convert';
 export 'package:im_chat_common_plugin/generated/json/user_info_model_entity.g.dart';
-
 enum UserOnlineStatus {
 	app(0),
 	web(1),
@@ -32,40 +31,61 @@ enum UserOnlineStatus {
 		}
 	}
 }
-
 @JsonSerializable()
 class UserInfoModelEntity {
 	@JSONField(name: 'app_id')
-	late String appId;
-	late String category;
+	String appId = '';
+	@JSONField(name: 'app_lock')
+	int appLock = 0;
+	String avatar = '';
+	@JSONField(name: 'base_avatar')
+	String baseAvatar = '';
+	String category = '';
+	@JSONField(name: 'chat_notice')
+	int chatNotice = 0;
 	@JSONField(name: 'chat_pwd')
-	late String chatPwd;
-	late String lang;
+	String chatPwd = '';
+	String lang = '';
 	@JSONField(name: 'lock_after_minute')
-	late int lockAfterMinute;
+	int lockAfterMinute = 0;
 	@JSONField(name: 'lock_screen_pwd')
-	late String lockScreenPwd;
+	String lockScreenPwd = '';
 	@JSONField(name: 'msg_expire_second')
-	late int msgExpireSecond;
-	late String name;
-	late String phone;
-	late int role;
+	int msgExpireSecond = 0;
+	@JSONField(name: 'msg_read_receipt')
+	int msgReadReceipt = 0;
+	String name = '';
+	String phone = '';
+	@JSONField(name: 'phone_by_friend')
+	int phoneByFriend = 0;
+	@JSONField(name: 'pwd_type')
+	int pwdType = 0;
+	int role = 0;
 	@JSONField(name: 'rsa_public_key')
-	late String rsaPublicKey;
+	String rsaPublicKey = '';
+	@JSONField(name: 'search_by_phone')
+	int searchByPhone = 0;
 	@JSONField(name: 'server_id')
-	late String serverId;
-	late UserInfoModelSetting setting;
-	late int sex;
+	String serverId = '';
+	late UserInfoModelSetting setting = UserInfoModelSetting();
+	int sex = 0;
+	@JSONField(name: 'shock_on')
+	int shockOn = 0;
 	@JSONField(name: 'short_no')
-	late String shortNo;
+	String shortNo = '';
 	@JSONField(name: 'short_status')
-	late int shortStatus;
-	late String sign;
-	late String token;
-	late String uid;
-	late String username;
-	late String zone;
-	late String avatar;
+	int shortStatus = 0;
+	String sign = '';
+	String token = '';
+	@JSONField(name: 'top_conversation')
+	int topConversation = 0;
+	String uid = '';
+	String username = '';
+	@JSONField(name: 'voice_notice')
+	int voiceNotice = 0;
+	@JSONField(name: 'voice_on')
+	int voiceOn = 0;
+	String zone = '';
 
 	UserInfoModelEntity();
 
@@ -82,23 +102,23 @@ class UserInfoModelEntity {
 @JsonSerializable()
 class UserInfoModelSetting {
 	@JSONField(name: 'device_lock')
-	late int deviceLock;
+	int deviceLock = 0;
 	@JSONField(name: 'msg_show_detail')
-	late int msgShowDetail;
+	int msgShowDetail = 0;
 	@JSONField(name: 'mute_of_app')
-	late int muteOfApp;
+	int muteOfApp = 0;
 	@JSONField(name: 'new_msg_notice')
-	late int newMsgNotice;
+	int newMsgNotice = 0;
 	@JSONField(name: 'offline_protection')
-	late int offlineProtection;
+	int offlineProtection = 0;
 	@JSONField(name: 'search_by_phone')
-	late int searchByPhone;
+	int searchByPhone = 0;
 	@JSONField(name: 'search_by_short')
-	late int searchByShort;
+	int searchByShort = 0;
 	@JSONField(name: 'shock_on')
-	late int shockOn;
+	int shockOn = 0;
 	@JSONField(name: 'voice_on')
-	late int voiceOn;
+	int voiceOn = 0;
 
 	UserInfoModelSetting();
 

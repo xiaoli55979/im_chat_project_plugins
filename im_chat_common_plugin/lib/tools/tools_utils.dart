@@ -25,8 +25,8 @@ class ToolsUtils {
   static ToolsUtils get instance => _instance;
 
   /// 基础连接
-  String baseUrl = "http://192.168.10.152:10005";
-  // String baseUrl = "http://app.wypkmhmc.cn:10005";
+  // String baseUrl = "http://192.168.10.152:10005";
+  String baseUrl = "http://app.wypkmhmc.cn:10005";
 
   /// 设备令牌
   String deviceToken = "";
@@ -243,31 +243,6 @@ class ToolsUtils {
         print("object_onErrorExceeded");
       },
     );
-  }
-
-  /// 显示扫码界面
-  static void onQrcodeScan() async {
-    if (GlobalService.to.isLoggedInValue) {
-      /// 申请权限
-      // 获取相机相册权限
-      PermissionsUtils.requestAllPermission((status) async {
-        if (status) {
-          startScan();
-        } else {
-          SnackBarUtil.showError("提示", "相册或者相机未授权!");
-        }
-      });
-    } else {}
-  }
-
-  /// 显示扫码界面
-  static Future<void> startScan() async {
-    var result = await Get.to(() => const CustomQrcodeScanview());
-    try {
-      print("object_startScan:$result");
-    } catch (e, stackTrace) {
-      SnackBarUtil.showError("提示", "无效二维码");
-    }
   }
 
   /// 返回指定格式时间字符串

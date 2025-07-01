@@ -76,7 +76,7 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
 
       /// 获取配置
-      await GlobalService.to.getAppConfig();
+      // await GlobalService.to.getAppConfig();
 
       /// 尝试登录
       String path = await GlobalService.to.checkLogin();

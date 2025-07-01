@@ -1,9 +1,11 @@
 import 'package:im_chat_common_plugin/generated/json/base/json_convert_content.dart';
 import 'package:im_chat_common_plugin/models/apns_notification_model_entity.dart';
 
-ApnsNotificationModelEntity $ApnsNotificationModelEntityFromJson(Map<String, dynamic> json) {
+ApnsNotificationModelEntity $ApnsNotificationModelEntityFromJson(
+    Map<String, dynamic> json) {
   final ApnsNotificationModelEntity apnsNotificationModelEntity = ApnsNotificationModelEntity();
-  final ApnsNotificationModelAps? aps = jsonConvert.convert<ApnsNotificationModelAps>(json['aps']);
+  final ApnsNotificationModelAps? aps = jsonConvert.convert<
+      ApnsNotificationModelAps>(json['aps']);
   if (aps != null) {
     apnsNotificationModelEntity.aps = aps;
   }
@@ -18,7 +20,8 @@ ApnsNotificationModelEntity $ApnsNotificationModelEntityFromJson(Map<String, dyn
   return apnsNotificationModelEntity;
 }
 
-Map<String, dynamic> $ApnsNotificationModelEntityToJson(ApnsNotificationModelEntity entity) {
+Map<String, dynamic> $ApnsNotificationModelEntityToJson(
+    ApnsNotificationModelEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['aps'] = entity.aps.toJson();
   data['code'] = entity.code;
@@ -39,9 +42,11 @@ extension ApnsNotificationModelEntityExtension on ApnsNotificationModelEntity {
   }
 }
 
-ApnsNotificationModelAps $ApnsNotificationModelApsFromJson(Map<String, dynamic> json) {
+ApnsNotificationModelAps $ApnsNotificationModelApsFromJson(
+    Map<String, dynamic> json) {
   final ApnsNotificationModelAps apnsNotificationModelAps = ApnsNotificationModelAps();
-  final ApnsNotificationModelApsAlert? alert = jsonConvert.convert<ApnsNotificationModelApsAlert>(json['alert']);
+  final ApnsNotificationModelApsAlert? alert = jsonConvert.convert<
+      ApnsNotificationModelApsAlert>(json['alert']);
   if (alert != null) {
     apnsNotificationModelAps.alert = alert;
   }
@@ -56,7 +61,8 @@ ApnsNotificationModelAps $ApnsNotificationModelApsFromJson(Map<String, dynamic> 
   return apnsNotificationModelAps;
 }
 
-Map<String, dynamic> $ApnsNotificationModelApsToJson(ApnsNotificationModelAps entity) {
+Map<String, dynamic> $ApnsNotificationModelApsToJson(
+    ApnsNotificationModelAps entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['alert'] = entity.alert.toJson();
   data['badge'] = entity.badge;
@@ -77,7 +83,8 @@ extension ApnsNotificationModelApsExtension on ApnsNotificationModelAps {
   }
 }
 
-ApnsNotificationModelApsAlert $ApnsNotificationModelApsAlertFromJson(Map<String, dynamic> json) {
+ApnsNotificationModelApsAlert $ApnsNotificationModelApsAlertFromJson(
+    Map<String, dynamic> json) {
   final ApnsNotificationModelApsAlert apnsNotificationModelApsAlert = ApnsNotificationModelApsAlert();
   final String? title = jsonConvert.convert<String>(json['title']);
   if (title != null) {
@@ -90,7 +97,8 @@ ApnsNotificationModelApsAlert $ApnsNotificationModelApsAlertFromJson(Map<String,
   return apnsNotificationModelApsAlert;
 }
 
-Map<String, dynamic> $ApnsNotificationModelApsAlertToJson(ApnsNotificationModelApsAlert entity) {
+Map<String, dynamic> $ApnsNotificationModelApsAlertToJson(
+    ApnsNotificationModelApsAlert entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['title'] = entity.title;
   data['body'] = entity.body;
