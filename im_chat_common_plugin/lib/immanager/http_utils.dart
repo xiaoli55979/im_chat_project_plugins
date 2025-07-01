@@ -359,10 +359,11 @@ class HttpUtils {
   static getGroupInfo(String groupId) async {
     try {
       final response = await api.getGroupInfo(groupId: groupId);
+      var data = response.data!;
       var channel = await WKIM.shared.channelManager.getChannel(groupId, WKChannelType.group);
       channel ??= WKChannel(groupId, WKChannelType.group);
-      channel.channelName = response['name'] ?? "";
-      channel.channelRemark = response['remark'];
+      channel.channelName = data['name'] ?? "";
+      channel.channelRemark = data['remark'];
       channel.avatar =
           "${getGroupAvatarUrl(groupId)}?t=${DateTime.now().millisecondsSinceEpoch}";
 
