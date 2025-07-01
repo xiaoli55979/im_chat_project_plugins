@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:im_chat_common_plugin/models/user_info_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../models/user_info_model_entity.dart';
 import 'database_manager.dart';
 
 class UserManager extends DatabaseManager {
@@ -66,9 +65,9 @@ class UserManager extends DatabaseManager {
   /// 获取当前登录用户 UID
   Future<String> getCurrentToken() async {
     if (_currentToken.isEmpty) return _currentToken;
-    UserInfoModelEntity? model = await getCurrentUser();
+    UserInfoData? model = await getCurrentUser();
     if (model != null) {
-      return model.token;
+      return model.token ?? '';
     }
     return "";
   }
@@ -81,13 +80,13 @@ class UserManager extends DatabaseManager {
   }
 
   /// 插入或更新用户
-  Future<int> upsertUser(UserInfoModelEntity user) async {
+  Future<int> upsertUser(UserInfoData user) async {
     final data = user.toJson();
 
     // 处理 Map 类型字段，转换为 JSON String
     if (data['setting'] is Map) {
       data['setting'] = jsonEncode(data['setting']);
-    } else if (data['setting'] is UserInfoModelSetting) {
+    } else if (data['setting'] is UserInfoSetting) {
       data['setting'] = jsonEncode(data['setting'].toJson());
     }
 
@@ -96,7 +95,7 @@ class UserManager extends DatabaseManager {
   }
 
   /// 查询用户信息
-  Future<UserInfoModelEntity?> getUser({String uid = ""}) async {
+  Future<UserInfoData?> getUser({String uid = ""}) async {
     if (uid.isEmpty) {
       _currentUserUid = await getCurrentUserUid();
       uid = _currentUserUid;
@@ -120,11 +119,11 @@ class UserManager extends DatabaseManager {
       }
     }
 
-    return UserInfoModelEntity.fromJson(data);
+    return UserInfoData.fromJson(data);
   }
 
   /// 获取当前登录用户的信息
-  Future<UserInfoModelEntity?> getCurrentUser() async {
+  Future<UserInfoData?> getCurrentUser() async {
     final uid = await getCurrentUserUid();
     if (uid.isEmpty) return null;
     return getUser(uid: uid);

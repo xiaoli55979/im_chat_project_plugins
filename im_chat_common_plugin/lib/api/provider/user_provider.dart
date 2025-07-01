@@ -1,13 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:im_chat_common_plugin/api/base_api.dart';
+import 'package:im_chat_common_plugin/api/im_api.dart';
 import 'package:im_chat_common_plugin/api/provider/base_provider.dart';
-import 'package:im_chat_common_plugin/api/result.dart';
-import 'package:im_chat_common_plugin/models/app_config_model_entity.dart';
-import 'package:im_chat_common_plugin/models/app_model_entity.dart';
-import 'package:im_chat_common_plugin/models/im_node_model_entity.dart';
+import 'package:im_chat_common_plugin/models/channel_msg_sync_data.dart';
+import 'package:im_chat_common_plugin/models/conversation_sync_data.dart';
+import 'package:im_chat_common_plugin/models/im_node_data.dart';
+import 'package:im_chat_common_plugin/models/response/base_response_entity.dart';
+import 'package:im_chat_common_plugin/models/response/data_list_response_data.dart';
+import 'package:im_chat_common_plugin/models/response/result.dart';
+import 'package:im_chat_common_plugin/models/wk_group_info_data.dart';
+import 'package:im_chat_common_plugin/models/wk_user_info_data.dart';
 import 'package:im_chat_common_plugin/tools/logger_utils.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
 
 /// =============用户相关接口===============
 class UserProvider extends BaseProvider {
@@ -44,7 +49,8 @@ class UserProvider extends BaseProvider {
 
       if (response != null && response.data == true) {
         var duration = endTime.difference(startTime).inMilliseconds; // 计算时长
-        transaction.status = SpanStatus.fromHttpStatusCode(response.statusCode ?? -1);
+        transaction.status =
+            SpanStatus.fromHttpStatusCode(response.statusCode ?? -1);
         return duration;
       } else {
         transaction.status = const SpanStatus.unknown();
@@ -53,12 +59,14 @@ class UserProvider extends BaseProvider {
     } catch (e, stackTrace) {
       transaction.throwable = e;
       transaction.status = const SpanStatus.unknown();
-      LoggerUtils.error(e, stackTrace: stackTrace, scopeCallback: (Scope scope) {
+      LoggerUtils.error(e, stackTrace: stackTrace,
+          scopeCallback: (Scope scope) {
         scope.setTag(LogType.LINE.label, url);
       }, level: LogLevel.ERROR, type: LogType.ERROR);
 
       /// 本地显示
-      LoggerUtils.error("Url:$url:${e.toString()}", error: "线路测速异常", level: LogLevel.INFO);
+      LoggerUtils.error("Url:$url:${e.toString()}",
+          error: "线路测速异常", level: LogLevel.INFO);
       return 20000; // 超时或者异常时返回默认值
     } finally {
       // 结束事务
@@ -66,100 +74,66 @@ class UserProvider extends BaseProvider {
     }
   }
 
-  /// 获取公共配置
-  Future<Result<AppConfigModelEntity>> appConfig() => getRequest(
-        "/v1/common/appconfig",
-        decoder: (obj) => Result<AppConfigModelEntity>.fromJson(obj),
-      );
-
-  /// 获取APP模块信息
-  Future<dynamic> appModule() async {
-    return getRequest(
-      "/v1/common/appmodule",
-      decoder: (obj) {
-        print("API 返回数据");
-
-        if (obj is List) {
-          // 确保 obj 里每个元素都是 Map
-          return obj
-              .where((e) => e is Map<String, dynamic>) // 过滤掉非 Map 类型的数据
-              .map((e) => AppModelEntity.fromJson(e as Map<String, dynamic>))
-              .toList();
-        }
-
-        print("⚠️ API 返回数据格式异常");
-        return [];
-      },
+  /// 获取用户所在的im节点信息
+  Future<Result<BaseEntity<IMNodeData?>?, APIError>> getIMNode({required String uid}) async {
+    final url = BaseAPI.getIMNode.path.replaceAll('uid', uid);
+    final result = await getRequest(
+      url,
+      construction: IMNodeData.fromJson,
+      decoder: BaseEntity<IMNodeData>.fromJson,
     );
+    return result;
   }
 
-  /// 获取用户所在的im节点信息
-  Future<Result<ImNodeModelEntity>> usersIm({required String uid}) => getRequest(
-        "/v1/users/$uid/im",
-        decoder: (obj) => Result<ImNodeModelEntity>.fromJson(obj),
-      );
-
   /// 同步最近会话
-  // {
-  //   "version": 0,
-  //   "last_msg_seqs": "string",
-  //   "msg_count": 0,
-  //   "device_uuid": "string"
-  // }
-  Future<Map<String, dynamic>> conversationSync({
+  Future<Result<BaseEntity<ConversationSyncData?>?, APIError>> conversationSync({
     required int version,
     required String lastMsgSeqs,
-    int msgCount = 100,
     required String deviceUuid,
-  }) =>
-      postRequest(
-        '/v1/conversation/sync',
-        {
-          'version': version,
-          'last_msg_seqs': lastMsgSeqs,
-          'msg_count': msgCount,
-          'device_uuid': deviceUuid,
-        },
-        decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
-      );
+    int msgCount = 100,
+  }) async {
+    final url = ImApi.conversationSync.path;
+    final body = {
+      'version': version,
+      'last_msg_seqs': lastMsgSeqs,
+      'msg_count': msgCount,
+      'device_uuid': deviceUuid,
+    };
+    final result = await postRequest(
+      ImApi.conversationSync.path,
+      body,
+      construction: ConversationSyncData.fromJson,
+      decoder: BaseEntity<ConversationSyncData>.fromJson,
+    );
+    return result;
+  }
 
-  /// 获取用户信息详情
-  Future<Result<Map<String, dynamic>>> getUserInfo({
-    required String uid,
-  }) =>
-      getRequest(
-        '/v1/user/?uid=$uid',
-        decoder: (obj) => Result<Map<String, dynamic>>.fromJson(obj)
-      );
+  /// 获取IM用户信息详情
+  Future<Result<BaseEntity<WKUserInfoData?>?, APIError>> getIMUserInfo(
+      {required String uid}) async {
+    final url = ImApi.getIMUserInfo.path + uid;
+    final result = await getRequest(
+      url,
+      construction: WKUserInfoData.fromJson,
+      decoder: BaseEntity<WKUserInfoData>.fromJson,
+    );
+    return result;
+  }
 
-  /// 获取用户头像
-  Future<Map<String, dynamic>> getUserAvatar({
-    required String uid,
-  }) =>
-      getRequest(
-        '/v1/users/$uid/avatar',
-        decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
-      );
+  /// 获取IM群组信息详情
+  Future<Result<BaseEntity<WKGroupInfoData?>?, APIError>> getIMGroupInfo(
+      {required String groupId}) async {
+    final url = ImApi.getIMGroupInfo.path + groupId;
+    final result = await getRequest(
+      url,
+      construction: WKGroupInfoData.fromJson,
+      decoder: BaseEntity<WKGroupInfoData>.fromJson,
+    );
+    return result;
+  }
 
-  /// 获取群组信息详情
-  Future<Result<Map<String, dynamic>>> getGroupInfo({
-    required String groupId,
-  }) =>
-      getRequest(
-        '/v1/groups/$groupId',
-        decoder: (obj) => Result<Map<String, dynamic>>.fromJson(obj), // 直接返回 JSON
-      );
-
-  /// 获取群组头像
-  Future<Map<String, dynamic>> getGroupAvatar({
-    required String groupId,
-  }) =>
-      getRequest(
-        '/v1/groups/$groupId/avatar',
-        decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
-      );
-  //
-  Future<Map<String, dynamic>> channelSync({
+  /// 同步频道消息
+  Future<Result<BaseEntity<ChannelMsgSyncData?>?, APIError>> channelMsgSync({
     required String uid,
     required String channelID,
     required int channelType,
@@ -167,50 +141,49 @@ class UserProvider extends BaseProvider {
     required int endMsgSeq,
     required int limit,
     required int pullMode,
-  }) =>
-      postRequest(
-        '/v1/message/channel/sync',
-        {
-          "login_uid": uid, // 当前登录用户uid
-          "channel_id": channelID, //  频道ID
-          "channel_type": channelType, // 频道类型
-          "start_message_seq": startMsgSeq, // 开始消息列号（结果包含start_message_seq的消息）
-          "end_message_seq": endMsgSeq, // 结束消息列号（结果不包含end_message_seq的消息）
-          "limit": limit, // 消息数量限制
-          "pull_mode": pullMode // 拉取模式 0:向下拉取 1:向上拉取
-        },
-        decoder: (obj) => obj as Map<String, dynamic>, // 直接返回 JSON
-      );
+  }) async {
+    final url = ImApi.channelMsgSync.path;
+    final body = {
+      "login_uid": uid, // 当前登录用户uid
+      "channel_id": channelID, //  频道ID
+      "channel_type": channelType, // 频道类型
+      "start_message_seq": startMsgSeq, // 开始消息列号（结果包含start_message_seq的消息）
+      "end_message_seq": endMsgSeq, // 结束消息列号（结果不包含end_message_seq的消息）
+      "limit": limit, // 消息数量限制
+      "pull_mode": pullMode // 拉取模式 0:向下拉取 1:向上拉取
+    };
+    final result = await postRequest(
+      url,
+      body,
+      construction: ChannelMsgSyncData.fromJson,
+      decoder: BaseEntity<ChannelMsgSyncData>.fromJson,
+    );
+    return result;
+  }
 
   /// 同步消息扩展
-  Future<Result> msgExtraSync({
+  Future<Result<ListEntity<MessageExtra>?, APIError>> msgExtraSync({
     required String channelID,
     required int channelType,
     required int extraVersion,
     required int limit,
     required String source,
-  }) =>
-      postRequest(
-        '/v1/message/extra/sync',
-        {
-          "channel_id": channelID, //  频道ID
-          "channel_type": channelType, // 频道类型
-          "extra_version": extraVersion, // 开始消息列号（结果包含start_message_seq的消息）
-          "limit": limit, // 结束消息列号（结果不包含end_message_seq的消息）
-          "source": source, // 消息数量限制
-        },
-        decoder: (obj) => Result.fromJson(obj), // 直接返回 JSON
-      );
+  }) async {
+    final url = ImApi.msgExtraSync.path;
+    final body = {
+      "channel_id": channelID, //  频道ID
+      "channel_type": channelType, // 频道类型
+      "extra_version": extraVersion, // 开始消息列号（结果包含start_message_seq的消息）
+      "limit": limit, // 结束消息列号（结果不包含end_message_seq的消息）
+      "source": source, // 消息数量限制
+    };
+    final result = await postRequest(
+      url,
+      body,
+      construction: MessageExtra.fromJson,
+      decoder: ListEntity<MessageExtra>.fromListJson,
+    );
+    return result;
+  }
 
-  ///同步敏感词,如银行卡,微信,提示注意交易问题
-  Future<Result> sensitiveWords() => getRequest(
-        '/v1/message/sync/sensitivewords',
-        decoder: (obj) => Result.fromJson(obj),
-      );
-
-  ///同步敏感词
-  Future<Result> prohibitWords() => getRequest(
-        '/v1/message/prohibit_words/sync',
-        decoder: (obj) => Result.fromJson(obj),
-      );
 }

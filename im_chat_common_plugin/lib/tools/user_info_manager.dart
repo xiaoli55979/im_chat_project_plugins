@@ -1,6 +1,4 @@
-import 'package:im_chat_common_plugin/models/conversation_cmd_msg_entity.dart';
-
-import '../models/user_info_model_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_data.dart';
 
 class UserInfoManager {
   // 单例实例
@@ -13,24 +11,15 @@ class UserInfoManager {
   factory UserInfoManager() => _instance;
 
   // 用户信息
-  UserInfoModelEntity? userInfo;
-
-  // 会话cmd收藏消息model
-  ConversationCmdMsgEntity? cmdMyCollectInfo;
-
-  // 会话cmd系统消息model
-  ConversationCmdMsgEntity? cmdMySystemInfo;
-
-  // 会话cmd通知消息model
-  ConversationCmdMsgEntity? cmdMyNotifyInfo;
+  UserInfoData? userInfo;
 
   // 设置用户信息
-  void setUserInfo(UserInfoModelEntity info) {
+  void setUserInfo(UserInfoData info) {
     userInfo = info;
   }
 
   // 获取用户信息
-  UserInfoModelEntity? get getUserInfo => userInfo;
+  UserInfoData? get getUserInfo => userInfo;
 
   // 清空用户信息（退出登录）
   void clearUserInfo() {

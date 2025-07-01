@@ -27,7 +27,7 @@ class ImManager {
     ));
     WKIM.shared.options.useWebSocket = true;
     WKIM.shared.options.getAddr = (Function(String address) complete) async {
-      String ip = ImOptionsUtils().imNode.wsAddr;
+      String ip = ImOptionsUtils().imNode.wsAddr ?? '';
       print('ip_Adder:$ip');
       complete(ip);
     };

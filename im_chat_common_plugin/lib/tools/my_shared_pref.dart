@@ -1,10 +1,9 @@
 import 'dart:convert';
 
+import 'package:im_chat_common_plugin/models/http_dns_lines_data.dart';
 import 'package:im_chat_common_plugin/tools/time_tools_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/http_dns_lines_model_entity.dart';
 
 class MySharedPref {
   // prevent making instance
@@ -106,16 +105,16 @@ class MySharedPref {
   static String? getToken() => _sharedPreferences.getString(_authorization);
 
   /// 获取线路配置
-  static HttpDnsLinesModelEntity? getHttpDnsLines() {
+  static HttpDnsLinesData? getHttpDnsLines() {
     String? infoStr = _sharedPreferences.getString(_httpDnsLinesKey);
     if (infoStr == null) return null;
     Map<String, dynamic> jsonMap = Map<String, dynamic>.from(jsonDecode(infoStr));
-    HttpDnsLinesModelEntity accountInfo = HttpDnsLinesModelEntity.fromJson(jsonMap);
+    HttpDnsLinesData accountInfo = HttpDnsLinesData.fromJson(jsonMap);
     return accountInfo;
   }
 
   /// 设置线路配置
-  static Future<void> setHttpDnsLines(HttpDnsLinesModelEntity? appVersion) async {
+  static Future<void> setHttpDnsLines(HttpDnsLinesData? appVersion) async {
     if (appVersion == null) return;
     String jsonInfo = appVersion.toString();
     _sharedPreferences.setString(_httpDnsLinesKey, jsonInfo);

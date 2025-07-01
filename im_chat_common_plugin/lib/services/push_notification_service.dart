@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../models/apns_notification_model_entity.dart';
-
 class PushNotificationService {
   /// APP生命周期通知
   static const String lifecycleState = "AppLifecycleState";
@@ -84,10 +82,10 @@ class PushNotificationService {
       try {
         final userInfo = rawData.map((key, value) => MapEntry(key.toString(), value));
         debugPrint("received_push_notification:$userInfo");
-        ApnsNotificationModelEntity modeEntity = ApnsNotificationModelEntity.fromJson(userInfo);
+        // ApnsNotificationModelEntity modeEntity = ApnsNotificationModelEntity.fromJson(userInfo);
 
         /// 根据实际业务的code进行处理
-        debugPrint("received_push_notification_code::${modeEntity.code}");
+        // debugPrint("received_push_notification_code::${modeEntity.code}");
       } catch (e) {}
     } else {
       debugPrint("Invalid push notification format: $rawData");

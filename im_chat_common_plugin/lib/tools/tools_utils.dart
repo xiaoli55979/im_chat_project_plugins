@@ -25,8 +25,8 @@ class ToolsUtils {
   static ToolsUtils get instance => _instance;
 
   /// 基础连接
-  String baseUrl = "http://192.168.10.152:10005";
-  // String baseUrl = "http://app.wypkmhmc.cn:10005";
+  // String baseUrl = "http://192.168.10.152:10005";
+  String baseUrl = "http://app.wypkmhmc.cn:10005";
 
   /// 设备令牌
   String deviceToken = "";

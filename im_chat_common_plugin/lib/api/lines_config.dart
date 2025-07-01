@@ -1,4 +1,4 @@
-import 'package:im_chat_common_plugin/models/http_dns_lines_model_entity.dart';
+import 'package:im_chat_common_plugin/models/http_dns_lines_data.dart';
 import 'package:im_chat_common_plugin/tools/my_shared_pref.dart';
 import 'package:im_chat_common_plugin/tools/project_utils.dart';
 import 'package:im_chat_common_plugin/tools/text_field_utils.dart';
@@ -8,10 +8,10 @@ import 'package:line_detection_plugin/line_detection.dart';
 class LinesConfig {
   /// 当可用线路小于几条时候更新线路
   static int reflashMin() {
-    HttpDnsLinesModelEntity? entity = MySharedPref.getHttpDnsLines();
+    HttpDnsLinesData? entity = MySharedPref.getHttpDnsLines();
     int minCount = 3;
-    if (entity != null && entity.endpoints.isNotEmpty) {
-      minCount = entity.endpoints.length ~/ 2;
+    if (entity != null && entity.endpoints != null && entity.endpoints?.isNotEmpty == true) {
+      minCount = entity.endpoints!.length ~/ 2;
     }
     return minCount;
   }
@@ -26,8 +26,8 @@ class LinesConfig {
 
     /// 如果不一样使用最新的替换
     String checkDnsId = "";
-    HttpDnsLinesModelEntity? entity = MySharedPref.getHttpDnsLines();
-    if (entity != null && entity.dnsId != 0) {
+    HttpDnsLinesData? entity = MySharedPref.getHttpDnsLines();
+    if (entity != null && entity.dnsId != null && entity.dnsId != 0) {
       checkDnsId = "${entity.dnsId}";
     }
     if (checkDnsId.isNotEmpty && dnsID != checkDnsId) {
@@ -47,9 +47,9 @@ class LinesConfig {
 
     /// 如果不一样使用最新的替换
     String checkDnsKey = "";
-    HttpDnsLinesModelEntity? entity = MySharedPref.getHttpDnsLines();
-    if (entity != null && entity.dnsToken.isNotEmpty) {
-      checkDnsKey = entity.dnsToken;
+    HttpDnsLinesData? entity = MySharedPref.getHttpDnsLines();
+    if (entity != null && entity.dnsToken != null && entity.dnsToken!.isNotEmpty) {
+      checkDnsKey = entity.dnsToken!;
     }
     if (checkDnsKey.isNotEmpty && dnsKey != checkDnsKey) {
       dnsKey = checkDnsKey;

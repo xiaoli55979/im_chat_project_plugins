@@ -11,8 +11,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart' as getx;
 import 'package:im_chat_common_plugin/api/exception.dart';
-import 'package:im_chat_common_plugin/api/result.dart';
 import 'package:im_chat_common_plugin/api/retry_evaluator.dart';
+import 'package:im_chat_common_plugin/models/response/base_response_entity.dart';
+import 'package:im_chat_common_plugin/models/response/result.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
 import 'package:im_chat_common_plugin/tools/encryption_interceptor.dart';
 import 'package:im_chat_common_plugin/tools/link_utils.dart';
@@ -26,8 +27,9 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-// bool debugModel = false; //kDebugMode;
-// bool debugModel = kDebugMode;
+typedef ConstructionAction<B> = B Function(dynamic data);
+
+typedef DecoderAction<T, B> = T Function(dynamic data, ConstructionAction<B> construction);
 
 /// 基类封装Dio
 abstract class BaseProvider extends getx.GetConnect {
@@ -48,7 +50,9 @@ abstract class BaseProvider extends getx.GetConnect {
       // ToolsUtils.instance.mqttLog = true;
     }
 
-    var appUrl = ToolsUtils.instance.isDebugModel ? LinkUtils.testBaseUrl : MySharedPref.getBaseUrl() ?? LinkUtils.prodBaseUrl;
+    var appUrl = ToolsUtils.instance.isDebugModel
+        ? LinkUtils.testBaseUrl
+        : MySharedPref.getBaseUrl() ?? LinkUtils.prodBaseUrl;
     LoggerUtils.info(appUrl);
     updateMqtt(appUrl);
 
@@ -83,11 +87,14 @@ abstract class BaseProvider extends getx.GetConnect {
           // options.headers['Authorization'] = 'Bearer ${GlobalService.to.token}';
           // }
           options.headers['X-App-Version'] = await ToolsUtils.getVersion();
-          options.headers['X-Device-Type'] = ToolsUtils.getPlatform(); // 1:PC 2:IOS 3:Android
-          options.headers['bundle_id'] = ToolsUtils.instance.deviceInfo?.package.packageName ?? "";
+          options.headers['X-Device-Type'] =
+              ToolsUtils.getPlatform(); // 1:PC 2:IOS 3:Android
+          options.headers['bundle_id'] =
+              ToolsUtils.instance.deviceInfo?.package.packageName ?? "";
           if (GlobalService.to.token != null) {
             // options.headers['token'] = '${GlobalService.to.token}';
-            options.headers['Authorization'] = 'Bearer ${GlobalService.to.token}';
+            options.headers['Authorization'] =
+                'Bearer ${GlobalService.to.token}';
           }
           print("object_headers:${options.headers}");
 
@@ -99,7 +106,8 @@ abstract class BaseProvider extends getx.GetConnect {
         },
         onError: (error, handler) async {
           /// 如果调用报了连接错误触发网络检查
-          if ((error.type == DioExceptionType.connectionError || error.type == DioExceptionType.connectionTimeout) &&
+          if ((error.type == DioExceptionType.connectionError ||
+                  error.type == DioExceptionType.connectionTimeout) &&
               NetworkManager.instance.networkStatus == 2) {
             await NetworkManager.instance.checkNetwork();
           }
@@ -143,7 +151,8 @@ abstract class BaseProvider extends getx.GetConnect {
           File? file = options.extra['file'];
           if (file != null) {
             // /// 重新生成文件流
-            final retryableFile = createMultipartFileRecreatable(file, options.extra['filename']);
+            final retryableFile =
+                createMultipartFileRecreatable(file, options.extra['filename']);
 
             /// 创建 FormData
             FormData formData = FormData.fromMap({'file': retryableFile});
@@ -152,7 +161,8 @@ abstract class BaseProvider extends getx.GetConnect {
 
           // 更新 baseUrl
           if (LinkUtils.endpoints.length >= options.attempt) {
-            return options.copyWith(baseUrl: LinkUtils.endpoints[options.attempt - 1]);
+            return options.copyWith(
+                baseUrl: LinkUtils.endpoints[options.attempt - 1]);
           }
 
           return options;
@@ -207,20 +217,41 @@ abstract class BaseProvider extends getx.GetConnect {
     }
   }
 
+  Future<Result<T, APIError>> getRequest<T extends APIEntity, B>(
+    String url, {
+    Map<String, dynamic>? query,
+    required ConstructionAction<B> construction,
+    required DecoderAction<T, B> decoder,
+    Duration? sendTimeout,
+    Duration? receiveTimeout,
+  }) async {
+    return _request(
+      url,
+      method: "GET",
+      query: query,
+      decoder: decoder,
+      construction: construction,
+      sendTimeout: sendTimeout,
+      receiveTimeout: receiveTimeout,
+    );
+  }
+
   /// post
-  Future<T> postRequest<T>(
+  Future<Result<T, APIError>> postRequest<T extends APIEntity, B>(
     String url,
     dynamic body, {
-    getx.Decoder<T>? decoder,
+    required ConstructionAction<B> construction,
+    required DecoderAction<T, B> decoder,
     bool? hideCatch,
     Duration? sendTimeout,
     Duration? receiveTimeout,
   }) {
     return _request(
       url,
-      data: body,
       method: "POST",
+      body: body,
       decoder: decoder,
+      construction: construction,
       sendTimeout: sendTimeout,
       receiveTimeout: receiveTimeout,
       hideCatch: hideCatch,
@@ -228,41 +259,49 @@ abstract class BaseProvider extends getx.GetConnect {
   }
 
   /// pust
-  Future<T> putRequest<T>(
+  Future<Result<T, APIError>> putRequest<T extends APIEntity, B>(
     String url,
     dynamic body, {
-    getx.Decoder<T>? decoder,
+    required ConstructionAction<B> construction,
+    required DecoderAction<T, B> decoder,
     Duration? sendTimeout,
     Duration? receiveTimeout,
   }) {
-    return _request(url, data: body, method: "PUT", decoder: decoder, sendTimeout: sendTimeout, receiveTimeout: receiveTimeout);
+    return _request(
+      url,
+      method: "PUT",
+      body: body,
+      decoder: decoder,
+      construction: construction,
+      sendTimeout: sendTimeout,
+      receiveTimeout: receiveTimeout,
+    );
   }
 
   /// get
-  Future<T> getRequest<T>(
-    String url, {
-    Map<String, dynamic>? queryParameters,
-    getx.Decoder<T>? decoder,
-    Duration? sendTimeout,
-    Duration? receiveTimeout,
-  }) async {
-    return _request(url,
-        method: "GET", queryParameters: queryParameters, decoder: decoder, sendTimeout: sendTimeout, receiveTimeout: receiveTimeout);
-  }
-
   /// delete
-  Future<T> deleteRequest<T>(
+  Future<Result<T, APIError>> deleteRequest<T extends APIEntity, B>(
     String url, {
-    Map<String, dynamic>? queryParameters,
-    getx.Decoder<T>? decoder,
+    Map<String, dynamic>? query,
+    required ConstructionAction<B> construction,
+    required DecoderAction<T, B> decoder,
     Duration? sendTimeout,
     Duration? receiveTimeout,
   }) async {
-    return _request(url, method: "DELETE", queryParameters: queryParameters, decoder: decoder, sendTimeout: sendTimeout, receiveTimeout: receiveTimeout);
+    return _request(
+      url,
+      method: "DELETE",
+      query: query,
+      decoder: decoder,
+      construction: construction,
+      sendTimeout: sendTimeout,
+      receiveTimeout: receiveTimeout,
+    );
   }
 
   /// 创建 MultipartFileRecreatable 对象时使用流
-  MultipartFileRecreatable createMultipartFileRecreatable(File file, String key) {
+  MultipartFileRecreatable createMultipartFileRecreatable(
+      File file, String key) {
     final stream = file.openRead();
     final length = file.lengthSync(); // 文件长度
     return MultipartFileRecreatable(
@@ -285,10 +324,7 @@ abstract class BaseProvider extends getx.GetConnect {
     final retryableFile = createMultipartFileRecreatable(file, key);
 
     /// 创建 FormData
-    FormData formData = FormData.fromMap({
-      'file': retryableFile,
-      'path': key
-    });
+    FormData formData = FormData.fromMap({'file': retryableFile, 'path': key});
 
     /// 添加配置
     // String namePath = "";
@@ -314,7 +350,8 @@ abstract class BaseProvider extends getx.GetConnect {
         onSendProgress: onSendProgress, // 上传进度回调
       );
     } catch (e, stackTrace) {
-      LoggerUtils.error(e, stackTrace: stackTrace, scopeCallback: (Scope scope) {
+      LoggerUtils.error(e, stackTrace: stackTrace,
+          scopeCallback: (Scope scope) {
         scope.setTag(LogType.FILETRANSFER.label, url);
       }, level: LogLevel.ERROR, type: LogType.FILETRANSFER);
       rethrow;
@@ -322,16 +359,17 @@ abstract class BaseProvider extends getx.GetConnect {
   }
 
   /// _request 是核心函数，所有的请求都会走这里
-  Future<T> _request<T>(
+  Future<Result<T, APIError>> _request<T extends APIEntity, B>(
     String path, {
     required String method,
+    dynamic body,
+    Map<String, dynamic>? query,
     Map? params,
-    Map<String, dynamic>? queryParameters,
     Duration? sendTimeout,
     Duration? receiveTimeout,
     bool? hideCatch, // 是否拦截异常
-    data,
-    getx.Decoder<T>? decoder,
+    required ConstructionAction<B> construction,
+    required DecoderAction<T, B> decoder,
   }) async {
     // restful 请求处理
     if (params != null) {
@@ -355,8 +393,8 @@ abstract class BaseProvider extends getx.GetConnect {
     try {
       Response response = await dio.request(
         path,
-        queryParameters: queryParameters,
-        data: data,
+        queryParameters: query,
+        data: body,
         options: Options(
           method: method,
           sendTimeout: sendTimeout,
@@ -366,19 +404,21 @@ abstract class BaseProvider extends getx.GetConnect {
         ),
       );
       // 获取HTTP状态码
-      transaction.status = SpanStatus.fromHttpStatusCode(response.statusCode ?? -1);
+      transaction.status =
+          SpanStatus.fromHttpStatusCode(response.statusCode ?? -1);
 
       try {
-        if (response.data['code'] == 401) { // 登录失效
+        if (response.data['code'] == 401) {
+          // 登录失效
           getx.Get.offAllNamed("/login");
         }
-        return decoder != null ? decoder.call(response.data) : Result.fromJson(response.data) as T;
+        return Result.succss(decoder(response.data, construction));
       } catch (e, stackTrace) {
         transaction.throwable = e;
         transaction.status = const SpanStatus.unknown();
         LoggerUtils.error(e, stackTrace: stackTrace, level: LogLevel.ERROR);
         SmartDialog.dismiss(status: SmartStatus.loading);
-        return Future.error(ApiException(-1, '解析响应数据异常:$e'));
+        return Result.failure(APIError('解析响应数据异常:$e', -1));
       }
     } on DioException catch (e, stackTrace) {
       print("🔹 错误消息: ${e.message}");
@@ -397,12 +437,13 @@ abstract class BaseProvider extends getx.GetConnect {
 
       if (hideCatch != null && hideCatch) {
         SmartDialog.dismiss(status: SmartStatus.loading);
-        return Future.error(ex);
+        return Result.failure(APIError(ex.message, ex.code));
       }
 
       /// 服务器有返回错误信息
       if (e.type == DioExceptionType.badResponse) {
-        transaction.status = SpanStatus.fromHttpStatusCode(e.response?.statusCode ?? -1);
+        transaction.status =
+            SpanStatus.fromHttpStatusCode(e.response?.statusCode ?? -1);
         if (ex is BusinessException) {
           // 系统维护状态处理
           // if (ex.code == 9999) {
@@ -411,11 +452,14 @@ abstract class BaseProvider extends getx.GetConnect {
           // }
           // 业务异常提示
           SmartDialog.dismiss(status: SmartStatus.loading);
-          var msg = ex.message.isNotEmpty ? ex.message : ApiException.defaultMessage;
+          var msg =
+              ex.message.isNotEmpty ? ex.message : ApiException.defaultMessage;
           EasyLoading.showError(msg);
         } else if (ex is UnauthorisedException) {
           // 接口未认证处理
-          if (GlobalService.to.isLoggedInValue && GlobalService.to.token != null && GlobalService.to.token!.isNotEmpty) {
+          if (GlobalService.to.isLoggedInValue &&
+              GlobalService.to.token != null &&
+              GlobalService.to.token!.isNotEmpty) {
             // GlobalService.to.logout();
             SmartDialog.dismiss();
             EasyLoading.dismiss();
@@ -437,8 +481,7 @@ abstract class BaseProvider extends getx.GetConnect {
       } else {
         transaction.status = const SpanStatus.unknown();
       }
-
-      return Future.error(ex);
+      return Result.failure(APIError(ex.message, ex.code));
     } catch (e, stackTrace) {
       transaction.throwable = e;
       transaction.status = const SpanStatus.unknown();
@@ -446,11 +489,13 @@ abstract class BaseProvider extends getx.GetConnect {
       /// 异常上报
       LoggerUtils.apiError(e, stackTrace: stackTrace);
       SmartDialog.dismiss(status: SmartStatus.loading);
-      return Future.error(ApiException(-1, ApiException.defaultMessage));
+      return Result.failure(APIError(ApiException.defaultMessage, -1));
     } finally {
       // 在整个请求完成后再刷新线路
       if (notAvailableList.isNotEmpty) {
-        LinkUtils.endpoints = LinkUtils.endpoints.where((item) => !notAvailableList.contains(item)).toList();
+        LinkUtils.endpoints = LinkUtils.endpoints
+            .where((item) => !notAvailableList.contains(item))
+            .toList();
       }
       // 结束事务
       await transaction.finish();
@@ -495,7 +540,8 @@ abstract class BaseProvider extends getx.GetConnect {
       temp.add(result);
     }
     if (status) {
-      LoggerUtils.error("获取到带头线路:${endpoints.toString()} 转化后:${temp.toString()}");
+      LoggerUtils.error(
+          "获取到带头线路:${endpoints.toString()} 转化后:${temp.toString()}");
     }
     return temp;
   }
@@ -513,7 +559,10 @@ abstract class BaseProvider extends getx.GetConnect {
     // 并行发送所有请求，并记录每个请求的结果
     for (var website in websites) {
       var future = Dio()
-          .get(website, options: Options(receiveTimeout: const Duration(seconds: 3), sendTimeout: const Duration(seconds: 3)))
+          .get(website,
+              options: Options(
+                  receiveTimeout: const Duration(seconds: 3),
+                  sendTimeout: const Duration(seconds: 3)))
           .then((response) {
         if (response.statusCode == 200) {
           return true;
@@ -524,7 +573,8 @@ abstract class BaseProvider extends getx.GetConnect {
       });
 
       // 单挑检测不超过3秒
-      var timeoutFuture = future.timeout(const Duration(seconds: 3), onTimeout: () {
+      var timeoutFuture =
+          future.timeout(const Duration(seconds: 3), onTimeout: () {
         return false; // 超时视为失败
       });
       futures.add(timeoutFuture);

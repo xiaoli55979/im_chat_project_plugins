@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/manager/im_manager.dart';
+import 'package:im_chat_common_plugin/models/user_info_data.dart';
 
 /// 全局认证服务
 class GlobalService extends GetxService {
@@ -30,7 +31,7 @@ class GlobalService extends GetxService {
   final isLoggedIn = false.obs;
 
   final userManager = UserManager();
-  UserInfoModelEntity? userModel;
+  UserInfoData? userModel;
 
   /// device id
   String deviceId = "";
@@ -126,10 +127,9 @@ class GlobalService extends GetxService {
       try {
         userModel = await userManager.getCurrentUser();
         print("object_userModel:${userModel?.token}");
-
-        if (userModel?.token.isNotEmpty ?? false) {
+        if (userModel != null && userModel!.token != null && userModel!.token!.isNotEmpty == true) {
           token = userModel!.token;
-          uid = userModel!.uid;
+          uid = userModel!.uid ?? '';
 
           /// 登录后执行初始化
           bool result = await loginDefault(userModel!.token);
@@ -151,13 +151,6 @@ class GlobalService extends GetxService {
 
   /// 保存登录信息
   void saveLoginInfo() {}
-
-  /// 获取APP模块
-  Future<void> getAppModule() async {
-    try {
-      var res = await api.appModule();
-    } catch (_) {}
-  }
 
   /// 获取配置信息
   Future<void> getAppConfig() async {
@@ -204,25 +197,19 @@ class GlobalService extends GetxService {
     try {
       if (token?.isNotEmpty == true) {
         /// 获取用户节点
-        var res = await api.usersIm(uid: uid);
-        imUtils.imNode = res.data!;
-        String ip = imUtils.imNode.wsAddr;
-        ImOptionsUtils().imNode.wsAddr = ip;
-        print('ip_Adder2:$ip  imUtils.imNode:${imUtils.imNode.wsAddr}');
-        // /// 获取APP模块信息
-        // appConfigModel = await api.appModule();
-        // await api.appModule();
+        var result = await api.getIMNode(uid: uid);
+        if (result.isSuccess) {
+          final imNodeData = result.responseData?.data;
+          imUtils.imNode = imNodeData!;
+          String ip = imUtils.imNode.wsAddr ?? '';
+          ImOptionsUtils().imNode.wsAddr = ip;
+          print('ip_Adder2:$ip  imUtils.imNode:${imUtils.imNode.wsAddr}');
 
-        /// 初始化IM
-
-
-        // /// 同步违禁词
-        // await api.sensitiveWords();
-        //
-        // /// 同步敏感词
-        // await api.prohibitWords();
-
-        return ImManager.shared.initIM();
+          /// 初始化IM
+          return ImManager.shared.initIM();
+        } else {
+          return Future.value(false);
+        }
       } else {
         return Future.value(false);
       }
