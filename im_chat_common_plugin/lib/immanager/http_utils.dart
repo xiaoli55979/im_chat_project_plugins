@@ -118,7 +118,9 @@ class HttpUtils {
       } catch (e) {
         print('同步最近会话错误');
       }
-      back(conversation);
+      // Future.delayed(Duration(milliseconds: 2000), () {
+        back(conversation);
+      // });
     }
   }
 

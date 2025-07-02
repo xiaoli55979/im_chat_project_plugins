@@ -119,8 +119,8 @@ class MySharedPref {
   
   /// set GlobalConfigInfo
   static void setGlobalConf(GlobalInfoEntity model) {
-    final json = model.toString();
-    _sharedPreferences.setString(_globalConf, json);
+    final jsonMap = model.toString();
+    _sharedPreferences.setString(_globalConf, json.encode(jsonMap));
   }
 
 
@@ -136,8 +136,8 @@ class MySharedPref {
 
   /// set PersonConf
   static void setPersonConf(PersonInfoEntity model) {
-    final json = model.toString();
-    _sharedPreferences.setString(_personConf, json);
+    final jsonMap = model.toString();
+    _sharedPreferences.setString(_personConf, json.encode(jsonMap));
   }
 
 
