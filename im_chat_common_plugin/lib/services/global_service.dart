@@ -6,6 +6,10 @@ import 'package:im_chat_common_plugin/api/provider/user_provider.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/manager/im_manager.dart';
 import 'package:im_chat_common_plugin/models/user_info_data.dart';
+import 'package:im_chat_common_plugin/models/global_info_entity.dart';
+import 'package:im_chat_common_plugin/models/person_info_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
+import 'package:im_chat_common_plugin/tools/app_config_utils.dart';
 
 /// 全局认证服务
 class GlobalService extends GetxService {
@@ -32,6 +36,11 @@ class GlobalService extends GetxService {
 
   final userManager = UserManager();
   UserInfoData? userModel;
+
+  final confManager = AppConfigUtils();
+  PersonInfoEntity? get personConf => AppConfigUtils().personConf;
+  GlobalInfoEntity? get globalConf => AppConfigUtils().globalConf;
+  UserInfoModelEntity? get ownConf => AppConfigUtils().ownConf;
 
   /// device id
   String deviceId = "";
@@ -154,8 +163,33 @@ class GlobalService extends GetxService {
 
   /// 获取配置信息
   Future<void> getAppConfig() async {
+
+  }
+  // /// 获取APP模块
+  // Future<void> getAppModule() async {
+  //   try {
+  //     var res = await api.appModule();
+  //   } catch (_) {}
+  // }
+
+  /// 获取全局配置信息
+  Future<void> getGlobalConfig() async {
     try {
-      // var res = await api.appConfig();
+      _getGlobalConf();
+    } catch (_) {}
+  }
+
+  /// 获取个人配置信息
+  Future<void> getPersonConfig() async {
+    try {
+      _getPersonConf();
+    } catch (_) {}
+  }
+
+  /// 获取当前登录配置信息
+  Future<void> getOwnConfig() async {
+    try {
+      await _getOwnConf();
     } catch (_) {}
   }
 
@@ -195,7 +229,14 @@ class GlobalService extends GetxService {
   /// 登录成功后首次调用接口
   Future<bool> loginDefault(String? token) async {
     try {
+      /// 获取全局配置
+      getGlobalConfig();
       if (token?.isNotEmpty == true) {
+        /// 获取个人配置
+        getPersonConfig();
+
+        /// 获取当前用户配置
+        getOwnConfig();
         /// 获取用户节点
         var result = await api.getIMNode(uid: uid);
         if (result.isSuccess) {
@@ -217,7 +258,43 @@ class GlobalService extends GetxService {
       return Future.value(false);
     }
   }
+
+  /// 获取全局配置
+  _getGlobalConf() {
+    api.getGlobalConf().then((onValue) async {
+        final globalModel = onValue.responseData?.data;
+        await AppConfigUtils().setGlobalConf(globalModel ?? GlobalInfoEntity());
+
+        print(globalModel);
+    }).catchError((onError) {
+
+    });
+  }
+
+  /// 获取角色配置
+  _getPersonConf() {
+    api.getPersonConf().then((onValue) async {
+        final personModel = onValue.responseData?.data;
+        await AppConfigUtils().setPersonConf(personModel ?? PersonInfoEntity());
+        bus.emit(EventNames.refreshUserInfo);
+        print(personModel);
+    }).catchError((onError) {
+
+    });
+  }
+
+  /// 获取登录用户(自己)配置
+  _getOwnConf() async {
+  final res = await api.getUserConf(uid: GlobalService.to.uid).catchError((onError) {
+
+  });
+    final ownModel = res.responseData?.data;
+    await AppConfigUtils().setOwnConf(ownModel ?? UserInfoModelEntity());
+
+  }
 }
+
+
 
 /// clear token
 void clear() {

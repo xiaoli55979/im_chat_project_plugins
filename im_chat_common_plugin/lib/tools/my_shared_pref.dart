@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:im_chat_common_plugin/models/http_dns_lines_data.dart';
+import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/models/global_info_entity.dart';
+import 'package:im_chat_common_plugin/models/person_info_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
 import 'package:im_chat_common_plugin/tools/time_tools_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,6 +59,15 @@ class MySharedPref {
 
   /// token
   static const String _authorization = 'auth_token';
+  
+  /// globalConf
+  static const String _globalConf = 'globalConf';
+
+  /// personConf
+  static const String _personConf = 'personConf';
+
+  /// ownConf
+  static const String _ownConf = 'ownConf';
 
   /// 项目id
   static const String _projectId = 'projectId';
@@ -103,6 +116,57 @@ class MySharedPref {
 
   /// get token
   static String? getToken() => _sharedPreferences.getString(_authorization);
+  
+  /// set GlobalConfigInfo
+  static void setGlobalConf(GlobalInfoEntity model) {
+    final json = model.toString();
+    _sharedPreferences.setString(_globalConf, json);
+  }
+
+
+  /// get GlobalConfigInfo
+  static GlobalInfoEntity getGlobalConf() {
+    final jsonString = _sharedPreferences.getString(_globalConf);
+    if (jsonString == null) {
+      throw Exception("Global config not found");
+    }
+    final jsonMap = json.decode(jsonString);
+    return GlobalInfoEntity.fromJson(jsonMap);
+  }
+
+  /// set PersonConf
+  static void setPersonConf(PersonInfoEntity model) {
+    final json = model.toString();
+    _sharedPreferences.setString(_personConf, json);
+  }
+
+
+  /// get PersonConf
+  static PersonInfoEntity getPersonConf() {
+    final jsonString = _sharedPreferences.getString(_personConf);
+    if (jsonString == null) {
+      throw Exception("Person config not found");
+    }
+    final jsonMap = json.decode(jsonString);
+    return PersonInfoEntity.fromJson(jsonMap);
+  }
+
+  /// set PersonConf
+  static void setOwnConf(UserInfoModelEntity model) async {
+    final json = model.toString();
+    await _sharedPreferences.setString(_ownConf, json);
+  }
+
+
+  /// get PersonConf
+  static UserInfoModelEntity getOwnConf() {
+    final jsonString = _sharedPreferences.getString(_ownConf);
+    if (jsonString == null) {
+      throw Exception("Own config not found");
+    }
+    final jsonMap = json.decode(jsonString);
+    return UserInfoModelEntity.fromJson(jsonMap);
+  }
 
   /// 获取线路配置
   static HttpDnsLinesData? getHttpDnsLines() {

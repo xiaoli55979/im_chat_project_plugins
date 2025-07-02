@@ -4,12 +4,16 @@ import 'package:im_chat_common_plugin/api/im_api.dart';
 import 'package:im_chat_common_plugin/api/provider/base_provider.dart';
 import 'package:im_chat_common_plugin/models/channel_msg_sync_data.dart';
 import 'package:im_chat_common_plugin/models/conversation_sync_data.dart';
+import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/im_node_data.dart';
 import 'package:im_chat_common_plugin/models/response/base_response_entity.dart';
 import 'package:im_chat_common_plugin/models/response/data_list_response_data.dart';
 import 'package:im_chat_common_plugin/models/response/result.dart';
+import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
 import 'package:im_chat_common_plugin/models/wk_group_info_data.dart';
 import 'package:im_chat_common_plugin/models/wk_user_info_data.dart';
+import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
+import 'package:im_chat_common_plugin/models/person_info_entity.dart';
 import 'package:im_chat_common_plugin/tools/logger_utils.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -75,7 +79,8 @@ class UserProvider extends BaseProvider {
   }
 
   /// 获取用户所在的im节点信息
-  Future<Result<BaseEntity<IMNodeData?>?, APIError>> getIMNode({required String uid}) async {
+  Future<Result<BaseEntity<IMNodeData?>?, APIError>> getIMNode(
+      {required String uid}) async {
     final url = BaseAPI.getIMNode.path.replaceAll('uid', uid);
     final result = await getRequest(
       url,
@@ -86,7 +91,8 @@ class UserProvider extends BaseProvider {
   }
 
   /// 同步最近会话
-  Future<Result<BaseEntity<ConversationSyncData?>?, APIError>> conversationSync({
+  Future<Result<BaseEntity<ConversationSyncData?>?, APIError>>
+      conversationSync({
     required int version,
     required String lastMsgSeqs,
     required String deviceUuid,
@@ -186,4 +192,48 @@ class UserProvider extends BaseProvider {
     return result;
   }
 
+  ///同步敏感词
+  // Future<Result> prohibitWords() => getRequest(
+  //       '/v1/message/prohibit_words/sync',
+  //       construction: WKGroupInfoData.fromJson,
+  //     decoder: BaseEntity.fromJson,
+  //       decoder: (obj) => Result.fromJson(obj)
+  //     );
+
+  // /// 获取IM群组信息详情
+  // Future<Result<BaseEntity<WKGroupInfoData?>?, APIError>> getIMGroupInfo(
+  //     {required String groupId}) async {
+  //   final url = ImApi.getIMGroupInfo.path + groupId;
+  //   final result = await getRequest(
+  //     url,
+  //     construction: WKGroupInfoData.fromJson,
+  //     decoder: BaseEntity<WKGroupInfoData>.fromJson,
+  //   );
+  //   return result;
+  // }
+
+  /// 拉取全局配置信息
+  Future<Result<BaseEntity<GlobalInfoEntity?>?, APIError>> getGlobalConf(
+      ) async {
+    final url = ImApi.getGlobalConf.path;
+    final result = await getRequest(
+        url,
+        construction: GlobalInfoEntity.fromJson,
+        decoder: BaseEntity<GlobalInfoEntity>.fromJson,
+      );
+    return result;
+  }
+  /// 拉取个人配置信息
+  Future<Result<BaseEntity<PersonInfoEntity?>?, APIError>> getPersonConf() => getRequest(
+        ImApi.getPersonConf.path,
+        decoder: BaseEntity<PersonInfoEntity>.fromJson, construction: PersonInfoEntity.fromJson
+      );
+
+  /// 获取用户信息详情
+  Future<Result<BaseEntity<UserInfoModelEntity?>?, APIError>> getUserConf({
+    required String uid,
+  }) =>
+      getRequest('${ImApi.getOwnConf.path}$uid',
+          construction: UserInfoModelEntity.fromJson,
+          decoder: BaseEntity<UserInfoModelEntity>.fromJson);
 }

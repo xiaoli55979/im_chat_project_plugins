@@ -81,26 +81,12 @@ class ImManager {
       } else if (wkcmd.cmd == "userAvatarUpdate") {
         HttpUtils.getUserInfo(wkcmd.param["uid"]);
       }
-      // else if (wkcmd.cmd == 'friendRequest') {
-      //   final msg = ConversationCmdMsgEntity();
-      //   msg.cmdType = wkcmd.cmd;
-      //   print(wkcmd.param['messageTime']);
-      //   msg.applyName = wkcmd.param['apply_name'];
-      //   msg.applyUid = wkcmd.param['apply_uid'];
-      //   msg.remark = wkcmd.param['remark'];
-      //   msg.toUid = wkcmd.param["to_uid"];
-      //   msg.token = wkcmd.param['token'];
-      //   msg.channelId = wkcmd.param['channel_id'];
-      //   msg.channelType = wkcmd.param['channel_type'];
-      //   int? count = await CmdMsgDBHelper.instance.getRedCount(msg.toUid, msg.cmdType);
-      //   msg.redCount += (count ?? 0);
-      //   msg.content = wkcmd.param['content'];
-      //   msg.timeStamp = wkcmd.param['timeStamp'];
-      //   msg.id += 1;
-      //   print("cmduid${msg.toUid}");
-      //
-      //   CmdMsgDBHelper.instance.updateOrInsertByCmdTypeAndToUid(msg);
-      // }
+      else if (wkcmd.cmd == 'globalConfUpdate') {
+        GlobalService(api: Get.find()).getGlobalConfig();
+      }
+      else if (wkcmd.cmd == 'userRoleUpdate') {
+        GlobalService(api: Get.find()).getPersonConfig();
+      }
     });
     // 监听同步某个频道的消息
     WKIM.shared.messageManager.addOnSyncChannelMsgListener((channelID, channelType, startMessageSeq, endMessageSeq, limit, pullMode, back) {

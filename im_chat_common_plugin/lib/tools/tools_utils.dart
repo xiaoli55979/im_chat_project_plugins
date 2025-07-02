@@ -245,31 +245,6 @@ class ToolsUtils {
     );
   }
 
-  /// 显示扫码界面
-  static void onQrcodeScan() async {
-    if (GlobalService.to.isLoggedInValue) {
-      /// 申请权限
-      // 获取相机相册权限
-      PermissionsUtils.requestAllPermission((status) async {
-        if (status) {
-          startScan();
-        } else {
-          SnackBarUtil.showError("提示", "相册或者相机未授权!");
-        }
-      });
-    } else {}
-  }
-
-  /// 显示扫码界面
-  static Future<void> startScan() async {
-    var result = await Get.to(() => const CustomQrcodeScanview());
-    try {
-      print("object_startScan:$result");
-    } catch (e, stackTrace) {
-      SnackBarUtil.showError("提示", "无效二维码");
-    }
-  }
-
   /// 返回指定格式时间字符串
   static String formatDateTime(int timestamp) {
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);

@@ -7,8 +7,13 @@ enum ImApi {
 
   getIMUserInfo('/v1/user/?uid='),
 
-  getIMGroupInfo('/v1/groups/');
+  getIMGroupInfo('/v1/groups/'),
 
+  getPersonConf('/v1/common/getUserRoleConfig'),
+
+  getOwnConf('/v1/user/?uid='),
+
+  getGlobalConf('/v1/common/getGlobalConf');
   const ImApi(this.path);
 
   final String path;
