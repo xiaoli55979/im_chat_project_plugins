@@ -1,6 +1,7 @@
 import 'package:im_chat_common_plugin/models/response/base_response_entity.dart';
 
 class GlobalInfoEntity extends BaseData {
+	/// 允许发送文件：1-默认 2-允许发文件
 	int? allowFile;
 	int? autoFriendNotice;
 	int? blacklistLimit;

@@ -76,6 +76,12 @@ extension StringExtension on String? {
     return '${this ?? ""}($text)';
   }
 
+  String keepFirstNChars(int n) {
+    if (n <= 0) return '';
+    if (n >= (this?.length ?? 0)) return this ?? "";
+    return (this ?? "").substring(0, n-1);
+  }
+
   // String withRemark(String? text) {
   //   final current = this ?? '';
   //   if (text == null || text.isEmpty) {
