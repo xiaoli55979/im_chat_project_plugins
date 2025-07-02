@@ -4,7 +4,7 @@ import 'package:im_chat_common_plugin/models/http_dns_lines_data.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/person_info_entity.dart';
-import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_data.dart';
 import 'package:im_chat_common_plugin/tools/time_tools_utils.dart';
 import 'package:im_chat_common_plugin/tools/tools_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,20 +152,20 @@ class MySharedPref {
   }
 
   /// set PersonConf
-  static void setOwnConf(UserInfoModelEntity model) async {
+  static void setOwnConf(UserInfoData model) async {
     final json = model.toString();
     await _sharedPreferences.setString(_ownConf, json);
   }
 
 
   /// get PersonConf
-  static UserInfoModelEntity getOwnConf() {
+  static UserInfoData getOwnConf() {
     final jsonString = _sharedPreferences.getString(_ownConf);
     if (jsonString == null) {
       throw Exception("Own config not found");
     }
     final jsonMap = json.decode(jsonString);
-    return UserInfoModelEntity.fromJson(jsonMap);
+    return UserInfoData.fromJson(jsonMap);
   }
 
   /// 获取线路配置

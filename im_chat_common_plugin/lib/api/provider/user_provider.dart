@@ -9,7 +9,7 @@ import 'package:im_chat_common_plugin/models/im_node_data.dart';
 import 'package:im_chat_common_plugin/models/response/base_response_entity.dart';
 import 'package:im_chat_common_plugin/models/response/data_list_response_data.dart';
 import 'package:im_chat_common_plugin/models/response/result.dart';
-import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_data.dart';
 import 'package:im_chat_common_plugin/models/wk_group_info_data.dart';
 import 'package:im_chat_common_plugin/models/wk_user_info_data.dart';
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
@@ -230,10 +230,10 @@ class UserProvider extends BaseProvider {
       );
 
   /// 获取用户信息详情
-  Future<Result<BaseEntity<UserInfoModelEntity?>?, APIError>> getUserConf({
+  Future<Result<BaseEntity<UserInfoData?>?, APIError>> getUserConf({
     required String uid,
   }) =>
       getRequest('${ImApi.getOwnConf.path}$uid',
-          construction: UserInfoModelEntity.fromJson,
-          decoder: BaseEntity<UserInfoModelEntity>.fromJson);
+          construction: UserInfoData.fromJson,
+          decoder: BaseEntity<UserInfoData>.fromJson);
 }

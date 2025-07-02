@@ -8,7 +8,6 @@ import 'package:im_chat_common_plugin/manager/im_manager.dart';
 import 'package:im_chat_common_plugin/models/user_info_data.dart';
 import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/person_info_entity.dart';
-import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
 import 'package:im_chat_common_plugin/tools/app_config_utils.dart';
 
 /// 全局认证服务
@@ -40,7 +39,7 @@ class GlobalService extends GetxService {
   final confManager = AppConfigUtils();
   PersonInfoEntity? get personConf => AppConfigUtils().personConf;
   GlobalInfoEntity? get globalConf => AppConfigUtils().globalConf;
-  UserInfoModelEntity? get ownConf => AppConfigUtils().ownConf;
+  UserInfoData? get ownConf => AppConfigUtils().ownConf;
 
   /// device id
   String deviceId = "";
@@ -289,7 +288,7 @@ class GlobalService extends GetxService {
 
   });
     final ownModel = res.responseData?.data;
-    await AppConfigUtils().setOwnConf(ownModel ?? UserInfoModelEntity());
+    await AppConfigUtils().setOwnConf(ownModel ?? UserInfoData());
 
   }
 }

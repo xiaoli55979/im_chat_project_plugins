@@ -1,7 +1,7 @@
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/person_info_entity.dart';
-import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_data.dart';
 import 'package:logging/logging.dart'; // 日志记录
 
 class AppConfigUtils {
@@ -15,7 +15,7 @@ class AppConfigUtils {
   // ---------- 成员变量 ----------
   GlobalInfoEntity? _globalConf; // 全局配置
   PersonInfoEntity? _personConf; // 角色配置
-  UserInfoModelEntity? _ownConf; // 当前配置
+  UserInfoData? _ownConf; // 当前配置
   final Logger _logger = Logger('AppConfigUtils'); // 日志工具
 
   // ---------- 初始化方法 ----------
@@ -28,7 +28,7 @@ class AppConfigUtils {
       _logger.severe('初始化全局配置失败', e, stackTrace);
       _globalConf = GlobalInfoEntity(); // 提供默认值
       _personConf = PersonInfoEntity();
-      _ownConf = UserInfoModelEntity();
+      _ownConf = UserInfoData();
     }
   }
 
@@ -66,12 +66,12 @@ class AppConfigUtils {
   }
 
   /// 获取当前登录配置（确保非空）
-  UserInfoModelEntity get ownConf {
-    return _ownConf ?? UserInfoModelEntity(); // 兜底默认值
+  UserInfoData get ownConf {
+    return _ownConf ?? UserInfoData(); // 兜底默认值
   }
 
   /// 更新当前登录配置
-  Future<void> setOwnConf(UserInfoModelEntity model) async {
+  Future<void> setOwnConf(UserInfoData model) async {
     try {
       MySharedPref.setOwnConf(model);
       _ownConf = model;
