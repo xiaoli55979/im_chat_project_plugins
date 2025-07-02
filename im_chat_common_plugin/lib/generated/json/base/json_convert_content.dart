@@ -156,10 +156,6 @@ class JsonConvert {
       return data.map<UserInfoModelEntity>((Map<String, dynamic> e) =>
           UserInfoModelEntity.fromJson(e)).toList() as M;
     }
-    if (<UserInfoModelSetting>[] is M) {
-      return data.map<UserInfoModelSetting>((Map<String, dynamic> e) =>
-          UserInfoModelSetting.fromJson(e)).toList() as M;
-    }
 
     debugPrint("$M not found");
 
@@ -184,7 +180,6 @@ class JsonConvertClassCollection {
     (PersonInfoEntity).toString(): PersonInfoEntity.fromJson,
     (TestEntity).toString(): TestEntity.fromJson,
     (UserInfoModelEntity).toString(): UserInfoModelEntity.fromJson,
-    (UserInfoModelSetting).toString(): UserInfoModelSetting.fromJson,
   };
 
   bool containsKey(String type) {
