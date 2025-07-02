@@ -153,10 +153,9 @@ class MySharedPref {
 
   /// set PersonConf
   static void setOwnConf(UserInfoData model) async {
-    final json = model.toString();
-    await _sharedPreferences.setString(_ownConf, json);
+    final jsonMap = model.toJson();
+    await _sharedPreferences.setString(_ownConf, json.encode(jsonMap));
   }
-
 
   /// get PersonConf
   static UserInfoData getOwnConf() {
@@ -165,6 +164,7 @@ class MySharedPref {
       throw Exception("Own config not found");
     }
     final jsonMap = json.decode(jsonString);
+    print(jsonMap.toString());
     return UserInfoData.fromJson(jsonMap);
   }
 

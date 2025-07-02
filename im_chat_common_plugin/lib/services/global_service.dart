@@ -34,7 +34,6 @@ class GlobalService extends GetxService {
   final isLoggedIn = false.obs;
 
   final userManager = UserManager();
-  UserInfoData? userModel;
 
   final confManager = AppConfigUtils();
   PersonInfoEntity? get personConf => AppConfigUtils().personConf;
@@ -45,6 +44,8 @@ class GlobalService extends GetxService {
   String deviceId = "";
 
   String uid = "";
+
+  UserInfoData? userModel;
 
   // /// member info
   // MemberEntity? member;
@@ -133,10 +134,11 @@ class GlobalService extends GetxService {
     String rootPath = projectId.isEmpty ? "/login" : "/home";
     if (projectId.isNotEmpty) {
       try {
-        userModel = await userManager.getCurrentUser();
+        userModel = MySharedPref.getOwnConf();
+        userModel?.token = MySharedPref.getToken();
         print("object_userModel:${userModel?.token}");
         if (userModel != null && userModel!.token != null && userModel!.token!.isNotEmpty == true) {
-          token = userModel!.token;
+          token = MySharedPref.getToken();
           uid = userModel!.uid ?? '';
 
           /// 登录后执行初始化

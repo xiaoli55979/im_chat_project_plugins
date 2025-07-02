@@ -31,39 +31,39 @@ enum UserOnlineStatus {
 }
 
 class UserInfoData extends BaseData {
-  String? appId;
-  int? appLock;
-  String? avatar;
-  String? baseAvatar;
-  String? category;
-  int? chatNotice;
-  String? chatPwd;
-  String? lang;
-  int? lockAfterMinute;
-  String? lockScreenPwd;
-  int? msgExpireSecond;
-  int? msgReadReceipt;
-  String? name;
-  String? phone;
-  int? phoneByFriend;
-  int? pwdType;
-  int? role;
-  String? rsaPublicKey;
-  int? searchByPhone;
-  String? serverId;
-  UserInfoSetting? setting;
-  int? sex;
-  int? shockOn;
-  String? shortNo;
-  int? shortStatus;
-  String? sign;
-  String? token;
-  int? topConversation;
-  String? uid;
-  String? username;
-  int? voiceNotice;
-  int? voiceOn;
-  String? zone;
+  String? appId = ""; // 应用ID
+  int? appLock = 0; // 应用锁定状态(0-未锁定,1-锁定)
+  String? avatar = ""; // 用户头像URL
+  String? baseAvatar = ""; // 基础头像URL
+  String? category = ""; // 用户分类
+  int? chatNotice = 0; // 聊天通知设置(0-关闭,1-开启)
+  String? chatPwd = ""; // 聊天密码
+  String? lang = ""; // 用户语言设置
+  int? lockAfterMinute = 0; // 自动锁屏时间(分钟)
+  String? lockScreenPwd = ""; // 锁屏密码
+  int? msgExpireSecond = 0; // 消息过期时间(秒)
+  int? msgReadReceipt = 0; // 消息已读回执设置(0-关闭,1-开启)
+  String? name = ""; // 用户昵称
+  String? phone = ""; // 手机号码
+  int? phoneByFriend = 0; // 是否允许好友查看手机号(0-不允许,1-允许)
+  int? pwdType = 0; // 密码类型
+  int? role = 0; // 用户角色
+  String? rsaPublicKey = ""; // RSA公钥
+  int? searchByPhone = 0; // 是否允许通过手机号搜索(0-不允许,1-允许)
+  String? serverId = ""; // 服务器ID
+  UserInfoSetting? setting = UserInfoSetting(); // 用户设置
+  int? sex = 0; // 性别(0-未知,1-男,2-女)
+  int? shockOn = 0; // 震动提醒设置(0-关闭,1-开启)
+  String? shortNo = ""; // 短号
+  int? shortStatus = 0; // 短号状态
+  String? sign = ""; // 个性签名
+  String? token = ""; // 用户令牌
+  int? topConversation = 0; // 置顶会话设置
+  String? uid = ""; // 用户唯一ID
+  String? username = ""; // 用户名
+  int? voiceNotice = 0; // 语音通知设置(0-关闭,1-开启)
+  int? voiceOn = 0; // 语音消息设置(0-关闭,1-开启)
+  String? zone = ""; // 时区
 
   UserInfoData(
       {this.appId,
@@ -179,15 +179,15 @@ class UserInfoData extends BaseData {
 }
 
 class UserInfoSetting {
-  int? deviceLock;
-  int? msgShowDetail;
-  int? muteOfApp;
-  int? newMsgNotice;
-  int? offlineProtection;
-  int? searchByPhone;
-  int? searchByShort;
-  int? shockOn;
-  int? voiceOn;
+  int? deviceLock = 0; // 设备锁（0-关闭，1-开启）
+  int? msgShowDetail = 0; // 消息详情显示（0-不显示，1-显示）
+  int? muteOfApp = 0; // 全局静音（0-关闭，1-开启）
+  int? newMsgNotice = 0; // 新消息通知（0-关闭，1-开启）
+  int? offlineProtection = 0; // 离线保护（0-关闭，1-开启）
+  int? searchByPhone = 0; // 手机号搜索（0-不允许，1-允许）
+  int? searchByShort = 0; // 短号搜索（0-不允许，1-允许）
+  int? shockOn = 0; // 震动提醒（0-关闭，1-开启）
+  int? voiceOn = 0; // 语音提醒（0-关闭，1-开启）
 
   UserInfoSetting(
       {this.deviceLock,
