@@ -1,6 +1,7 @@
 import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/person_info_entity.dart';
+import 'package:im_chat_common_plugin/models/user_info_model_entity.dart';
 import 'package:logging/logging.dart'; // 日志记录
 
 class AppConfigUtils {
