@@ -44,6 +44,8 @@ class IMColors {
 
   static Color get visitorColor => Storage.getIsLightTheme() ? LightThemeColors.visitorColor : DarkThemeColors.visitorColor;
 
+  static Color get borderColor => Storage.getIsLightTheme() ? LightThemeColors.borderColor : DarkThemeColors.borderColor;
+
   static const colorA2ACFF = Color(0xFFA2ACFF);
 
   static const colorF5F8FC = Color(0xFFF5F8FC);
@@ -73,5 +75,9 @@ class IMColors {
   static const colorF80202 = Color(0xFFF80202);
 
   static const colorFFDADA = Color(0xFFFFDADA);
+
+  static const colorECEDEE = Color(0xFFECEDEE);
+
+  static const colorD9D9D9 = Color(0xFFD9D9D9);
 
 }

@@ -36,5 +36,6 @@ class Assets {
   static const String conversationAudio = 'assets/images/conversation/audio.png';
   static const String conversationSystemMsg = 'assets/images/conversation/system_msg.png';
   static const String ichatLogo = 'assets/images/ichat/logo.png';
+  static const String loginIconLoginBg = 'assets/images/login/icon_login_bg.png';
 
 }

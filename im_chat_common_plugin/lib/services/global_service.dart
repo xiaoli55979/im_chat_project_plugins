@@ -9,6 +9,8 @@ import 'package:im_chat_common_plugin/models/user_info_data.dart';
 import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/person_info_entity.dart';
 import 'package:im_chat_common_plugin/tools/app_config_utils.dart';
+import 'package:im_chat_common_plugin/util/extension.dart';
+import 'package:im_chat_common_plugin/util/storage.dart';
 
 /// 全局认证服务
 class GlobalService extends GetxService {
@@ -33,8 +35,6 @@ class GlobalService extends GetxService {
   /// login status
   final isLoggedIn = false.obs;
 
-  final userManager = UserManager();
-
   final confManager = AppConfigUtils();
   PersonInfoEntity? get personConf => AppConfigUtils().personConf;
   GlobalInfoEntity? get globalConf => AppConfigUtils().globalConf;
@@ -43,15 +43,9 @@ class GlobalService extends GetxService {
   /// device id
   String deviceId = "";
 
+  UserInfoData? userInfo;
+  String? token;
   String uid = "";
-
-  UserInfoData? userModel;
-
-  // /// member info
-  // MemberEntity? member;
-  //
-  // ///账户信息
-  // PayAccountEntity? accountEntity;
 
   /// IM数据管理
   var imUtils = ImOptionsUtils();
@@ -64,21 +58,8 @@ class GlobalService extends GetxService {
     return versionCode; // 例子中的版本号
   }
 
-  /// Token
-  String? token = MySharedPref.getToken();
-  // final _player = AudioPlayer();
-  // final _voice = {
-  //   "NewBuyOrderNotification": "neworder",
-  //   "BuyerPaidNotification": "seller_buyorder_payed",
-  //   "SellerTransferNotification": "buyer_buyorder_complete",
-  //   "SellerCreateAppealOrderNotification": "buyer_apper_notification"
-  // };
-
   /// 是否已登录
   bool get isLoggedInValue => isLoggedIn.value;
-
-  /// 是否已实名
-  // bool get isVerify => member?.realStatus == 1;
 
   Future<bool> assetExists(String path) async {
     try {
@@ -88,15 +69,6 @@ class GlobalService extends GetxService {
       return false; // 文件不存在
     }
   }
-
-  // /// 语音播放
-  // Future<void> play(String name) async {
-  //   // 推送声音
-  //   if (!MySharedPref.getNoticeStatus()) return;
-  //   // _playAudio("$name.mp3");
-  //   ResourceTools.playAudio("$name.mp3", player: _player);
-  //
-  // }
 
   @override
   void onInit() {
@@ -109,7 +81,6 @@ class GlobalService extends GetxService {
   @override
   void onReady() async {
     super.onReady();
-
     deviceId = await getDeviceID();
   }
 
@@ -129,33 +100,20 @@ class GlobalService extends GetxService {
 
   /// 判断登录
   Future<String> checkLogin() async {
-    // return GlobalService.to.isLoggedIn.value ? '/home' : '/login';
-    String projectId = MySharedPref.getToken() ?? "";
-    String rootPath = projectId.isEmpty ? "/login" : "/home";
-    if (projectId.isNotEmpty) {
+    token = Storage.getToken();
+    userInfo = Storage.getUserInfo();
+    String rootPath = token.isEmptyString() ? "/login" : "/home";
+    if (userInfo != null && token.isNotEmptyString()) {
       try {
-        userModel = MySharedPref.getOwnConf();
-        userModel?.token = MySharedPref.getToken();
-        print("object_userModel:${userModel?.token}");
-        if (userModel != null && userModel!.token != null && userModel!.token!.isNotEmpty == true) {
-          token = MySharedPref.getToken();
-          uid = userModel!.uid ?? '';
-
-          /// 登录后执行初始化
-          bool result = await loginDefault(userModel!.token);
-          rootPath = result ? "/home" : "/login";
-          isLoggedIn.value = result;
-        } else {
-          rootPath = "/login";
-          isLoggedIn.value = false;
-        }
+        uid = userInfo!.uid ?? '';
+        /// 登录后执行初始化
+        bool result = await loginDefault(token);
+        rootPath = result ? "/home" : "/login";
+        isLoggedIn.value = result;
       } catch (e) {
-        print("checkLogin 发生错误: $e");
         SmartDialog.dismiss(status: SmartStatus.loading);
       }
     }
-
-    print("rootPath:$rootPath");
     return rootPath;
   }
 
@@ -215,7 +173,6 @@ class GlobalService extends GetxService {
   }
 
   Future<void> registLoginToken(String token) async {
-    // MySharedPref.setToken(token);
     // await loginDefault(token);
   }
 
@@ -302,7 +259,6 @@ void clear() {
   // token = null;
   // isProvider = false;
   // isLoggedIn.value = false;
-  // MySharedPref.removeToken();
   // ToolsUtils.instance.loginMsg = "";
   // ToolsUtils.instance.loadSuccess = false;
 }

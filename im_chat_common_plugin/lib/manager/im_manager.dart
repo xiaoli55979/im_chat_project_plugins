@@ -18,12 +18,12 @@ class ImManager {
   ImManager._();
 
   Future<bool> initIM() async {
-    if (GlobalService.to.userModel == null) {
+    if (GlobalService.to.userInfo == null) {
       return Future.value(false);
     }
     bool result = await WKIM.shared.setup(Options.newDefault(
-      GlobalService.to.userModel!.uid,
-      GlobalService.to.userModel!.token,
+      GlobalService.to.userInfo!.uid,
+      GlobalService.to.userInfo!.token,
     ));
     WKIM.shared.options.useWebSocket = true;
     WKIM.shared.options.getAddr = (Function(String address) complete) async {

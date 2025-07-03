@@ -32,7 +32,6 @@ export 'config/color/light_theme_colors.dart';
 export 'config/color/dark_theme_colors.dart';
 /// database
 export 'database/database_manager.dart';
-export 'database/user_manager.dart';
 export 'im_chat_common_plugin_library.dart';
 export 'database/invite_notice_manager.dart';
 /// immanager
@@ -78,6 +77,5 @@ export 'tools/snack_bar_util.dart';
 export 'tools/text_field_utils.dart';
 export 'tools/time_tools_utils.dart';
 export 'tools/tools_utils.dart';
-export 'tools/user_info_manager.dart';
 /// utils
 export 'util/event_bus.dart';
