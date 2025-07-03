@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:im_chat_common_plugin/models/global_info_entity.dart';
+import 'package:im_chat_common_plugin/models/person_info_entity.dart';
 import 'package:im_chat_common_plugin/models/user_info_data.dart';
 
 class Storage {
@@ -10,6 +12,12 @@ class Storage {
   static const _kToken = '_token_key';
   static const _kUserInfo = 'user_info_key';
   static const _kFriendSync = 'friend_sync';
+  /// globalConf
+  static const String _globalConf = 'globalConf';
+  /// personConf
+  static const String _personConf = 'personConf';
+  /// ownConf
+  static const String _ownConf = 'ownConf';
 
   static Storage? _instance;
   static Storage shared() {
@@ -79,6 +87,57 @@ class Storage {
       return user;
     }
     return null;
+  }
+
+  /// set GlobalConfigInfo
+  static void setGlobalConf(GlobalInfoEntity model) {
+    final jsonMap = model.toString();
+    _getStorage?.write(_globalConf, json.encode(jsonMap));
+  }
+
+
+  /// get GlobalConfigInfo
+  static GlobalInfoEntity getGlobalConf() {
+    final jsonString = _getStorage?.read(_globalConf);
+    if (jsonString == null) {
+      throw Exception("Global config not found");
+    }
+    final jsonMap = json.decode(jsonString);
+    return GlobalInfoEntity.fromJson(jsonMap);
+  }
+
+  /// set PersonConf
+  static void setPersonConf(PersonInfoEntity model) {
+    final jsonMap = model.toString();
+    _getStorage?.write(_personConf, json.encode(jsonMap));
+  }
+
+
+  /// get PersonConf
+  static PersonInfoEntity getPersonConf() {
+    final jsonString = _getStorage?.read(_personConf);
+    if (jsonString == null) {
+      throw Exception("Person config not found");
+    }
+    final jsonMap = json.decode(jsonString);
+    return PersonInfoEntity.fromJson(jsonMap);
+  }
+
+  /// set PersonConf
+  static void setOwnConf(UserInfoData model) async {
+    final jsonMap = model.toJson();
+    await _getStorage?.write(_ownConf, json.encode(jsonMap));
+  }
+
+  /// get PersonConf
+  static UserInfoData getOwnConf() {
+    final jsonString = _getStorage?.read(_ownConf);
+    if (jsonString == null) {
+      throw Exception("Own config not found");
+    }
+    final jsonMap = json.decode(jsonString);
+    print(jsonMap.toString());
+    return UserInfoData.fromJson(jsonMap);
   }
 
   static Future<void> putFriendSync(bool friendSync) async {

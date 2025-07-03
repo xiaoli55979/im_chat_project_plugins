@@ -2,6 +2,7 @@ import 'package:im_chat_common_plugin/im_chat_common_plugin_library.dart';
 import 'package:im_chat_common_plugin/models/global_info_entity.dart';
 import 'package:im_chat_common_plugin/models/person_info_entity.dart';
 import 'package:im_chat_common_plugin/models/user_info_data.dart';
+import 'package:im_chat_common_plugin/util/storage.dart';
 import 'package:logging/logging.dart'; // 日志记录
 
 class AppConfigUtils {
@@ -21,9 +22,9 @@ class AppConfigUtils {
   // ---------- 初始化方法 ----------
   Future<void> _init() async {
     try {
-      _globalConf = MySharedPref.getGlobalConf();
-      _personConf = MySharedPref.getPersonConf();
-      _ownConf = MySharedPref.getOwnConf();
+      _globalConf = Storage.getGlobalConf();
+      _personConf = Storage.getPersonConf();
+      _ownConf = Storage.getOwnConf();
     } catch (e, stackTrace) {
       _logger.severe('初始化全局配置失败', e, stackTrace);
       _globalConf = GlobalInfoEntity(); // 提供默认值
@@ -41,7 +42,7 @@ class AppConfigUtils {
   /// 更新全局配置
   Future<void> setGlobalConf(GlobalInfoEntity model) async {
     try {
-      MySharedPref.setGlobalConf(model);
+      Storage.setGlobalConf(model);
       _globalConf = model;
     } catch (e, stackTrace) {
       _logger.severe('保存全局配置失败', e, stackTrace);
@@ -57,7 +58,7 @@ class AppConfigUtils {
   /// 更新角色配置
   Future<void> setPersonConf(PersonInfoEntity model) async {
     try {
-      MySharedPref.setPersonConf(model);
+      Storage.setPersonConf(model);
       _personConf = model;
     } catch (e, stackTrace) {
       _logger.severe('保存角色配置失败', e, stackTrace);
@@ -73,7 +74,7 @@ class AppConfigUtils {
   /// 更新当前登录配置
   Future<void> setOwnConf(UserInfoData model) async {
     try {
-      MySharedPref.setOwnConf(model);
+      Storage.setOwnConf(model);
       _ownConf = model;
     } catch (e, stackTrace) {
       _logger.severe('保存当前登录配置失败', e, stackTrace);
