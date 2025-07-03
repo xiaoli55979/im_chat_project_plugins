@@ -1,17 +1,17 @@
 class PersonInfoEntity {
-	int? canAiReturn; // 是否允许AI返回消息(2-不允许,1-允许)
-	int? canBatchMsg; // 是否允许批量发送消息(2-不允许,1-允许)
-	int? canCreateGroup; // 是否允许创建群组(2-不允许,1-允许)
-	int? canDelFriend; // 是否允许删除好友(2-不允许,1-允许)
-	int? canDelMsg; // 是否允许删除消息(2-不允许,1-允许)
-	int? canReadReceipt; // 是否允许已读回执(2-不允许,1-允许)
-	int? canRevokeMsg; // 是否允许撤回消息(2-不允许,1-允许)
-	int? canSendLimit; // 消息发送频率限制(2-无限制,1-有限制)
-	int? canSendLine; // 是否允许发送行消息(2-不允许,1-允许)
+	int? canAiReturn; // 是否允许AI返回消息(1-不允许,2-允许)
+	int? canBatchMsg; // 是否允许批量发送消息(1-不允许,2-允许)
+	int? canCreateGroup; // 是否允许创建群组(1-不允许,2-允许)
+	int? canDelFriend; // 是否允许删除好友(1-不允许,2-允许)
+	int? canDelMsg; // 是否允许删除消息(1-不允许,2-允许)
+	int? canReadReceipt; // 是否允许已读回执(1-不允许,2-允许)
+	int? canRevokeMsg; // 是否允许撤回消息(1-不允许,2-允许)
+	int? canSendLimit; // 消息发送频率限制(1-无限制,2-有限制)
+	int? canSendLine; // 是否允许发送行消息12-不允许,2-允许)
 	int? canSendSize; // 消息大小限制（单位：KB）
-	int? canShareQrcode; // 是否允许分享二维码(2-不允许,1-允许)
+	int? canShareQrcode; // 是否允许分享二维码(1-不允许,2-允许)
 	int? id; // 用户/群组唯一ID
-	int? loginDeviceLimit; // 设备登录限制（如1=仅允许1个设备）
+	int? loginDeviceLimit; //登录设备限制：1-全部设备 2-主设备和授权设置 3-仅主设备
 	String? loginTypeLimit; // 允许的登录方式（如"mobile,pc"）
 	String? name; // 名称/昵称
 	String? remark; // 备注信息

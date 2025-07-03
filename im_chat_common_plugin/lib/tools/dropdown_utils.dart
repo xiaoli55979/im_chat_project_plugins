@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:im_chat_common_plugin/services/global_service.dart';
 
 class DropdownOption {
   final int index; // 索引
@@ -20,7 +21,8 @@ class DropdownUtils {
 
   // 获取当前用户的权限列表
   static List<String> getUserPermissions() {
-    return ['group_create', 'friend_add', "qr_scan"];
+
+    return GlobalService.to.personConf?.canCreateGroup == 2 ? ['group_create', 'friend_add', "qr_scan"] : ['friend_add', "qr_scan"];
   }
 
   // 根据权限过滤显示的选项
