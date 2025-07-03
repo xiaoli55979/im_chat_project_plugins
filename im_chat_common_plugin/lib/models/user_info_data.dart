@@ -66,119 +66,122 @@ class UserInfoData extends BaseData {
   String? zone = ""; // 时区
 
   UserInfoData(
-      {this.appId,
-        this.appLock,
-        this.avatar,
-        this.baseAvatar,
-        this.category,
-        this.chatNotice,
-        this.chatPwd,
-        this.lang,
-        this.lockAfterMinute,
-        this.lockScreenPwd,
-        this.msgExpireSecond,
-        this.msgReadReceipt,
-        this.name,
-        this.phone,
-        this.phoneByFriend,
-        this.pwdType,
-        this.role,
-        this.rsaPublicKey,
-        this.searchByPhone,
-        this.serverId,
-        this.setting,
-        this.sex,
-        this.shockOn,
-        this.shortNo,
-        this.shortStatus,
-        this.sign,
-        this.token,
-        this.topConversation,
-        this.uid,
-        this.username,
-        this.voiceNotice,
-        this.voiceOn,
-        this.zone});
+      {appId,
+        appLock,
+        avatar,
+        baseAvatar,
+        category,
+        chatNotice,
+        chatPwd,
+        lang,
+        lockAfterMinute,
+        lockScreenPwd,
+        msgExpireSecond,
+        msgReadReceipt,
+        name,
+        phone,
+        phoneByFriend,
+        pwdType,
+        role,
+        rsaPublicKey,
+        searchByPhone,
+        serverId,
+        setting,
+        sex,
+        shockOn,
+        shortNo,
+        shortStatus,
+        sign,
+        token,
+        topConversation,
+        uid,
+        username,
+        voiceNotice,
+        voiceOn,
+        zone});
 
+  @override
   UserInfoData.fromJson(dynamic json) {
-    appId = json['app_id'];
-    appLock = json['app_lock'];
-    avatar = json['avatar'];
-    baseAvatar = json['base_avatar'];
-    category = json['category'];
-    chatNotice = json['chat_notice'];
-    chatPwd = json['chat_pwd'];
-    lang = json['lang'];
-    lockAfterMinute = json['lock_after_minute'];
-    lockScreenPwd = json['lock_screen_pwd'];
-    msgExpireSecond = json['msg_expire_second'];
-    msgReadReceipt = json['msg_read_receipt'];
-    name = json['name'];
-    phone = json['phone'];
-    phoneByFriend = json['phone_by_friend'];
-    pwdType = json['pwd_type'];
-    role = json['role'];
-    rsaPublicKey = json['rsa_public_key'];
-    searchByPhone = json['search_by_phone'];
-    serverId = json['server_id'];
-    setting =
-    json['setting'] != null ? new UserInfoSetting.fromJson(json['setting']) : null;
-    sex = json['sex'];
-    shockOn = json['shock_on'];
-    shortNo = json['short_no'];
-    shortStatus = json['short_status'];
-    sign = json['sign'];
-    token = json['token'];
-    topConversation = json['top_conversation'];
-    uid = json['uid'];
-    username = json['username'];
-    voiceNotice = json['voice_notice'];
-    voiceOn = json['voice_on'];
-    zone = json['zone'];
+    if (json is Map<String, dynamic>) {
+      appId = json['app_id'];
+      appLock = json['app_lock'];
+      avatar = json['avatar'];
+      baseAvatar = json['base_avatar'];
+      category = json['category'];
+      chatNotice = json['chat_notice'];
+      chatPwd = json['chat_pwd'];
+      lang = json['lang'];
+      lockAfterMinute = json['lock_after_minute'];
+      lockScreenPwd = json['lock_screen_pwd'];
+      msgExpireSecond = json['msg_expire_second'];
+      msgReadReceipt = json['msg_read_receipt'];
+      name = json['name'];
+      phone = json['phone'];
+      phoneByFriend = json['phone_by_friend'];
+      pwdType = json['pwd_type'];
+      role = json['role'];
+      rsaPublicKey = json['rsa_public_key'];
+      searchByPhone = json['search_by_phone'];
+      serverId = json['server_id'];
+      if (json['setting'] != null) {
+        setting = UserInfoSetting.fromJson(json['setting']);
+      }
+      sex = json['sex'];
+      shockOn = json['shock_on'];
+      shortNo = json['short_no'];
+      shortStatus = json['short_status'];
+      sign = json['sign'];
+      token = json['token'];
+      topConversation = json['top_conversation'];
+      uid = json['uid'];
+      username = json['username'];
+      voiceNotice = json['voice_notice'];
+      voiceOn = json['voice_on'];
+      zone = json['zone'];
+    }
   }
 
+  @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['app_id'] = this.appId;
-    data['app_lock'] = this.appLock;
-    data['avatar'] = this.avatar;
-    data['base_avatar'] = this.baseAvatar;
-    data['category'] = this.category;
-    data['chat_notice'] = this.chatNotice;
-    data['chat_pwd'] = this.chatPwd;
-    data['lang'] = this.lang;
-    data['lock_after_minute'] = this.lockAfterMinute;
-    data['lock_screen_pwd'] = this.lockScreenPwd;
-    data['msg_expire_second'] = this.msgExpireSecond;
-    data['msg_read_receipt'] = this.msgReadReceipt;
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['phone_by_friend'] = this.phoneByFriend;
-    data['pwd_type'] = this.pwdType;
-    data['role'] = this.role;
-    data['rsa_public_key'] = this.rsaPublicKey;
-    data['search_by_phone'] = this.searchByPhone;
-    data['server_id'] = this.serverId;
-    if (this.setting != null) {
-      data['setting'] = this.setting!.toJson();
-    }
-    data['sex'] = this.sex;
-    data['shock_on'] = this.shockOn;
-    data['short_no'] = this.shortNo;
-    data['short_status'] = this.shortStatus;
-    data['sign'] = this.sign;
-    data['token'] = this.token;
-    data['top_conversation'] = this.topConversation;
-    data['uid'] = this.uid;
-    data['username'] = this.username;
-    data['voice_notice'] = this.voiceNotice;
-    data['voice_on'] = this.voiceOn;
-    data['zone'] = this.zone;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['app_id'] = appId;
+    data['app_lock'] = appLock;
+    data['avatar'] = avatar;
+    data['base_avatar'] = baseAvatar;
+    data['category'] = category;
+    data['chat_notice'] = chatNotice;
+    data['chat_pwd'] = chatPwd;
+    data['lang'] = lang;
+    data['lock_after_minute'] = lockAfterMinute;
+    data['lock_screen_pwd'] = lockScreenPwd;
+    data['msg_expire_second'] = msgExpireSecond;
+    data['msg_read_receipt'] = msgReadReceipt;
+    data['name'] = name;
+    data['phone'] = phone;
+    data['phone_by_friend'] = phoneByFriend;
+    data['pwd_type'] = pwdType;
+    data['role'] = role;
+    data['rsa_public_key'] = rsaPublicKey;
+    data['search_by_phone'] = searchByPhone;
+    data['server_id'] = serverId;
+    data['setting'] = setting?.toJson();
+    data['sex'] = sex;
+    data['shock_on'] = shockOn;
+    data['short_no'] = shortNo;
+    data['short_status'] = shortStatus;
+    data['sign'] = sign;
+    data['token'] = token;
+    data['top_conversation'] = topConversation;
+    data['uid'] = uid;
+    data['username'] = username;
+    data['voice_notice'] = voiceNotice;
+    data['voice_on'] = voiceOn;
+    data['zone'] = zone;
     return data;
   }
 }
 
-class UserInfoSetting {
+class UserInfoSetting extends BaseData {
   int? deviceLock = 0; // 设备锁（0-关闭，1-开启）
   int? msgShowDetail = 0; // 消息详情显示（0-不显示，1-显示）
   int? muteOfApp = 0; // 全局静音（0-关闭，1-开启）
@@ -190,16 +193,17 @@ class UserInfoSetting {
   int? voiceOn = 0; // 语音提醒（0-关闭，1-开启）
 
   UserInfoSetting(
-      {this.deviceLock,
-        this.msgShowDetail,
-        this.muteOfApp,
-        this.newMsgNotice,
-        this.offlineProtection,
-        this.searchByPhone,
-        this.searchByShort,
-        this.shockOn,
-        this.voiceOn});
+      {deviceLock,
+        msgShowDetail,
+        muteOfApp,
+        newMsgNotice,
+        offlineProtection,
+        searchByPhone,
+        searchByShort,
+        shockOn,
+        voiceOn});
 
+  @override
   UserInfoSetting.fromJson(dynamic json) {
     deviceLock = json['device_lock'];
     msgShowDetail = json['msg_show_detail'];
@@ -212,17 +216,18 @@ class UserInfoSetting {
     voiceOn = json['voice_on'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['device_lock'] = this.deviceLock;
-    data['msg_show_detail'] = this.msgShowDetail;
-    data['mute_of_app'] = this.muteOfApp;
-    data['new_msg_notice'] = this.newMsgNotice;
-    data['offline_protection'] = this.offlineProtection;
-    data['search_by_phone'] = this.searchByPhone;
-    data['search_by_short'] = this.searchByShort;
-    data['shock_on'] = this.shockOn;
-    data['voice_on'] = this.voiceOn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['device_lock'] = deviceLock;
+    data['msg_show_detail'] = msgShowDetail;
+    data['mute_of_app'] = muteOfApp;
+    data['new_msg_notice'] = newMsgNotice;
+    data['offline_protection'] = offlineProtection;
+    data['search_by_phone'] = searchByPhone;
+    data['search_by_short'] = searchByShort;
+    data['shock_on'] = shockOn;
+    data['voice_on'] = voiceOn;
     return data;
   }
 }

@@ -183,7 +183,7 @@ class HttpUtils {
         channelType: channelType,
         extraVersion: version,
         limit: 100,
-        source: GlobalService.to.userModel!.uid ?? '',
+        source: GlobalService.to.userInfo!.uid ?? '',
       );
       if (result.isSuccess) {
         var msgExtraList = result.responseData?.data ?? [];

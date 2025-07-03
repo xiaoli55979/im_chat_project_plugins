@@ -131,7 +131,7 @@ class _MultiMenuItemState extends State<MultiMenuItem> {
 
   double _spacing() =>
       widget.spacing ?? (widget.direction == Axis.horizontal ? 8.w : 4.w);
-  final double _fontSize = 14.sp;
+  final double _fontSize = 16.sp;
   final double _cleanButtonSpacing = 4.w;
 
   @override
@@ -196,9 +196,9 @@ class _MultiMenuItemState extends State<MultiMenuItem> {
     );
   }
 
-  _getCleanButton(){
+  _getCleanButton() {
     return _showCleanButton && widget.showCleanButton
-        ?  CommonButton(
+        ? CommonButton(
             padding: EdgeInsets.only(left: 10.w),
             minSize: 16.w,
             child: Icon(Icons.cancel, color: Colors.grey, size: 16.w),
@@ -212,12 +212,17 @@ class _MultiMenuItemState extends State<MultiMenuItem> {
         : Container();
   }
 
-  _getPwdButton(){
+  _getPwdButton() {
     return widget.showPwdText
         ? CommonButton(
             padding: EdgeInsets.only(left: 10.w),
             minSize: 16,
-            child: AssetUtil.asset(_obscureText ? Assets.commonIconVisibilityOff : Assets.commonIconVisibility, width: 16.w, height: 16.h),
+            child: AssetUtil.asset(
+                _obscureText
+                    ? Assets.commonIconVisibilityOff
+                    : Assets.commonIconVisibility,
+                width: 16.w,
+                height: 16.h),
             onPressed: () {
               setState(() {
                 _obscureText = !_obscureText;
@@ -284,15 +289,13 @@ class _MultiMenuItemState extends State<MultiMenuItem> {
   _getTitleTextStyle() {
     return widget.titleStyle ??
         CommonTextStyle.instance(_fontSize,
-            color: widget.enabled == true
-                ? IMColors.normalTextColor
-                : Colors.grey);
+            color: widget.enabled == true ? IMColors.normalTextColor : Colors.grey);
   }
 
   _getSubTitleTextStyle() {
     return widget.subTitleStyle ??
         CommonTextStyle.instance(_fontSize,
-            color: widget.enabled == true ? IMColors.subTextColor : Colors.grey);
+            color: widget.enabled == true ? IMColors.normalTextColor : Colors.grey);
   }
 
   _getHintTextStyle() {

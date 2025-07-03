@@ -1,4 +1,3 @@
-import 'package:im_chat_common_plugin/database/user_manager.dart';
 import 'package:im_chat_common_plugin/routes/app_routes_common.dart';
 import 'package:im_chat_common_plugin/services/global_service.dart';
 

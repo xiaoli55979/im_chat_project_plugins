@@ -42,4 +42,6 @@ class DarkThemeColors {
   static const Color reminderColor = Color(0xFFFF5353);
 
   static const Color visitorColor = Color(0xFFFFC107);
+
+  static const Color borderColor = Color(0xFFE5E5E5);
 }

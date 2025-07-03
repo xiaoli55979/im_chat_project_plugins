@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// 主题颜色配置
 class LightThemeColors {
   // PRIMARY
-  static const Color primaryColor = Color(0xFF2035C7);
+  static const Color primaryColor = Color(0xFF2F50F7);
 // SECONDARY COLOR
   static const Color accentColor = Color(0xFF6E82EA);
 
@@ -11,16 +11,16 @@ class LightThemeColors {
 
   static const Color black = Color(0xFF000000);
 
-  static const Color background = Color(0xFFF3F3F7);
+  static const Color background = white;
 
-  static const Color dividerColor = Color(0xFFc0c0c0);
+  static const Color dividerColor = Color(0xFFF5F5F5);
 
   static const Color cardColor = Color(0xfffafafa);
 
   /// app_bar
   static const Color appBarColor = white;
   static const Color appBarIconsColor = black;
-  static const Color appBarTextColor = Color(0xFF172735);
+  static const Color appBarTextColor = normalTextColor;
 
   // BUTTON
   static const Color buttonColor = primaryColor;
@@ -32,14 +32,16 @@ class LightThemeColors {
   static const Color tabTextUnSelectedColor = Color(0xFF7E8590);
 
   // TEXT
-  static const Color normalTextColor = Color(0xFF172735);
-  static const Color subTextColor = Color(0xFF696E79);
+  static const Color normalTextColor = Color(0xFF10162F);
+  static const Color subTextColor = Color(0xFFA5A9B1);
   static const Color chooseTextColor = Color(0xFF2F50F7);
-  static const Color hintTextColor = Color(0xFFB4B8BF);
+  static const Color hintTextColor = Color(0xFFC5C7CC);
 
   static const Color cardTitleTextColor = Color(0xFF4B4E57);
 
   static const Color reminderColor = Color(0xFFFF5353);
 
   static const Color visitorColor = Color(0xFFFFC107);
+
+  static const Color borderColor = Color(0xFFE5E5E5);
 }

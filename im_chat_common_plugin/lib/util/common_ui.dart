@@ -78,7 +78,7 @@ Widget loadingIndicator({Color? color, double size = 60}) {
 Widget getDivider({
   bool visible = true,
   double? height = 0.5,
-  double? thickness,
+  double? thickness = 0.5,
   Color? color,
 }) {
   return Visibility(
@@ -140,11 +140,13 @@ buildTextFormView(String title, MultiMenuItemType type,
       TextAlign subTitleTextAlign = TextAlign.right,
       Axis direction = Axis.horizontal,
       bool showPwdText = false,
-      TextEditingController? controller,}) {
+      TextEditingController? controller,
+      double? dividerHeight,
+      double? dividerThickness,
+      Color? dividerColor,}) {
   return Column(
     children: [
       MultiMenuItem(
-        key: UniqueKey(),
         type: type,
         height: height,
         direction: direction,
@@ -172,7 +174,7 @@ buildTextFormView(String title, MultiMenuItemType type,
       ),
       Visibility(
         visible: showDivider,
-        child: getDivider(),
+        child: getDivider(height: dividerHeight, thickness: dividerThickness, color: dividerColor),
       ),
     ],
   );
